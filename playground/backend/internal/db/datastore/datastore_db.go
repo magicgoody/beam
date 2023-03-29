@@ -133,6 +133,8 @@ func (d *Datastore) GetSnippet(ctx context.Context, id string) (*entity.SnippetE
 		return nil, err
 	}
 
+	logger.Infof("Datastore: GetSnippet(): snippet %s has %d view count", id, snip.VisitCount)
+
 	// Update the last visited time and visit count
 	//TODO call cloud function here
 	//err = d.IncrementSnippetVisitorsCount(ctx, id)
