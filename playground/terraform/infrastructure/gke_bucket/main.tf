@@ -25,8 +25,8 @@ resource "google_storage_bucket" "bucket" {
 
 data "archive_file" "backend_folder" {
   type        = "zip"
-  source_dir  = "playground/backend"
-  output_path = "playground/cloudfunction.zip"
+  source_dir  = "../../../backend"
+  output_path = "../../../cloudfunction.zip"
 }
 
 resource "google_storage_bucket_object" "cloudfunction_object" {
