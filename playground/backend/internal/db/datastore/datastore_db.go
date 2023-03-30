@@ -111,13 +111,15 @@ func (d *Datastore) PutSnippet(ctx context.Context, snipId string, snip *entity.
 		return err
 	}
 
-	//TODO: call CloudFunction here
-	//return d.DeleteObsoleteSnippets(ctx, snipKey, snip.Snippet.PersistenceKey)
-
 	if d.externalFunctions != nil {
-		return d.externalFunctions.DeleteObsoleteSnippets(ctx, snipId, snip.Snippet.PersistenceKey)
+		err := d.externalFunctions.DeleteObsoleteSnippets(ctx, snipId, snip.Snippet.PersistenceKey)
+		if err != nil {
+			logger.Errorf("Datastore: PutSnippet(): error during deleting obsolete snippets using cloud function proxy, trying to call DeleteObsoleteSnippets() directly, err: %s\n", err.Error())
+			return d.DeleteObsoleteSnippets(ctx, snipKey, snip.Snippet.PersistenceKey)
+		}
 	} else {
-		logger.Errorf("Datastore: PutSnippet(): externalFunctions is nil. Can't delete obsolete snippets")
+		logger.Warnf("Datastore: PutSnippet(): externalFunctions is nil. Try to call DeleteObsoleteSnippets() directly")
+		return d.DeleteObsoleteSnippets(ctx, snipKey, snip.Snippet.PersistenceKey)
 	}
 	return nil
 }
@@ -136,21 +138,20 @@ func (d *Datastore) GetSnippet(ctx context.Context, id string) (*entity.SnippetE
 	logger.Infof("Datastore: GetSnippet(): snippet %s has %d view count", id, snip.VisitCount)
 
 	// Update the last visited time and visit count
-	//TODO call cloud function here
-	//err = d.IncrementSnippetVisitorsCount(ctx, id)
-	//if err != nil {
-	//	logger.Errorf("Datastore: GetSnippet(): error during updating snippet visit count, err: %s\n", err.Error())
-	//	return snip, err
-	//}
-
 	if d.externalFunctions != nil {
-		err = d.externalFunctions.IncrementSnippetViews(ctx, id)
+		err := d.externalFunctions.IncrementSnippetViews(ctx, id)
 		if err != nil {
-			logger.Errorf("Datastore: GetSnippet(): error during updating snippet visit count, err: %s\n", err.Error())
+			logger.Errorf("Datastore: GetSnippet(): error during updating snippet visit count using cloud function proxy, trying to call IncrementSnippetVisitorsCount() directly, err: %s\n", err.Error())
+			err = d.IncrementSnippetVisitorsCount(ctx, id)
 			return snip, err
 		}
 	} else {
-		logger.Errorf("Datastore: GetSnippet(): externalFunctions is nil. Can't increment snippet visit count")
+		logger.Warnf("Datastore: GetSnippet(): externalFunctions is nil. Try to call IncrementSnippetViews() directly")
+		err := d.IncrementSnippetVisitorsCount(ctx, id)
+		if err != nil {
+			logger.Errorf("Datastore: GetSnippet(): externalFunctions is nil. Can't increment snippet visit count")
+			return snip, err
+		}
 	}
 
 	return snip, nil
