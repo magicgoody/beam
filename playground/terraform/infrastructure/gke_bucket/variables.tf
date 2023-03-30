@@ -21,6 +21,6 @@ variable "region" {
   description = "Region of Playground Examples Bucket"
 }
 
-variable "state_bucket" {
+variable "bucket_name" {
   description = "Bucket name for CloudFunction"
 }
