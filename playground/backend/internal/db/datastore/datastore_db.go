@@ -16,7 +16,7 @@
 package datastore
 
 import (
-	"beam.apache.org/playground/backend/internal/components"
+	"beam.apache.org/playground/backend/internal/external_functions"
 	"context"
 	"fmt"
 	"time"
@@ -42,10 +42,10 @@ const (
 type Datastore struct {
 	Client            *datastore.Client
 	ResponseMapper    mapper.ResponseMapper
-	externalFunctions components.ExternalFunctions
+	externalFunctions external_functions.ExternalFunctions
 }
 
-func New(ctx context.Context, responseMapper mapper.ResponseMapper, externalFunctions components.ExternalFunctions, projectId string) (*Datastore, error) {
+func New(ctx context.Context, responseMapper mapper.ResponseMapper, externalFunctions external_functions.ExternalFunctions, projectId string) (*Datastore, error) {
 	client, err := datastore.NewClient(ctx, projectId)
 	if err != nil {
 		logger.Errorf("Datastore: connection to store: error during connection, err: %s\n", err.Error())

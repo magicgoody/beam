@@ -1,6 +1,7 @@
-package components
+package external_functions
 
 import (
+	"beam.apache.org/playground/backend/internal/environment"
 	"beam.apache.org/playground/backend/internal/logger"
 	"context"
 	"fmt"
@@ -18,18 +19,18 @@ type ExternalFunctions interface {
 	IncrementSnippetViews(ctx context.Context, snipId string) error
 }
 
-const (
-	// TODO: read this from configuration
-	cleanupSnippetsFunctionsUrl        = "http://cleanup_snippets:8080/"
-	deleteObsoleteSnippetsFunctionsUrl = "http://delete_obsolete_snippets:8080/"
-	incrementSnippetViewsFunctionsUrl  = "http://increment_snippet_views:8080/"
-)
-
 type externalFunctionsComponent struct {
+	cleanupSnippetsFunctionsUrl        string
+	deleteObsoleteSnippetsFunctionsUrl string
+	incrementSnippetViewsFunctionsUrl  string
 }
 
-func NewExternalFunctionsComponent() ExternalFunctions {
-	return &externalFunctionsComponent{}
+func NewExternalFunctionsComponent(appEnvs environment.ApplicationEnvs) ExternalFunctions {
+	return &externalFunctionsComponent{
+		cleanupSnippetsFunctionsUrl:        appEnvs.CleanupSnippetsFunctionsUrl(),
+		deleteObsoleteSnippetsFunctionsUrl: appEnvs.DeleteObsoleteSnippetsFunctionsUrl(),
+		incrementSnippetViewsFunctionsUrl:  appEnvs.IncrementSnippetViewsFunctionsUrl(),
+	}
 }
 
 func makePostRequest(ctx context.Context, requestUrl string) error {
@@ -53,7 +54,7 @@ func makePostRequest(ctx context.Context, requestUrl string) error {
 }
 
 func (c *externalFunctionsComponent) CleanupSnippets(ctx context.Context) error {
-	requestUrl := fmt.Sprintf("%s", cleanupSnippetsFunctionsUrl)
+	requestUrl := fmt.Sprintf("%s", c.cleanupSnippetsFunctionsUrl)
 
 	if err := makePostRequest(ctx, requestUrl); err != nil {
 		logger.Errorf("CleanupSnippets(): Couldn't cleanup snippets, err: %s\n", err.Error())
@@ -64,7 +65,7 @@ func (c *externalFunctionsComponent) CleanupSnippets(ctx context.Context) error 
 }
 
 func (c *externalFunctionsComponent) DeleteObsoleteSnippets(ctx context.Context, snipId string, persistenceKey string) error {
-	requestUrl := fmt.Sprintf("%s?snipId=%s&persistenceKey=%s", deleteObsoleteSnippetsFunctionsUrl, snipId, persistenceKey)
+	requestUrl := fmt.Sprintf("%s?snipId=%s&persistenceKey=%s", c.deleteObsoleteSnippetsFunctionsUrl, snipId, persistenceKey)
 
 	if err := makePostRequest(ctx, requestUrl); err != nil {
 		logger.Errorf("DeleteObsoleteSnippets(): Couldn't delete obsolete snippets, err: %s\n", err.Error())
@@ -75,7 +76,7 @@ func (c *externalFunctionsComponent) DeleteObsoleteSnippets(ctx context.Context,
 }
 
 func (c *externalFunctionsComponent) IncrementSnippetViews(ctx context.Context, snipId string) error {
-	requestUrl := fmt.Sprintf("%s?snipId=%s", incrementSnippetViewsFunctionsUrl, snipId)
+	requestUrl := fmt.Sprintf("%s?snipId=%s", c.incrementSnippetViewsFunctionsUrl, snipId)
 
 	if err := makePostRequest(ctx, requestUrl); err != nil {
 		logger.Errorf("IncrementSnippetViews(): Couldn't increment snippet views, err: %s\n", err.Error())
