@@ -16,7 +16,7 @@
 package tasks
 
 import (
-	"beam.apache.org/playground/backend/internal/components"
+	"beam.apache.org/playground/backend/internal/external_functions"
 	"context"
 	"time"
 
@@ -34,7 +34,7 @@ func New(ctx context.Context) *ScheduledTask {
 	return &ScheduledTask{ctx: ctx, taskScheduler: chrono.NewDefaultTaskScheduler()}
 }
 
-func (st *ScheduledTask) StartRemovingExtraSnippets(cron string, externalFunction components.ExternalFunctions) error {
+func (st *ScheduledTask) StartRemovingExtraSnippets(cron string, externalFunction external_functions.ExternalFunctions) error {
 	task, err := st.taskScheduler.ScheduleWithCron(func(ctx context.Context) {
 		logger.Info("ScheduledTask: StartRemovingExtraSnippets() is running...\n")
 		startDate := time.Now()

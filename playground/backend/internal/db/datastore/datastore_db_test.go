@@ -56,7 +56,7 @@ func setup() {
 	logger.SetupLogger(ctx, "local", "some_google_project_id")
 
 	var err error
-	datastoreDb, err = New(ctx, mapper.NewPrecompiledObjectMapper(), constants.EmulatorProjectId)
+	datastoreDb, err = New(ctx, mapper.NewPrecompiledObjectMapper(), nil, constants.EmulatorProjectId)
 	if err != nil {
 		panic(err)
 	}
@@ -863,7 +863,7 @@ func TestDatastore_DeleteUnusedSnippets(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.prepare()
-			err := datastoreDb.DeleteUnusedSnippets(tt.args.ctx, tt.args.dayDiff)
+			err := datastoreDb.DeleteUnusedSnippets(tt.args.ctx, time.Duration(tt.args.dayDiff)*time.Hour*24)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("DeleteUnusedSnippets() error = %v, wantErr %v", err, tt.wantErr)
 			}
@@ -944,7 +944,7 @@ func TestNew(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := New(ctx, mapper.NewPrecompiledObjectMapper(), constants.EmulatorProjectId)
+			_, err := New(ctx, mapper.NewPrecompiledObjectMapper(), nil, constants.EmulatorProjectId)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("New() error = %v, wantErr %v", err, tt.wantErr)
 			}

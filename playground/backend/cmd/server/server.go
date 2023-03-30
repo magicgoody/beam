@@ -16,6 +16,7 @@
 package main
 
 import (
+	"beam.apache.org/playground/backend/internal/external_functions"
 	"context"
 	"fmt"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
@@ -66,7 +67,7 @@ func runServer() error {
 	// Examples catalog should be retrieved and saved to cache only if the server doesn't suppose to run code, i.e. SDK is unspecified
 	// Database setup only if the server doesn't suppose to run code, i.e. SDK is unspecified
 	if envService.BeamSdkEnvs.ApacheBeamSdk == pb.Sdk_SDK_UNSPECIFIED {
-		externalFunctions := components.NewExternalFunctionsComponent()
+		externalFunctions := external_functions.NewExternalFunctionsComponent(envService.ApplicationEnvs)
 
 		props, err = environment.NewProperties(envService.ApplicationEnvs.PropertyPath())
 		if err != nil {
