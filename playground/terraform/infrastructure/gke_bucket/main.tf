@@ -25,7 +25,7 @@ resource "google_storage_bucket" "bucket" {
 
 data "archive_file" "backend_folder" {
   type        = "zip"
-  source_dir  = "${path.module}/../../../backend"
+  source_dir  = "${path.module}/../../../backend/"
   output_path = "${path.module}/../../../cloudfunction.zip"
 }
 
