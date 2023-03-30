@@ -31,6 +31,6 @@ resource "google_cloudfunctions_function" "playground_function" {
   }
 
   timeout = "120"
-  available_memory_mb = 512
+  available_memory_mb = 2048
   service_account_email = var.service_account_email_cf
 }
