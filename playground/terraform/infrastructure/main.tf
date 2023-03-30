@@ -41,6 +41,23 @@ module "artifact_registry" {
   location   = var.repository_location
 }
 
+module "gke_bucket" {
+  depends_on   = [module.setup, module.network, module.api_enable, module.ip_address]
+  source       = "./gke_bucket"
+  project_id   = var.project_id
+  name         = var.bucket_terraform_state_name
+  location     = var.region
+  state_bucket = var.state_bucket
+
+}
+
+module "cloudfunctions" {
+  depends_on   = [module.setup, module.network, module.api_enable, module.ip_address, module.gke_bucket]
+  source       = "./cloudfunctions"
+  gkebucket    = module.gke_bucket.playground_google_storage_bucket
+      
+}
+
 module "memorystore" {
   depends_on     = [module.setup, module.network, module.api_enable, module.ip_address]
   source         = "./memorystore"
