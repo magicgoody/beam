@@ -17,10 +17,14 @@
 # under the License.
 #
 
-output "service_account_email" {
-  value = google_service_account.playground_service_account.email
+output "playground_function_cleanup_url" {
+  value = google_cloudfunctions_function.playground_functions[0].https_trigger_url
 }
 
-output "service_account_email_cf" {
-  value = google_service_account.playground_service_account_cf.email
+output "playground_function_delete_url" {
+  value = google_cloudfunctions_function.playground_functions[1].https_trigger_url
+}
+
+output "playground_function_view_url" {
+  value = google_cloudfunctions_function.playground_functions[2].https_trigger_url
 }

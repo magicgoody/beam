@@ -17,10 +17,6 @@
 # under the License.
 #
 
-output "service_account_email" {
-  value = google_service_account.playground_service_account.email
-}
-
-output "service_account_email_cf" {
-  value = google_service_account.playground_service_account_cf.email
+output "playground_google_storage_bucket" {
+    value = google_storage_bucket.bucket.name
 }

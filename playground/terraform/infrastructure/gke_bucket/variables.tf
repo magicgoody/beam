@@ -17,10 +17,10 @@
 # under the License.
 #
 
-output "service_account_email" {
-  value = google_service_account.playground_service_account.email
+variable "region" {
+  description = "Region of Playground Examples Bucket"
 }
 
-output "service_account_email_cf" {
-  value = google_service_account.playground_service_account_cf.email
+variable "bucket_name" {
+  description = "Bucket name for CloudFunction"
 }

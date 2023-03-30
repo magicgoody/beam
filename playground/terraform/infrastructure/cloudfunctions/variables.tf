@@ -17,10 +17,28 @@
 # under the License.
 #
 
-output "service_account_email" {
-  value = google_service_account.playground_service_account.email
+variable "function_names" {
+  type    = list(string)
+  default = ["cleanupSnippets", "deleteObsoleteSnippets", "incrementSnippetViews"]
 }
 
-output "service_account_email_cf" {
-  value = google_service_account.playground_service_account_cf.email
+variable "function_description" {
+  type    = string
+  default = "Playground function"
+}
+
+variable "gkebucket" {
+  description = "Bucket name for CloudFunction"
+}
+
+variable "service_account_email_cf" {
+  description = "Service account email for CloudFunctions"
+}
+
+variable "project_id" {
+  description = "The GCP Project ID where Playground Applications will be created"
+}
+
+variable "region" {
+  description = "The GCP Project region where Cloudfunctions will be created"
 }

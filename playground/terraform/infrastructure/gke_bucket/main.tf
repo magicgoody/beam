@@ -17,10 +17,29 @@
 # under the License.
 #
 
-output "service_account_email" {
-  value = google_service_account.playground_service_account.email
+resource "google_storage_bucket" "bucket" {
+  name          = "${var.bucket_name}-cloudbuild"
+  location      = var.region
+  force_destroy = true
 }
 
-output "service_account_email_cf" {
-  value = google_service_account.playground_service_account_cf.email
+data "archive_file" "backend_folder" {
+  type        = "zip"
+  source_dir  = "${path.module}/../../../backend/"
+  output_path = "${path.module}/../../../cloudfunction.zip"
+
+  excludes = [
+    "./containers"
+  ]
+}
+
+resource "google_storage_bucket_object" "cloudfunction_object" {
+  name   = "cloudfunction.zip"
+  bucket = google_storage_bucket.bucket.name
+
+  source = "${path.module}/../../../cloudfunction.zip"
+
+  content_type = "application/zip"
+  content_encoding = "zip"
+
 }
