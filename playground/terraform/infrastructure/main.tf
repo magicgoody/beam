@@ -46,7 +46,7 @@ module "gke_bucket" {
   source       = "./gke_bucket"
   project_id   = var.project_id
   name         = var.bucket_terraform_state_name
-  location     = var.region
+  region       = var.region
   state_bucket = var.state_bucket
 
 }
