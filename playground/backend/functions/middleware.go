@@ -17,7 +17,7 @@ package functions
 
 import "net/http"
 
-// Middleware to check http method.
+// EnsureMethod is a middleware method which will only allow requests with the specified method to pass through.
 func EnsureMethod(method string) func(http.HandlerFunc) http.HandlerFunc {
 	return func(next http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {

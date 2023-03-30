@@ -16,7 +16,7 @@
 # limitations under the License.
 ###############################################################################
 
-# This Dcokerfile only for local testing
+# This Dockerfile is only for local testing
 
 FROM golang:1.20-alpine as build
 
