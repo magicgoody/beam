@@ -30,7 +30,7 @@ resource "google_cloudfunctions_function" "playground_function" {
     example_env_var = "example_value"
   }
 
-  timeout = "120"
+  timeout = "600"
   available_memory_mb = 2048
   service_account_email = var.service_account_email_cf
 }
