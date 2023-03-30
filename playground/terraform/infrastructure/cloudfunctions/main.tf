@@ -32,5 +32,5 @@ resource "google_cloudfunctions_function" "playground_function" {
 
   timeout = "120"
   available_memory_mb = 512
-  service_account_email = "cloudfunction-service-account@${var.project_id}.iam.gserviceaccount.com"
+  service_account_email = var.service_account_email_cf
 }
