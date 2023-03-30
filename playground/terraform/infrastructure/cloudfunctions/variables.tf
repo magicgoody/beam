@@ -24,3 +24,7 @@ variable "gkebucket" {
 variable "project_id" {
   description = "The GCP Project ID where Playground Applications will be created"
 }
+
+variable "service_account_email_cf" {
+  description = "Service account email for CloudFunctions"
+}

@@ -50,11 +50,11 @@ module "gke_bucket" {
 }
 
 module "cloudfunctions" {
-  depends_on   = [module.setup, module.network, module.api_enable, module.ip_address, module.gke_bucket]
-  source       = "./cloudfunctions"
-  gkebucket    = module.gke_bucket.playground_google_storage_bucket
-  project_id     = var.project_id
-      
+  depends_on            = [module.setup, module.network, module.api_enable, module.ip_address, module.gke_bucket]
+  source                = "./cloudfunctions"
+  gkebucket             = module.gke_bucket.playground_google_storage_bucket
+  project_id            = var.project_id
+  service_account_email_cf = module.setup.service_account_email_cf
 }
 
 module "memorystore" {
