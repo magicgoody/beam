@@ -44,7 +44,6 @@ module "artifact_registry" {
 module "gke_bucket" {
   depends_on   = [module.setup, module.network, module.api_enable, module.ip_address]
   source       = "./gke_bucket"
-  name         = var.bucket_terraform_state_name
   region       = var.region
   bucket_name = var.state_bucket
 
