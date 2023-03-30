@@ -65,3 +65,12 @@ resource "google_project_iam_member" "terraform_service_account_roles" {
   member  = "serviceAccount:${google_service_account.playground_service_account.email}"
   project = var.project_id
 }
+
+resource "google_project_iam_member" "cloudfunction" {
+  for_each = toset([
+    "roles/storage.objectViewer",
+  ])
+  role    = each.key
+  member  = "serviceAccount:${google_service_account.playground_service_account_cf.email}"
+  project = var.project_id
+}
