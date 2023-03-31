@@ -13,23 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package playground_functions
 
-import (
-	"log"
-	"os"
+import "os"
 
-	_ "beam.apache.org/playground/backend/functions"
-	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
-)
+type Environment interface {
+	GetProjectId() string
+}
 
-func main() {
-	// Use PORT environment variable, or default to 8080.
-	port := "8080"
-	if envPort := os.Getenv("PORT"); envPort != "" {
-		port = envPort
+type environment struct {
+	projectID string
+}
+
+func GetEnvironment() Environment {
+	projectId := os.Getenv("GOOGLE_CLOUD_PROJECT")
+	return &environment{
+		projectID: projectId,
 	}
-	if err := funcframework.Start(port); err != nil {
-		log.Fatalf("funcframework.Start: %v\n", err)
-	}
+}
+
+func (e *environment) GetProjectId() string {
+	return e.projectID
 }

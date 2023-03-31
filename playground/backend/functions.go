@@ -13,11 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package functions
+package backend
 
 import (
 	"beam.apache.org/playground/backend/internal/db/datastore"
 	"beam.apache.org/playground/backend/internal/utils"
+	"beam.apache.org/playground/backend/playground_functions"
 	"context"
 	"fmt"
 	"net/http"
@@ -34,7 +35,7 @@ var db *datastore.Datastore
 func init() {
 	fmt.Printf("Initializing snippets functions\n")
 
-	env := GetEnvironment()
+	env := playground_functions.GetEnvironment()
 
 	pcMapper := mapper.NewPrecompiledObjectMapper()
 	var err error
@@ -44,7 +45,7 @@ func init() {
 		panic(err)
 	}
 
-	ensurePost := EnsureMethod(http.MethodPost)
+	ensurePost := playground_functions.EnsureMethod(http.MethodPost)
 
 	functions.HTTP("cleanupSnippets", ensurePost(cleanupSnippets))
 	functions.HTTP("deleteObsoleteSnippets", ensurePost(deleteObsoleteSnippets))

@@ -13,25 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package functions
+package playground_functions
 
-import "os"
+import "net/http"
 
-type Environment interface {
-	GetProjectId() string
-}
-
-type environment struct {
-	projectID string
-}
-
-func GetEnvironment() Environment {
-	projectId := os.Getenv("GOOGLE_CLOUD_PROJECT")
-	return &environment{
-		projectID: projectId,
+// EnsureMethod is a middleware method which will only allow requests with the specified method to pass through.
+func EnsureMethod(method string) func(http.HandlerFunc) http.HandlerFunc {
+	return func(next http.HandlerFunc) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			if r.Method == method {
+				next(w, r)
+			} else {
+				w.WriteHeader(http.StatusMethodNotAllowed)
+			}
+		}
 	}
-}
-
-func (e *environment) GetProjectId() string {
-	return e.projectID
 }

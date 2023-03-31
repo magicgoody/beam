@@ -13,19 +13,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package functions
+package main
 
-import "net/http"
+import (
+	"log"
+	"os"
 
-// EnsureMethod is a middleware method which will only allow requests with the specified method to pass through.
-func EnsureMethod(method string) func(http.HandlerFunc) http.HandlerFunc {
-	return func(next http.HandlerFunc) http.HandlerFunc {
-		return func(w http.ResponseWriter, r *http.Request) {
-			if r.Method == method {
-				next(w, r)
-			} else {
-				w.WriteHeader(http.StatusMethodNotAllowed)
-			}
-		}
+	_ "beam.apache.org/playground/backend"
+	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
+)
+
+func main() {
+	// Use PORT environment variable, or default to 8080.
+	port := "8080"
+	if envPort := os.Getenv("PORT"); envPort != "" {
+		port = envPort
+	}
+	if err := funcframework.Start(port); err != nil {
+		log.Fatalf("funcframework.Start: %v\n", err)
 	}
 }
