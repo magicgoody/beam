@@ -99,6 +99,7 @@ export 'src/widgets/buttons/report_issue.dart';
 export 'src/widgets/clickable.dart';
 export 'src/widgets/close_button.dart';
 export 'src/widgets/complexity.dart';
+export 'src/widgets/copy_button.dart';
 export 'src/widgets/copyright.dart';
 export 'src/widgets/dialog.dart';
 export 'src/widgets/divider.dart';

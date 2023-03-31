@@ -54,6 +54,7 @@ class BeamBorderRadius {
 class BeamIconSizes {
   static const double xs = BeamSizes.size8;
   static const double small = BeamSizes.size16;
+  static const double medium = BeamSizes.size24;
   static const double large = BeamSizes.size32;
 
   static const double largeSplashRadius = 24;
