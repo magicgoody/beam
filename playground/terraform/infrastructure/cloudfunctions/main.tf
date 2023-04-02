@@ -17,11 +17,47 @@
 # under the License.
 #
 
-resource "google_cloudfunctions_function" "playground_function" {
-  name        = "playground-function"
-  description = "Playground function"
+resource "google_cloudfunctions_function" "playground_function_cleanup" {
+  name        = "playground-function-cleanup"
+  description = "Playground function cleanup"
   runtime     = "go120"
-  entry_point = "PlaygroundFunction"
+  entry_point = "cleanupSnippets"
+  source_archive_bucket = var.gkebucket
+  source_archive_object = "cloudfunction.zip"
+  trigger_http = true
+
+  environment_variables = {
+    example_env_var = "example_value"
+  }
+
+  timeout = "540"
+  available_memory_mb = 2048
+  service_account_email = var.service_account_email_cf
+}
+
+resource "google_cloudfunctions_function" "playground_function_delete" {
+  name        = "playground-function-delete"
+  description = "Playground function delete"
+  runtime     = "go120"
+  entry_point = "deleteObsoleteSnippets"
+  source_archive_bucket = var.gkebucket
+  source_archive_object = "cloudfunction.zip"
+  trigger_http = true
+
+  environment_variables = {
+    example_env_var = "example_value"
+  }
+
+  timeout = "540"
+  available_memory_mb = 2048
+  service_account_email = var.service_account_email_cf
+}
+
+resource "google_cloudfunctions_function" "playground_function_view" {
+  name        = "playground-function-view"
+  description = "Playground function view"
+  runtime     = "go120"
+  entry_point = "incrementSnippetViews"
   source_archive_bucket = var.gkebucket
   source_archive_object = "cloudfunction.zip"
   trigger_http = true
