@@ -27,7 +27,7 @@ resource "google_cloudfunctions_function" "playground_function_cleanup" {
   trigger_http = true
 
   environment_variables = {
-    example_env_var = "example_value"
+    GOOGLE_CLOUD_PROJECT = var.project_id
   }
 
   timeout = "540"
@@ -45,7 +45,7 @@ resource "google_cloudfunctions_function" "playground_function_delete" {
   trigger_http = true
 
   environment_variables = {
-    example_env_var = "example_value"
+    GOOGLE_CLOUD_PROJECT = var.project_id
   }
 
   timeout = "540"
@@ -63,7 +63,7 @@ resource "google_cloudfunctions_function" "playground_function_view" {
   trigger_http = true
 
   environment_variables = {
-    example_env_var = "example_value"
+    GOOGLE_CLOUD_PROJECT = var.project_id
   }
 
   timeout = "540"
