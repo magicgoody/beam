@@ -62,7 +62,7 @@ resource "google_cloudfunctions_function" "playground_function_delete" {
   service_account_email = var.service_account_email_cf
 }
 
-resource "google_cloudfunctions_function_iam_member" "invoker_cleanup_delete" {
+resource "google_cloudfunctions_function_iam_member" "invoker_delete" {
   project        = google_cloudfunctions_function.playground_function_delete.project
   region         = google_cloudfunctions_function.playground_function_delete.region
   cloud_function = google_cloudfunctions_function.playground_function_delete.name
@@ -89,7 +89,7 @@ resource "google_cloudfunctions_function" "playground_function_view" {
   service_account_email = var.service_account_email_cf
 }
 
-resource "google_cloudfunctions_function_iam_member" "invoker_cleanup_delete" {
+resource "google_cloudfunctions_function_iam_member" "invoker_view" {
   project        = google_cloudfunctions_function.playground_function_view.project
   region         = google_cloudfunctions_function.playground_function_view.region
   cloud_function = google_cloudfunctions_function.playground_function_view.name
