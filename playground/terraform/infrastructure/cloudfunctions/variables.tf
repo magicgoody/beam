@@ -27,29 +27,9 @@ variable "function_description" {
   default = "Playground function"
 }
 
-variable "runtime" {
-  type    = string
-  default = "go120"
-}
-
-variable "source_archive_bucket" {
+variable "gkebucket" {
   type    = string
   default = var.gkebucket
-}
-
-variable "source_archive_object" {
-  type    = string
-  default = "cloudfunction.zip"
-}
-
-variable "timeout" {
-  type    = string
-  default = "540"
-}
-
-variable "available_memory_mb" {
-  type    = number
-  default = 2048
 }
 
 variable "service_account_email_cf" {

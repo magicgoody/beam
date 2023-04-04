@@ -3,18 +3,18 @@ resource "google_cloudfunctions_function" "playground_functions" {
 
   name        = "playground-function-${var.function_names[count.index]}"
   description = var.function_description
-  runtime     = var.runtime
+  runtime     = "go120"
   entry_point = var.function_names[count.index]
-  source_archive_bucket = var.source_archive_bucket
-  source_archive_object = var.source_archive_object
+  source_archive_bucket = var.gkebucket
+  source_archive_object = "cloudfunction.zip"
   trigger_http = true
 
   environment_variables = {
     GOOGLE_CLOUD_PROJECT = var.project_id
   }
 
-  timeout = var.timeout
-  available_memory_mb = var.available_memory_mb
+  timeout = "540"
+  available_memory_mb = 2048
   service_account_email = var.service_account_email
 }
 
