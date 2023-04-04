@@ -35,6 +35,15 @@ resource "google_cloudfunctions_function" "playground_function_cleanup" {
   service_account_email = var.service_account_email_cf
 }
 
+resource "google_cloudfunctions_function_iam_member" "invoker_cleanup" {
+  project        = google_cloudfunctions_function.playground_function_cleanup.project
+  region         = google_cloudfunctions_function.playground_function_cleanup.region
+  cloud_function = google_cloudfunctions_function.playground_function_cleanup.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "user:${var.service_account_email_cf}"
+}
+
 resource "google_cloudfunctions_function" "playground_function_delete" {
   name        = "playground-function-delete"
   description = "Playground function delete"
@@ -53,6 +62,15 @@ resource "google_cloudfunctions_function" "playground_function_delete" {
   service_account_email = var.service_account_email_cf
 }
 
+resource "google_cloudfunctions_function_iam_member" "invoker_delete" {
+  project        = google_cloudfunctions_function.playground_function_delete.project
+  region         = google_cloudfunctions_function.playground_function_delete.region
+  cloud_function = google_cloudfunctions_function.playground_function_delete.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "user:${var.service_account_email_cf}"
+}
+
 resource "google_cloudfunctions_function" "playground_function_view" {
   name        = "playground-function-view"
   description = "Playground function view"
@@ -69,4 +87,13 @@ resource "google_cloudfunctions_function" "playground_function_view" {
   timeout = "540"
   available_memory_mb = 2048
   service_account_email = var.service_account_email_cf
+}
+
+resource "google_cloudfunctions_function_iam_member" "invoker_view" {
+  project        = google_cloudfunctions_function.playground_function_view.project
+  region         = google_cloudfunctions_function.playground_function_view.region
+  cloud_function = google_cloudfunctions_function.playground_function_view.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "user:${var.service_account_email_cf}"
 }
