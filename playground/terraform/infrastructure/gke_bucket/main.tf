@@ -28,7 +28,7 @@ data "archive_file" "backend_folder" {
   source_dir  = "${path.module}/../../../backend/"
   output_path = "${path.module}/../../../cloudfunction.zip"
 
-  exclude = [
+  excludes = [
     "${path.module}/../../../backend/containers"
   ]
 }
