@@ -17,14 +17,46 @@
 # under the License.
 #
 
-variable "gkebucket" {
-  description = "Bucket name for CloudFunction"
+variable "function_names" {
+  type    = list(string)
+  default = ["cleanupSnippets", "deleteObsoleteSnippets", "incrementSnippetViews"]
 }
 
-variable "project_id" {
-  description = "The GCP Project ID where Playground Applications will be created"
+variable "function_description" {
+  type    = string
+  default = "Playground function"
+}
+
+variable "runtime" {
+  type    = string
+  default = "go120"
+}
+
+variable "source_archive_bucket" {
+  type    = string
+  default = var.gkebucket
+}
+
+variable "source_archive_object" {
+  type    = string
+  default = "cloudfunction.zip"
+}
+
+variable "timeout" {
+  type    = string
+  default = "540"
+}
+
+variable "available_memory_mb" {
+  type    = number
+  default = 2048
 }
 
 variable "service_account_email_cf" {
-  description = "Service account email for CloudFunctions"
+  type    = string
+  default = var.service_account_email_cf
+}
+
+variable "project_id" {
+  type    = string
 }
