@@ -15,7 +15,7 @@ resource "google_cloudfunctions_function" "playground_functions" {
 
   timeout = "540"
   available_memory_mb = 2048
-  service_account_email = var.service_account_email
+  service_account_email = var.service_account_email_cf
 }
 
 resource "google_cloudfunctions_function_iam_member" "invoker" {
