@@ -28,7 +28,3 @@ variable "project_id" {
 variable "service_account_email_cf" {
   description = "Service account email for CloudFunctions"
 }
-
-variable "service_account_email" {
-  description = "Service account email"
-}
