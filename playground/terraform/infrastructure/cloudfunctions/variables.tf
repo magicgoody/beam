@@ -28,15 +28,13 @@ variable "function_description" {
 }
 
 variable "gkebucket" {
-  type    = string
-  default = var.gkebucket
+  description = "Bucket name for CloudFunction"
 }
 
 variable "service_account_email_cf" {
-  type    = string
-  default = var.service_account_email_cf
+  description = "Service account email for CloudFunctions"
 }
 
 variable "project_id" {
-  type    = string
+  description = "The GCP Project ID where Playground Applications will be created"
 }
