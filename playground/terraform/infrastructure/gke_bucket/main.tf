@@ -27,6 +27,10 @@ data "archive_file" "backend_folder" {
   type        = "zip"
   source_dir  = "${path.module}/../../../backend/"
   output_path = "${path.module}/../../../cloudfunction.zip"
+
+  exclude = [
+    "${path.module}/../../../backend/containers"
+  ]
 }
 
 resource "google_storage_bucket_object" "cloudfunction_object" {
