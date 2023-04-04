@@ -56,8 +56,8 @@ resource "google_cloudfunctions_function" "playground_functions" {
 
 resource "google_cloudfunctions_function_iam_member" "invokers" {
   count         = length(local.functions)
-  project       = google_cloudfunctions_function.playground_functions[count.index].project
-  region        = google_cloudfunctions_function.playground_functions[count.index].region
+  project       = var.project_id
+  region        = var.region
   cloud_function = google_cloudfunctions_function.playground_functions[count.index].name
   role          = "roles/cloudfunctions.invoker"
   member        = "allUsers"

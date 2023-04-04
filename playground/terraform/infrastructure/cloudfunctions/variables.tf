@@ -38,3 +38,7 @@ variable "service_account_email_cf" {
 variable "project_id" {
   description = "The GCP Project ID where Playground Applications will be created"
 }
+
+variable "region" {
+  description = "The GCP Project region where Cloudfunctions will be created"
+}
