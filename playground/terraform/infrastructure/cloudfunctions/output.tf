@@ -18,13 +18,13 @@
 #
 
 output "playground_function_cleanup_url" {
-  value = google_cloudfunctions_function.playground_function.https_trigger_url
+  value = google_cloudfunctions_function.playground_functions.https_trigger_url
 }
 
 output "playground_function_delete_url" {
-  value = google_cloudfunctions_function.playground_function.https_trigger_url
+  value = google_cloudfunctions_function.playground_functions.https_trigger_url
 }
 
 output "playground_function_view_url" {
-  value = google_cloudfunctions_function.playground_function.https_trigger_url
+  value = google_cloudfunctions_function.playground_functions.https_trigger_url
 }
