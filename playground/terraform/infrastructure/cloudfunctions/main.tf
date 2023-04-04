@@ -25,7 +25,7 @@ resource "google_cloudfunctions_function" "playground_function_cleanup" {
   source_archive_bucket = var.gkebucket
   source_archive_object = "cloudfunction.zip"
   trigger_http = true
-  allow_unauthenticated = true
+
   environment_variables = {
     GOOGLE_CLOUD_PROJECT = var.project_id
   }
@@ -33,6 +33,15 @@ resource "google_cloudfunctions_function" "playground_function_cleanup" {
   timeout = "540"
   available_memory_mb = 2048
   service_account_email = var.service_account_email_cf
+}
+
+resource "google_cloudfunctions_function_iam_member" "invoker_cleanup" {
+  project        = google_cloudfunctions_function.playground_function_cleanup.project
+  region         = google_cloudfunctions_function.playground_function_cleanup.region
+  cloud_function = google_cloudfunctions_function.playground_function_cleanup.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "allUsers"
 }
 
 resource "google_cloudfunctions_function" "playground_function_delete" {
@@ -43,7 +52,7 @@ resource "google_cloudfunctions_function" "playground_function_delete" {
   source_archive_bucket = var.gkebucket
   source_archive_object = "cloudfunction.zip"
   trigger_http = true
-  allow_unauthenticated = true
+
   environment_variables = {
     GOOGLE_CLOUD_PROJECT = var.project_id
   }
@@ -51,6 +60,15 @@ resource "google_cloudfunctions_function" "playground_function_delete" {
   timeout = "540"
   available_memory_mb = 2048
   service_account_email = var.service_account_email_cf
+}
+
+resource "google_cloudfunctions_function_iam_member" "invoker_cleanup_delete" {
+  project        = google_cloudfunctions_function.playground_function_delete.project
+  region         = google_cloudfunctions_function.playground_function_delete.region
+  cloud_function = google_cloudfunctions_function.playground_function_delete.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "allUsers"
 }
 
 resource "google_cloudfunctions_function" "playground_function_view" {
@@ -61,7 +79,7 @@ resource "google_cloudfunctions_function" "playground_function_view" {
   source_archive_bucket = var.gkebucket
   source_archive_object = "cloudfunction.zip"
   trigger_http = true
-  allow_unauthenticated = true
+
   environment_variables = {
     GOOGLE_CLOUD_PROJECT = var.project_id
   }
@@ -69,4 +87,13 @@ resource "google_cloudfunctions_function" "playground_function_view" {
   timeout = "540"
   available_memory_mb = 2048
   service_account_email = var.service_account_email_cf
+}
+
+resource "google_cloudfunctions_function_iam_member" "invoker_cleanup_delete" {
+  project        = google_cloudfunctions_function.playground_function_view.project
+  region         = google_cloudfunctions_function.playground_function_view.region
+  cloud_function = google_cloudfunctions_function.playground_function_view.name
+
+  role   = "roles/cloudfunctions.invoker"
+  member = "allUsers"
 }
