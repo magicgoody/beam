@@ -55,6 +55,7 @@ module "cloudfunctions" {
   gkebucket             = module.gke_bucket.playground_google_storage_bucket
   project_id            = var.project_id
   service_account_email_cf = module.setup.service_account_email_cf
+  service_account_email = module.setup.service_account_email
 }
 
 module "memorystore" {

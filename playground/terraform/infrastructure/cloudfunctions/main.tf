@@ -41,7 +41,7 @@ resource "google_cloudfunctions_function_iam_member" "invoker_cleanup" {
   cloud_function = google_cloudfunctions_function.playground_function_cleanup.name
 
   role   = "roles/cloudfunctions.invoker"
-  member = "serviceAccount:${var.service_account_email_cf}"
+  member = "serviceAccount:${var.service_account_email}"
 }
 
 resource "google_cloudfunctions_function" "playground_function_delete" {
@@ -68,7 +68,7 @@ resource "google_cloudfunctions_function_iam_member" "invoker_delete" {
   cloud_function = google_cloudfunctions_function.playground_function_delete.name
 
   role   = "roles/cloudfunctions.invoker"
-  member = "serviceAccount:${var.service_account_email_cf}"
+  member = "serviceAccount:${var.service_account_email}"
 }
 
 resource "google_cloudfunctions_function" "playground_function_view" {
@@ -95,5 +95,5 @@ resource "google_cloudfunctions_function_iam_member" "invoker_view" {
   cloud_function = google_cloudfunctions_function.playground_function_view.name
 
   role   = "roles/cloudfunctions.invoker"
-  member = "serviceAccount:${var.service_account_email_cf}"
+  member = "serviceAccount:${var.service_account_email}"
 }
