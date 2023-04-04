@@ -25,7 +25,7 @@ resource "google_cloudfunctions_function" "playground_function_cleanup" {
   source_archive_bucket = var.gkebucket
   source_archive_object = "cloudfunction.zip"
   trigger_http = true
-
+  allow_unauthenticated = true
   environment_variables = {
     GOOGLE_CLOUD_PROJECT = var.project_id
   }
@@ -43,7 +43,7 @@ resource "google_cloudfunctions_function" "playground_function_delete" {
   source_archive_bucket = var.gkebucket
   source_archive_object = "cloudfunction.zip"
   trigger_http = true
-
+  allow_unauthenticated = true
   environment_variables = {
     GOOGLE_CLOUD_PROJECT = var.project_id
   }
@@ -61,7 +61,7 @@ resource "google_cloudfunctions_function" "playground_function_view" {
   source_archive_bucket = var.gkebucket
   source_archive_object = "cloudfunction.zip"
   trigger_http = true
-
+  allow_unauthenticated = true
   environment_variables = {
     GOOGLE_CLOUD_PROJECT = var.project_id
   }
