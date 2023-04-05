@@ -14,8 +14,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-# beam-playground:
-#   name: read-query
+# beam-playground-broken:
+#   name: read-table
 #   description: TextIO read query example.
 #   multifile: false
 #   context_line: 34
@@ -25,32 +25,32 @@
 #   tags:
 #     - hellobeam
 
+import argparse
 import apache_beam as beam
 from apache_beam.io import ReadFromText
 from apache_beam.io import WriteToBigQuery
 from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.options.pipeline_options import SetupOptions
 
+
 def run(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--input',
                         dest='input',
-                        default='gs://dataflow-samples/shakespeare/kinglear.txt',
+                        default='gs://bucket',
                         help='Input file to process.')
-    parser.add_argument('--output',
-                        dest='output',
-                        required=True,
-                        help='Output file to write results to.')
+
     known_args, pipeline_args = parser.parse_known_args(argv)
 
     pipeline_options = PipelineOptions(pipeline_args)
     pipeline_options.view_as(SetupOptions).save_main_session = True
 
     with beam.Pipeline(options=pipeline_options) as p:
-      lines = p | 'ReadFromBigQuery' >> beam.io.Read(beam.io.BigQuerySource(
-            query='SELECT * FROM `tess-372508.fir.xasw`'))
+      (p #| 'ReadTable' >> beam.io.Read(beam.io.BigQuerySource(query='SELECT * FROM `project-id.dataset.table`')))
+         # Each row is a dictionary where the keys are the BigQuery columns
+         #| beam.Map(lambda elem: elem['field'])
+       )
 
-        lines | 'Log words' >> beam.Map(print)
 
 if __name__ == '__main__':
-    run()
+  run()

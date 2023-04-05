@@ -15,8 +15,8 @@
 #   limitations under the License.
 
 # beam-playground:
-#   name: write-table-schema
-#   description: TextIO write table with schema example.
+#   name: table-schema
+#   description: TextIO table schema example.
 #   multifile: false
 #   context_line: 30
 #   categories:
@@ -24,27 +24,36 @@
 #   complexity: ADVANCED
 #   tags:
 #     - hellobeam
-
 import apache_beam as beam
-from apache_beam.io import ReadFromText
 from apache_beam.io import WriteToBigQuery
-from apache_beam.options.pipeline_options import PipelineOptions
-from apache_beam.options.pipeline_options import SetupOptions
+from apache_beam.io.gcp.internal.clients import bigquery
 
+p = beam.Pipeline()
 
-fictional_characters_view = beam.pvalue.AsDict(
-    pipeline | 'CreateCharacters' >> beam.Create([('Yoda', True),
-                                                  ('Obi Wan Kenobi', True)]))
+table_spec = bigquery.TableReference(
+                 projectId='project-id',
+                 datasetId='dataset',
+                 tableId='table')
 
-def table_fn(element, fictional_characters):
-  if element in fictional_characters:
-    return 'my_dataset.fictional_quotes'
-  else:
-    return 'my_dataset.real_quotes'
+table_schema = {
+    'fields': [{
+        'name': 'source', 'type': 'STRING', 'mode': 'NULLABLE'
+    }, {
+        'name': 'quote', 'type': 'STRING', 'mode': 'REQUIRED'
+    }]
+}
 
-quotes | 'WriteWithDynamicDestination' >> beam.io.WriteToBigQuery(
-    table_fn,
+input = p | beam.Create([
+    {
+        'source': 'Mahatma Gandhi', 'quote': 'My life is my message.'
+    },
+    {
+        'source': 'Yoda', 'quote': "Do, or do not. There is no 'try'."
+    },
+])
+
+input | beam.io.WriteToBigQuery(
+    table_spec,
     schema=table_schema,
-    table_side_inputs=(fictional_characters_view, ),
     write_disposition=beam.io.BigQueryDisposition.WRITE_TRUNCATE,
     create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED)
