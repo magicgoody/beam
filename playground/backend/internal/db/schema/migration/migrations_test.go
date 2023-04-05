@@ -49,11 +49,26 @@ func setup() {
 	ctx = context.Background()
 	ctx = context.WithValue(ctx, constants.DatastoreNamespaceKey, "migration")
 	var err error
-	datastoreDb, err = datastore.New(ctx, mapper.NewPrecompiledObjectMapper(), constants.EmulatorProjectId)
+	datastoreDb, err = datastore.New(ctx, mapper.NewPrecompiledObjectMapper(), nil, constants.EmulatorProjectId)
 	if err != nil {
 		panic(err)
 	}
-	appEnvs = environment.NewApplicationEnvs("/app", "", "", "", "../../../../../sdks-emulator.yaml", "../../../../.", "", "", nil, 0, 0)
+	appEnvs = environment.NewApplicationEnvs(
+		"/app",
+		"",
+		"",
+		"",
+		"../../../../../sdks-emulator.yaml",
+		"../../../../.",
+		"",
+		"",
+		"",
+		"",
+		"",
+		nil,
+		0,
+		0,
+	)
 	props, err = environment.NewProperties(appEnvs.PropertyPath())
 	if err != nil {
 		panic(err)

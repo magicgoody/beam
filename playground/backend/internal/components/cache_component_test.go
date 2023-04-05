@@ -56,7 +56,7 @@ func setup() {
 	ctx = context.Background()
 	ctx = context.WithValue(ctx, constants.DatastoreNamespaceKey, "components")
 	cacheService = local.New(ctx)
-	datastoreDb, _ = db.New(ctx, mapper.NewPrecompiledObjectMapper(), constants.EmulatorProjectId)
+	datastoreDb, _ = db.New(ctx, mapper.NewPrecompiledObjectMapper(), nil, constants.EmulatorProjectId)
 	cacheComponent = NewService(cacheService, datastoreDb)
 }
 

@@ -44,13 +44,14 @@ func main() {
 
 	ctx := context.Background()
 	pcMapper := mapper.NewPrecompiledObjectMapper()
-	db, err := datastore.New(ctx, pcMapper, projectId)
+	db, err := datastore.New(ctx, pcMapper, nil, projectId)
 	if err != nil {
 		fmt.Printf("Couldn't create the database client, err: %s \n", err.Error())
 		return
 	}
 
-	err = db.DeleteUnusedSnippets(ctx, int32(diff))
+	retentionPeriod := time.Duration(diff) * time.Hour * 24
+	err = db.DeleteUnusedSnippets(ctx, retentionPeriod)
 	if err != nil {
 		fmt.Printf("Couldn't delete unused code snippets, err: %s \n", err.Error())
 		return
