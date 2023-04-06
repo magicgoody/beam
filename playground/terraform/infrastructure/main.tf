@@ -122,6 +122,7 @@ module "private_dns" {
   private_zones     = [
     "gcr.io",
     "pkg.dev",
-    "cloud.google.com"
+    "cloud.google.com",
+    "cloudfunctions.net"
   ]
 }
