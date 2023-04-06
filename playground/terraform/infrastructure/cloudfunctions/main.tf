@@ -42,6 +42,7 @@ resource "google_cloudfunctions_function" "playground_functions" {
   name                    = local.functions[count.index].name
   description             = local.functions[count.index].description
   entry_point             = local.functions[count.index].entry_point
+  ingress_settings        = "ALLOW_INTERNAL_ONLY"
   runtime                 = "go120"
   source_archive_bucket   = var.gkebucket
   source_archive_object   = "cloudfunction.zip"
@@ -49,8 +50,8 @@ resource "google_cloudfunctions_function" "playground_functions" {
   timeout                 = "540"
   available_memory_mb     = 2048
   service_account_email   = var.service_account_email_cf
-  environment_variables = {
-    GOOGLE_CLOUD_PROJECT = var.project_id
+  environment_variables   = {
+    GOOGLE_CLOUD_PROJECT  = var.project_id
   }
 }
 
