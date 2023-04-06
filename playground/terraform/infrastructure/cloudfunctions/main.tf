@@ -42,7 +42,7 @@ resource "google_cloudfunctions_function" "playground_functions" {
   name                    = local.functions[count.index].name
   description             = local.functions[count.index].description
   entry_point             = local.functions[count.index].entry_point
-  ingress_settings        = "ALLOW_INTERNAL_AND_GCLB"
+  ingress_settings        = "ALLOW_ALL"
   runtime                 = "go120"
   source_archive_bucket   = var.gkebucket
   source_archive_object   = "cloudfunction.zip"
