@@ -66,3 +66,4 @@ jobs:
           version: '${{ env.DATASTORE_EMULATOR_VERSION }}'
       - name: Run PreCommit
         run: ./gradlew playground:backend:precommit
+
