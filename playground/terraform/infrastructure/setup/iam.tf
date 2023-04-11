@@ -57,6 +57,23 @@ resource "google_service_account" "playground_service_account_cf" {
   display_name = "${google_service_account.playground_service_account.account_id}-cf"
 }
 
+resource "google_project_iam_custom_role" "playground_datastore_role" {
+  role_id     = "datastore_role"
+  title       = "Playground Datastore Role"
+  description = "A custom role for Playground datastore"
+  permissions = [
+     "datastore.databases.get",
+     "datastore.databases.getMetadata",
+     "datastore.entities.create",
+     "datastore.entities.get",
+     "datastore.entities.list",
+     "datastore.indexes.get",
+     "datastore.indexes.list",
+     "datastore.namespaces.get",
+     "datastore.namespaces.list",
+  ]
+}
+
 resource "google_project_iam_member" "terraform_service_account_roles" {
   for_each = toset([
     "roles/container.admin", "roles/artifactregistry.reader", "roles/datastore.owner", "roles/redis.admin",
@@ -68,7 +85,7 @@ resource "google_project_iam_member" "terraform_service_account_roles" {
 
 resource "google_project_iam_member" "cloudfunction" {
   for_each = toset([
-    "roles/storage.objectViewer","roles/cloudfunctions.invoker","roles/datastore.user",
+    "roles/storage.objectViewer","roles/cloudfunctions.invoker","roles/datastore.user", google_project_iam_custom_role.playground_datastore_role.name,
   ])
   role    = each.key
   member  = "serviceAccount:${google_service_account.playground_service_account_cf.email}"
