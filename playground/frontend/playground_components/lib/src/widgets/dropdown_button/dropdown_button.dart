@@ -22,6 +22,8 @@ import '../../constants/sizes.dart';
 import '../../theme/theme.dart';
 import '../../util/dropdown_utils.dart';
 
+import '../../constants/sizes.dart';
+
 const int kAnimationDurationInMilliseconds = 80;
 const Offset kAnimationBeginOffset = Offset(0, -0.02);
 const Offset kAnimationEndOffset = Offset.zero;
@@ -128,6 +130,8 @@ class _AppDropdownButtonState extends State<AppDropdownButton>
       widgetWidth: widget.width,
     );
 
+    final child = widget.createDropdown(_close);
+
     return OverlayEntry(
       builder: (context) {
         return Stack(
@@ -157,7 +161,7 @@ class _AppDropdownButtonState extends State<AppDropdownButton>
                         BeamBorderRadius.medium,
                       ),
                     ),
-                    child: widget.createDropdown(_close),
+                    child: child,
                   ),
                 ),
               ),

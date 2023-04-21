@@ -21,9 +21,10 @@ import 'package:playground_components/playground_components.dart';
 
 import '../../components/scaffold.dart';
 import '../../constants/sizes.dart';
+import '../../shortcuts/shortcuts_manager.dart';
 import 'state.dart';
 import 'widgets/content_tree.dart';
-import 'widgets/playground_demo.dart';
+import 'widgets/playground.dart';
 import 'widgets/unit_content.dart';
 
 class TourScreen extends StatelessWidget {
@@ -88,8 +89,8 @@ class _UnitContentWidget extends StatelessWidget {
                 first: UnitContentWidget(tourNotifier),
                 second: tourNotifier.isSnippetLoading
                     ? const Center(child: CircularProgressIndicator())
-                    : PlaygroundDemoWidget(
-                        playgroundController: tourNotifier.playgroundController,
+                    : PlaygroundWidget(
+                        tourNotifier: tourNotifier,
                       ),
               );
       },

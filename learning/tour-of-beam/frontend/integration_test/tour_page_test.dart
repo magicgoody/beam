@@ -29,6 +29,7 @@ import 'package:tour_of_beam/models/module.dart';
 import 'package:tour_of_beam/models/unit.dart';
 import 'package:tour_of_beam/pages/tour/screen.dart';
 import 'package:tour_of_beam/pages/tour/state.dart';
+import 'package:tour_of_beam/pages/tour/widgets/playground.dart';
 import 'package:tour_of_beam/pages/tour/widgets/playground_demo.dart';
 import 'package:tour_of_beam/pages/tour/widgets/unit.dart';
 import 'package:tour_of_beam/pages/tour/widgets/unit_content.dart';
@@ -102,7 +103,7 @@ Future<void> _checkUnitContentLoadsProperly(
   final hasSnippet = _getTourNotifier(wt).isUnitContainsSnippet;
 
   expect(
-    find.byType(PlaygroundDemoWidget),
+    find.byType(PlaygroundWidget),
     hasSnippet ? findsOneWidget : findsNothing,
   );
 

@@ -61,7 +61,9 @@ class TobScaffold extends StatelessWidget {
       body: Column(
         children: [
           Expanded(child: child),
-          const Footer(),
+          Footer(
+            playgroundController: playgroundController,
+          ),
         ],
       ),
     );
