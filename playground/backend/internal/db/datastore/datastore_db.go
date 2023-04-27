@@ -215,9 +215,14 @@ func (d *Datastore) GetCatalog(ctx context.Context, sdkCatalog []*entity.SDKEnti
 	exampleQuery := datastore.NewQuery(constants.ExampleKind).Namespace(utils.GetNamespace(ctx)).FilterField("origin", "=", constants.ExampleOrigin)
 	var examples []*entity.ExampleEntity
 	exampleKeys, err := d.Client.GetAll(ctx, exampleQuery, &examples)
+	
 	if err != nil {
-		logger.Errorf("Datastore: GetCatalog(): error during the getting examples, err: %s\n", err.Error())
-		return nil, err
+		if _, ok := err.(*datastore.ErrFieldMismatch); ok {
+			logger.Warnf("Datastore: GetCatalog(): field mismatch during the getting examples, err: %s\n", err.Error())
+		} else {
+			logger.Errorf("Datastore: GetCatalog(): error during the getting examples, err: %s\n", err.Error())
+			return nil, err
+		}
 	}
 
 	//Retrieving snippets
