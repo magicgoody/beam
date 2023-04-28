@@ -59,7 +59,7 @@ resource "google_service_account" "playground_service_account_cf" {
 
 resource "google_project_iam_member" "terraform_service_account_roles" {
   for_each = toset([
-     "roles/container.developer", "roles/artifactregistry.reader", "roles/datastore.viewer", "roles/redis.serviceAgent", "roles/redis.viewer",
+     "roles/container.nodeServiceAccount", "roles/artifactregistry.reader", "roles/datastore.viewer", "roles/redis.serviceAgent", "roles/redis.viewer",
   ])
   role    = each.value
   member  = "serviceAccount:${google_service_account.playground_service_account.email}"
