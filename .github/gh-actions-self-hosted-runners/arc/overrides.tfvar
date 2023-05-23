@@ -1,0 +1,13 @@
+project_id = "apache-beam-testing"                    # google PROJECT_ID that you want to deploy in
+region = "europe-west3"                                 # GCP region for the network              #add region gke
+zone = "europe-west3-c"                               # GCP zone for the nodes                  #same region gke
+min_main_node_count = "1"                             # Minimal and initial node count for main pool
+max_main_node_count = "5"                             # Maximal node count for main pool
+environment = "mkulatayev"                            # Name of the environment. Used as a prefix like dev- stag- anything-
+ingress_domain = "example.com"                               # FQDN for webhook ingress        #
+organization = "magicgoody"                                  # Github Organization to use runners in       #github accounbt
+repository = "https://github.com/magicgoody/beam"                                   # Repository to use runners in    # my gh repoi
+github_app_id = "mkulatayev_gh_app_id"                              # Github App app_id
+github_app_installation_id = "mkulatayev_gh_app_installation_id"             # Github App install id
+github_app_private_key_path = "mkulatayev_gh_app_private_key"  # Absolute filesystem path to .pem keyfile generated in the Github App
+deploy_webhook = "false"                              # Terraform to deploy the scaling webhook
