@@ -7,7 +7,7 @@ on:
 
 jobs:
     job_PreCommit_Go:
-        runs-on: self-hosted, ubuntu-latest
+        runs-on: [self-hosted, ubuntu-latest]
         name: job_PreCommit_Go
         steps:
 # The checkout step downloads a copy of your repository on the runner.          
