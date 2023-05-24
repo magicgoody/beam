@@ -1,0 +1,23 @@
+name: job_PreCommit_Go
+
+on:
+  pull_request:
+    branches: ['master', 'release-*']
+    paths: ['model/**', 'sdks/go.**', 'release/**']
+
+jobs:
+    job_PreCommit_Go:
+        runs-on: self-hosted, ubuntu-latest
+        name: job_PreCommit_Go
+        steps:
+# The checkout step downloads a copy of your repository on the runner.          
+          - name: Git checkout
+            uses: actions/checkout@v3
+# Install gradle with disabling caching (dependencies, wrapper distributions, local build cache)           
+          - name: Setup Gradle
+            uses: gradle/gradle-build-action@v2
+            with:
+              cache-read-only: false
+# Running a script from the repository              
+          - name: run job_PreCommit_Go script
+            run: ./gradlew :goPreCommit
