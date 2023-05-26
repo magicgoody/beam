@@ -3,7 +3,7 @@ name: job_PreCommit_Go
 on:
   pull_request:
     branches: ['master', 'release-*']
-    paths: ['model/**', 'sdks/go.**', 'release/**']
+    paths: ['model/**', 'sdks/go*', 'release/**']
 
 jobs:
     job_PreCommit_Go:
