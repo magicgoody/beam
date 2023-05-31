@@ -15,10 +15,15 @@ jobs:
             uses: actions/checkout@v3
 # Install Java
           - name: Install Java
-            uses: actions/setup-java@v3
+            uses: actions/setup-java@v3.8.0
             with:
-              distribution: 'temurin'
-              java-version: '17'
+              distribution: 'zulu'
+              java-version: '8'
+# Install Go
+          - name: Install Go
+            uses: actions/setup-go@v3
+            with:
+              go-version: '1.20'
 # Install gradle with disabling caching (dependencies, wrapper distributions, local build cache)           
           - name: Setup Gradle
             uses: gradle/gradle-build-action@v2
