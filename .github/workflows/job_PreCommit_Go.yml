@@ -1,14 +1,14 @@
-name: job_PreCommit_Go
+name: beam_PreCommit_Go_Commit
 
 on:
   pull_request:
-    branches: ['master', 'release-*']
+    branches: ['master']
     paths: ['model/**', 'sdks/go.**', 'release/**']
 
 jobs:
-    job_PreCommit_Go:
+  beam_PreCommit_Go_Commit:
         runs-on: self-hosted
-        name: job_PreCommit_Go
+        name: beam_PreCommit_Go_Commit
         steps:
 # The checkout step downloads a copy of your repository on the runner.          
           - name: Git checkout
@@ -30,5 +30,5 @@ jobs:
             with:
               cache-read-only: false
 # Running a script from the repository              
-          - name: run job_PreCommit_Go script
+          - name: run goPreCommit script
             run: ./gradlew :goPreCommit
