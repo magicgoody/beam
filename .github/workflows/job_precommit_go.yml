@@ -3,7 +3,7 @@ name: job_PreCommit_Go
 on:
   pull_request:
     branches: ['master', 'release-*']
-    paths: ['model/**', 'sdks/go*', 'release/**']
+    paths: ['model/**', 'sdks/go.**', 'release/**']
 
 jobs:
     job_PreCommit_Go:
@@ -13,6 +13,12 @@ jobs:
 # The checkout step downloads a copy of your repository on the runner.          
           - name: Git checkout
             uses: actions/checkout@v3
+# Install Java
+          - name: Install Java
+            uses: actions/setup-java@v3
+            with:
+              distribution: 'temurin'
+              java-version: '17'
 # Install gradle with disabling caching (dependencies, wrapper distributions, local build cache)           
           - name: Setup Gradle
             uses: gradle/gradle-build-action@v2
