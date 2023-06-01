@@ -108,7 +108,7 @@ class CommonJobProperties {
       credentialsBinding {
         string("CODECOV_TOKEN", "beam-codecov-token")
         string("COVERALLS_REPO_TOKEN", "beam-coveralls-token")
-        string("GRADLE_ENTERPRISE_ACCESS_KEY", "GE_ACCESS_TOKEN")
+        usernamePassword("GRADLE_ENTERPRISE_CACHE_USERNAME", "GRADLE_ENTERPRISE_CACHE_PASSWORD", "beam_cache_node_credentials")
       }
       timestamps()
       colorizeOutput()
