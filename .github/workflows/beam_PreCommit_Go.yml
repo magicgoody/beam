@@ -36,7 +36,7 @@ jobs:
   beam_PreCommit_Go_Phrase:
         runs-on: [self-hosted, ubuntu-20.04]
         name: beam_PreCommit_Go_Phrase
-        if: contains(github.event.comment.body, 'Run_Go_PreCommit')
+        if: github.event.issue.pull_request && contains(github.event.comment.body, 'Run Go PreCommit')
         steps:  
           - name: Git checkout
             uses: actions/checkout@v3
