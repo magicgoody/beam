@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 * * * *'
   pull_request:   
-    branches: ['master']
+    branches: ['**']
     paths: ['model/**', 'sdks/go.**', 'release/**']
   issue_comment:
     types: [created]
