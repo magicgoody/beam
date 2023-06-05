@@ -54,5 +54,5 @@ jobs:
             with:
               cache-read-only: false
           - name: run goPreCommit script
-            if: contains(github.event.comment.body, 'Run Go PreCommit')
+            if: contains(github.event.comment.body, 'Run_Go_PreCommit')
             run: ./gradlew :goPreCommit
