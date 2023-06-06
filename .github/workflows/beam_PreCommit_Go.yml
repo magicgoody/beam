@@ -59,3 +59,4 @@ jobs:
         if: contains(github.event.comment.body, 'Run Go PreCommit')    
       - name: run goPreCommit script
         run: ./gradlew :goPreCommit
+# test
