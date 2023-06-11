@@ -5,8 +5,9 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
   pull_request:
-    branches: ['master', 'release-*']
-    paths: ['*.md?', '*.build.gradle?']
+    branches: ['**']
+#    branches: ['master', 'release-*']
+    paths: ['*.md', '*.build.gradle']
   issue_comment:
     types: [created]
   schedule:
