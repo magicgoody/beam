@@ -5,8 +5,7 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
   pull_request:
-    branches: ['**']
-#    branches: ['master', 'release-*']
+    branches: ['master', 'release-*']
     paths: ['*.md', '*.build.gradle']
   issue_comment:
     types: [created]
@@ -30,10 +29,6 @@ jobs:
             uses: actions/setup-python@v4
             with:
               python-version: '3.8'
-        #   - name: Install Go
-        #     uses: actions/setup-go@v3
-        #     with:
-        #       go-version: '1.20'
           - name: Setup Gradle
             uses: gradle/gradle-build-action@v2
             with:
