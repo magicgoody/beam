@@ -49,4 +49,4 @@ jobs:
             with:
               cache-read-only: false
           - name: run goPortablePreCommit script
-            run: ./gradlew :goPortablePreCommit --warning-mode=all
+            run: ./gradlew :goPortablePreCommit --stacktrace
