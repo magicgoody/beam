@@ -25,27 +25,27 @@ on:
     branches: ['master', 'release-*']
   pull_request:
     branches: ['master', 'release-*']
-    paths: ['sdks/python/apache_beam/runners/interactive/extensions/**']
+    paths: ['model/**']
   issue_comment:
     types: [created]
   schedule:
     - cron: '* */6 * * *'
 
 jobs:
-  beam_PreCommit_Typescript:
-    if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Typescript PreCommit'}} || ${{github.event.schedule}}
-    runs-on: [self-hosted]
-    name: beam_PreCommit_Typescript
-    steps:
-      - name: Git checkout
-        uses: actions/checkout@v3
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          cache-read-only: false
-      - name: run typescriptPreCommit script
-        run: ./gradlew :typescriptPreCommit
+    beam_PreCommit_Typescript:
+        if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Typescript PreCommit'}} || ${{github.event.schedule}}
+        runs-on: [self-hosted]
+        name: beam_PreCommit_Typescript
+        steps:
+          - name: Git checkout
+            uses: actions/checkout@v3
+          - name: Install Python
+            uses: actions/setup-python@v4
+            with:
+              python-version: '3.8'
+          - name: Setup Gradle
+            uses: gradle/gradle-build-action@v2
+            with:
+              cache-read-only: false
+          - name: run typescriptPreCommit script
+            run: ./gradlew :typescriptPreCommit
