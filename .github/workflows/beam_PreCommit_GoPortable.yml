@@ -32,30 +32,44 @@ jobs:
         if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run GoPortable PreCommit'}} || ${{github.event.schedule}}
         runs-on: [self-hosted, ubuntu-20.04]
         name: beam_PreCommit_GoPortable
-        steps:       
-          - name: Git checkout
-            uses: actions/checkout@v3
-          - name: Install Java
-            uses: actions/setup-java@v3.8.0
-            with:
-              distribution: 'zulu'
-              java-version: '8'
-          - name: Install Go
-            uses: actions/setup-go@v3
+        steps:
+          - uses: actions/checkout@v3
+          - uses: actions/setup-go@v3
             with:
               go-version: '1.20'
-          - name: Install Python
-            uses: actions/setup-python@v4
+          - uses: actions/setup-python@v4
             with:
               python-version: '3.8'
-          - name: Set up Docker Buildx
-            uses: docker/setup-buildx-action@v2
+          - name: "Installing local env dependencies"
+            run: "sudo ./local-env-setup.sh"
+            id: local_env_install_ubuntu
+          - name: "Gradle check"
+            run: "./gradlew checkSetup"
+            id: local_env_install_gradle_check_ubuntu 
+          # - name: Git checkout
+          #   uses: actions/checkout@v3
+          # - name: Install Java
+          #   uses: actions/setup-java@v3.8.0
+          #   with:
+          #     distribution: 'zulu'
+          #     java-version: '8'
+          # - name: Install Go
+          #   uses: actions/setup-go@v3
+          #   with:
+          #     go-version: '1.20'
+          # - name: Install Python
+          #   uses: actions/setup-python@v4
+          #   with:
+          #     python-version: '3.8'
+          # - name: Set up Docker Buildx
+          #   uses: docker/setup-buildx-action@v2
           # - name: Build and push
           #   uses: docker/build-push-action@v4
-          - name: Setup Gradle
-            uses: gradle/gradle-build-action@v2
+          # - name: Setup Gradle
+          #   uses: gradle/gradle-build-action@v2
             # with:
             #   gradle-version: 7.5.1
             #   cache-read-only: false
           - name: run goPortablePreCommit script
             run: ./gradlew :goPortablePreCommit
+
