@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: SQL Precommit Job
+name: beam_PreCommit_SQL
 
 on:
   push:
@@ -24,9 +24,9 @@ on:
       - 'sdks/java/extensions/sql/**'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  beam_PreCommit_SQL:
+    runs-on: [self-hosted, ubuntu-20.04]
+    name: beam_PreCommit_SQL
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
