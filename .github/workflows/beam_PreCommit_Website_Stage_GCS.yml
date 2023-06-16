@@ -21,7 +21,7 @@ on:
     branches: ['master', 'release-*']
     paths: ['website/**']
   pull_request:
-    branches: ['master', 'release-*']
+    # branches: ['master', 'release-*']
     paths: ['website/**']
   issue_comment:
     types: [created]
