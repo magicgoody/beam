@@ -37,13 +37,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-        #   cache: 'maven'
-    #   - name: Setup Maven Action
-    #     uses: s4u/setup-maven-action@v1.2.1
-    #     with:
-    #       java-version: 8
-    #       maven-version: 3.8.2
-      
       - name: Remove default github maven configuration
         # This step is a workaround to avoid a decryption issue of Beam's
         # net.linguica.gradle.maven.settings plugin and github's provided maven
@@ -60,7 +53,7 @@ jobs:
           path: '**/build/test-results/**/*.xml'
 
       - name: Run SpotBugs
-        run: ./gradlew spotbugsMain --console=plain
+        run: ./gradlew spotbugs --console=plain
         continue-on-error: true
 
       - name: Archive SpotBugs Results
@@ -73,12 +66,23 @@ jobs:
         run: ./gradlew errorProneMain --console=plain
         continue-on-error: true
 
-      - name: Run JaCoCo Code Coverage
-        run: ./gradlew jacocoTestReport --console=plain
+      - name: Run Coverage
+        run: ./gradlew testCoverage  
         continue-on-error: true
 
-      - name: Archive JaCoCo Code Coverage Report
-        uses: actions/upload-artifact@v3
+      - name: Jacoco Report
+        uses: madrapps/jacoco-report@v1.3
         with:
-          name: JaCoCo Code Coverage Report
-          path: '**/build/jacoco/*.exec'
+          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+
+    #   - name: Run JaCoCo Code Coverage
+    #     run: ./gradlew jacocoTestReport --console=plain
+    #     continue-on-error: true
+
+    #   - name: Archive JaCoCo Code Coverage Report
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: JaCoCo Code Coverage Report
+    #       path: '**/build/jacoco/*.exec'
