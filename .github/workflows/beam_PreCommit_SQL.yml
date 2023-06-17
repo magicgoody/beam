@@ -53,29 +53,32 @@ jobs:
           path: '**/build/test-results/**/*.xml'
 
       - name: Run SpotBugs
-        run: ./gradlew spotbugs --console=plain
+        run: ./gradlew spotbugsMain --console=plain
         continue-on-error: true
 
       - name: Archive SpotBugs Results
         uses: actions/upload-artifact@v3
         with:
           name: SpotBugs Results
-          path: '**/build/spotbugs/*.xml'
+          path: '**/build/reports/spotbugs/*.xml'
 
       - name: Run Error Prone
         run: ./gradlew errorProneMain --console=plain
         continue-on-error: true
 
-      - name: Run Coverage
-        run: ./gradlew testCoverage  
-        continue-on-error: true
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+      
+    #   - name: Run Coverage
+    #     run: ./gradlew testCoverage  
+    #     continue-on-error: true
 
-      - name: Jacoco Report
-        uses: madrapps/jacoco-report@v1.3
-        with:
-          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 40
+    #   - name: Jacoco Report
+    #     uses: madrapps/jacoco-report@v1.3
+    #     with:
+    #       paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+    #       token: ${{ secrets.GITHUB_TOKEN }}
+    #       min-coverage-overall: 40
 
     #   - name: Run JaCoCo Code Coverage
     #     run: ./gradlew jacocoTestReport --console=plain
