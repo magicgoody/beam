@@ -67,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: SpotBugs Results
-          path: '**/build/reports/spotbugs/*.xml'
+          path: '**/build/spotbugs/*.xml'
 
       - name: Run Error Prone
         run: ./gradlew errorProneMain --console=plain
