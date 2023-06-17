@@ -64,7 +64,7 @@ jobs:
         continue-on-error: true
 
       - name: Archive SpotBugs Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: SpotBugs Results
           path: '**/build/reports/spotbugs/*.xml'
@@ -74,10 +74,11 @@ jobs:
         continue-on-error: true
 
       - name: Run JaCoCo Code Coverage
-        run: ./gradlew jacocoTestReport
+        run: ./gradlew jacocoTestReport --console=plain
+        continue-on-error: true
 
       - name: Archive JaCoCo Code Coverage Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: JaCoCo Code Coverage Report
           path: '**/build/jacoco/*.exec'
