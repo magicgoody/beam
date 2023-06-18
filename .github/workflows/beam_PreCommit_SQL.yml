@@ -1,0 +1,93 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: beam_PreCommit_SQL
+
+on:
+  push:
+    paths:
+      - 'sdks/java/extensions/sql/**'
+  pull_request:
+    paths:
+      - 'sdks/java/extensions/sql/**'
+
+jobs:
+  beam_PreCommit_SQL:
+    runs-on: [ubuntu-local]
+    # runs-on: [self-hosted, ubuntu-20.04]
+    name: beam_PreCommit_SQL
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3.8.0
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+      - name: Remove default github maven configuration
+        # This step is a workaround to avoid a decryption issue of Beam's
+        # net.linguica.gradle.maven.settings plugin and github's provided maven
+        # settings.xml file
+        run: rm ~/.m2/settings.xml
+      - name: Build and Test
+        run: |
+          ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
+
+      - name: Archive JUnit Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: JUnit Test Results
+          path: '**/build/test-results/**/*.xml'
+
+      - name: Run SpotBugs
+        run: ./gradlew spotbugsMain --console=plain
+        continue-on-error: true
+
+      - name: Archive SpotBugs Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: SpotBugs Results
+          path: '**/build/reports/spotbugs/*.xml'
+
+      - name: Run Error Prone
+        run: ./gradlew errorProneMain --console=plain
+        continue-on-error: true
+
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+          with:
+            jacoco-csv-file:: 
+      
+    #   - name: Run Coverage
+    #     run: ./gradlew testCoverage  
+    #     continue-on-error: true
+
+    #   - name: Jacoco Report
+    #     uses: madrapps/jacoco-report@v1.3
+    #     with:
+    #       paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+    #       token: ${{ secrets.GITHUB_TOKEN }}
+    #       min-coverage-overall: 40
+
+    #   - name: Run JaCoCo Code Coverage
+    #     run: ./gradlew jacocoTestReport --console=plain
+    #     continue-on-error: true
+
+    #   - name: Archive JaCoCo Code Coverage Report
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: JaCoCo Code Coverage Report
+    #       path: '**/build/jacoco/*.exec'
