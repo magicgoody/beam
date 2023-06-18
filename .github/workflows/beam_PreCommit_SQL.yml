@@ -25,8 +25,8 @@ on:
 
 jobs:
   beam_PreCommit_SQL:
-    # runs-on: [ubuntu-local]
-    runs-on: [self-hosted, ubuntu-20.04]
+    runs-on: [ubuntu-local]
+    # runs-on: [self-hosted, ubuntu-20.04]
     name: beam_PreCommit_SQL
     steps:
       - name: Checkout repository
@@ -43,30 +43,31 @@ jobs:
         # settings.xml file
         run: rm ~/.m2/settings.xml
 
-      # - name: Build and Test
-      #   run: |
-      #     ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
+      - name: Build and Test
+        run: |
+          ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
 
-      # - name: Archive JUnit Test Results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: JUnit Test Results
-      #     path: '**/build/test-results/**/*.xml'
+      - name: Archive JUnit Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: JUnit Test Results
+          path: '**/build/test-results/**/*.xml'
 
-      # - name: Run SpotBugs
-      #   run: ./gradlew spotbugsMain --console=plain
-      #   continue-on-error: true
+      - name: Run SpotBugs
+        run: ./gradlew check
+        # run: ./gradlew spotbugsMain --console=plain
+        continue-on-error: true
 
-      # - name: Archive SpotBugs Results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: SpotBugs Results
-      #     path: '**/build/reports/spotbugs/*.xml'
+      - name: Archive SpotBugs Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: SpotBugs Results
+          path: '**/build/reports/spotbugs/*.xml'
 
       - name: Run Tests
         run: ./gradlew test
         continue-on-error: true
-        
+
       - name: Run Test Coverage
         run: ./gradlew jacocoTestReport
 
@@ -75,6 +76,8 @@ jobs:
         with:
           generate-branches-badge: true
           jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+
+      
 
 
 
