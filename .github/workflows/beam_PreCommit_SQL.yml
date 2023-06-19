@@ -54,15 +54,15 @@ jobs:
           path: '**/build/test-results/**/*.xml'
 
       - name: Run SpotBugs
-        run: ./gradlew check
-        # run: ./gradlew spotbugsMain --console=plain
+        # run: ./gradlew check
+        run: ./gradlew spotbugsMain --console=plain
         continue-on-error: true
 
       - name: Archive SpotBugs Results
         uses: actions/upload-artifact@v3
         with:
           name: SpotBugs Results
-          path: '**/build/reports/spotbugs/*.xml'
+          path: '**/build/reports/spotbugs/*.html'
 
       - name: Run Tests
         run: ./gradlew test
