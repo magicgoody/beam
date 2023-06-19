@@ -85,11 +85,11 @@ jobs:
       - name: Run Test Coverage
         run: ./gradlew jacocoTestReport
 
-      - name: Generate JaCoCo Badge
-        uses: cicirello/jacoco-badge-generator@v2
-        with:
-          generate-branches-badge: true
-          jacoco-csv-file: '**/jacocoTestReport.csv'
+      # - name: Generate JaCoCo Badge
+      #   uses: cicirello/jacoco-badge-generator@v2
+      #   with:
+      #     generate-branches-badge: true
+      #     jacoco-csv-file: '**/jacocoTestReport.csv'
 
     
       - name: Add coverage to PR
@@ -101,7 +101,6 @@ jobs:
           min-coverage-overall: 40
           min-coverage-changed-files: 60
           
-
 
 
       # - name: Run Error Prone
