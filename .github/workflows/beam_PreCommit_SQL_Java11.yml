@@ -59,7 +59,7 @@ jobs:
           channel: 'stable'
 
       - name: Build and run precommit
-        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PcompileAndRunTestsWithJava11 -PskipCheckerFramework "-Pjava11Home=${properties.JAVA_11_HOME}"
+        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PcompileAndRunTestsWithJava11 -PskipCheckerFramework -Pjava11Home=$JAVA_HOME
 
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
