@@ -36,7 +36,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3.8.0
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '11'
 
       - name: Remove default github maven configuration
@@ -66,6 +66,10 @@ jobs:
         with:
           name: JUnit Test Results
           path: '**/build/test-results/**/*.xml'
+
+      - name: Run Error Prone
+        run: ./gradlew errorProneMain --console=plain
+        continue-on-error: true
 
       - name: Run SpotBugs
         run: ./gradlew spotbugsMain --console=plain
