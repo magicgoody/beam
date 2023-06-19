@@ -43,13 +43,17 @@ jobs:
         # settings.xml file
         run: rm ~/.m2/settings.xml
 
-
-      - name: 'Cache Flutter Dependencies'
-        uses: actions/cache@v3
+      - name: Install Go
+        uses: actions/setup-go@v3
         with:
-          path: /opt/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-3.10.2
-          restore-keys: ${{ runner.OS }}-flutter-install-cache
+          go-version: '1.20'
+
+      # - name: 'Cache Flutter Dependencies'
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: /opt/hostedtoolcache/flutter
+      #     key: ${{ runner.OS }}-flutter-install-cache-3.10.2
+      #     restore-keys: ${{ runner.OS }}-flutter-install-cache
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
