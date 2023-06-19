@@ -36,7 +36,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3.8.0
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '11'
 
       - name: Remove default github maven configuration
@@ -59,7 +59,7 @@ jobs:
           channel: 'stable'
 
       - name: Build and run precommit
-        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PcompileAndRunTestsWithJava11 -PskipCheckerFramework
+        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PcompileAndRunTestsWithJava11 -PskipCheckerFramework "-Pjava11Home=${properties.JAVA_11_HOME}"
 
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
