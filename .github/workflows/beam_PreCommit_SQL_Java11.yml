@@ -25,7 +25,7 @@ on:
       - 'sdks/java/extensions/sql/**'
 
 jobs:
-    beam_PreCommit_SQL_Java11:
+  beam_PreCommit_SQL_Java11:
     # runs-on: [ubuntu-local]
     runs-on: [self-hosted, ubuntu-20.04]
     name: beam_PreCommit_SQL_Java11
