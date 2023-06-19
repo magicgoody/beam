@@ -43,32 +43,40 @@ jobs:
         # settings.xml file
         run: rm ~/.m2/settings.xml
 
+
+      - name: 'Cache Flutter Dependencies'
+        uses: actions/cache@v3
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ runner.OS }}-flutter-install-cache-3.10.2
+          restore-keys: ${{ runner.OS }}-flutter-install-cache
+
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.2'
           channel: 'stable'
 
-      - name: Build and Test
-        run: |
-          ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
+      # - name: Build and Test
+      #   run: |
+      #     ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
 
-      - name: Archive JUnit Test Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: JUnit Test Results
-          path: '**/build/test-results/**/*.xml'
+      # - name: Archive JUnit Test Results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: JUnit Test Results
+      #     path: '**/build/test-results/**/*.xml'
 
-      - name: Run SpotBugs
-        # run: ./gradlew check
-        run: ./gradlew spotbugsMain --console=plain
-        continue-on-error: true
+      # - name: Run SpotBugs
+      #   # run: ./gradlew check
+      #   run: ./gradlew spotbugsMain --console=plain
+      #   continue-on-error: true
 
-      - name: Archive SpotBugs Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: SpotBugs Results
-          path: '**/build/reports/spotbugs/*.html'
+      # - name: Archive SpotBugs Results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: SpotBugs Results
+      #     path: '**/build/reports/spotbugs/*.html'
 
       - name: Run Tests
         run: ./gradlew test
