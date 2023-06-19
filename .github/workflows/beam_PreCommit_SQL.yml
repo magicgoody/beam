@@ -43,6 +43,12 @@ jobs:
         # settings.xml file
         run: rm ~/.m2/settings.xml
 
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.2'
+          channel: 'stable'
+
       - name: Build and Test
         run: |
           ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
