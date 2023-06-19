@@ -80,20 +80,10 @@ jobs:
       #     name: SpotBugs Results
       #     path: '**/build/reports/spotbugs/*.html'
 
-      - name: Run Coverage
-        run: ./gradlew testCoverage
 
-      - name: Add coverage to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.3
-        with:
-          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 40
-          min-coverage-changed-files: 60
-
-      # - name: Run Test Coverage
-      #   run: ./gradlew jacocoTestReport
+          
+      - name: Run Test Coverage
+        run: ./gradlew jacocoTestReport
 
       - name: Generate JaCoCo Badge
         uses: cicirello/jacoco-badge-generator@v2
@@ -102,7 +92,15 @@ jobs:
           jacoco-csv-file: '**/jacocoTestReport.csv'
 
     
-
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.3
+        with:
+          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
+          
 
 
 
