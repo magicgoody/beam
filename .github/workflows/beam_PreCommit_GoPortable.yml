@@ -33,31 +33,25 @@ jobs:
         runs-on: [self-hosted, ubuntu-20.04]
         name: beam_PreCommit_GoPortable
         steps:       
-          # - name: Git checkout
-          #   uses: actions/checkout@v3
-          # - name: Install Java
-          #   uses: actions/setup-java@v3.8.0
-          #   with:
-          #     distribution: 'zulu'
-          #     java-version: '8'
-          # - name: Install Go
-          #   uses: actions/setup-go@v3
-          #   with:
-          #     go-version: '1.20'
-          # - name: Install Python
-          #   uses: actions/setup-python@v4
-          #   with:
-          #     python-version: '3.8'
+          - name: Git checkout
+            uses: actions/checkout@v3
+          - name: Install Java
+            uses: actions/setup-java@v3.8.0
+            with:
+              distribution: 'zulu'
+              java-version: '8'
+          - name: Install Go
+            uses: actions/setup-go@v3
+            with:
+              go-version: '1.20'
+          - name: Install Python
+            uses: actions/setup-python@v4
+            with:
+              python-version: '3.8'
+          - name: Set up QEMU
+            uses: docker/setup-qemu-action@v2
           - name: Set up Docker Buildx
-            run: | 
-              sudo apt-get update --yes
-              sudo apt-get install ca-certificates curl gnupg --yes
-              sudo install -m 0755 -d /etc/apt/keyrings
-              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-              sudo chmod a+r /etc/apt/keyrings/docker.gpg
-              sudo apt-get update --yes
-              sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin --yes
-            # uses: docker/setup-buildx-action@v2
+            uses: docker/setup-buildx-action@v2
           - name: Setup Gradle
             uses: gradle/gradle-build-action@v2
             with:
