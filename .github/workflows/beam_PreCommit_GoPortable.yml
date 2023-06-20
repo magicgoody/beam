@@ -55,7 +55,7 @@ jobs:
           #   with:
           #     cache-read-only: false
           - name: local env
-            run: ./start-build-env.sh
+            run: sudo ./start-build-env.sh
           - name: clean task
             run: ./gradlew clean :sdks:go:test:ulrValidatesRunner
           - name: run goPortablePreCommit script
