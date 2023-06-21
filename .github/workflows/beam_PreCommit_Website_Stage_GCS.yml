@@ -48,7 +48,11 @@ jobs:
           - name: Install Python
             uses: actions/setup-python@v4
             with:
-              python-version: '3.8'  
+              python-version: '3.8'
+          - name: Set up Cloud SDK
+            uses: google-github-actions/setup-gcloud@v1
+            # with:
+            #   version: '>= 363.0.0'
           - name: run websitePreCommit script
             run: ./gradlew :website:stageWebsite
           - name: Publish website description
