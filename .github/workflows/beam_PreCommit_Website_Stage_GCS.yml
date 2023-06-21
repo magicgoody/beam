@@ -46,10 +46,7 @@ jobs:
             with:
               cache-read-only: false
           - name: run websitePreCommit script
-            run: ./gradlew :websitePreCommit
+            run: ./gradlew :website:stageWebsite
           - name: Publish website description
             run: |
               echo "Website published to http://${gcs_bucket}.storage.googleapis.com/${baseUrl}/index.html"
-          - name: task
-            run: ./gradlew :stageWebsite
-              
