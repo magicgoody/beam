@@ -49,5 +49,5 @@ jobs:
             run: ./gradlew :websitePreCommit
           - name: Publish website description
             run: |
-              echo "Website published to $website_url"
-              "Website published to http://${gcs_bucket}."+"storage.googleapis.com/${baseUrl}/index.html"
+              echo "Website published to http://${gcs_bucket}.storage.googleapis.com/${baseUrl}/index.html"
+              
