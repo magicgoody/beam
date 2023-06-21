@@ -45,6 +45,10 @@ jobs:
             uses: gradle/gradle-build-action@v2
             with:
               cache-read-only: false
+          - name: Install Python
+            uses: actions/setup-python@v4
+            with:
+              python-version: '3.8'  
           - name: run websitePreCommit script
             run: ./gradlew :website:stageWebsite
           - name: Publish website description
