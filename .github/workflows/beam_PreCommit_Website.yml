@@ -47,4 +47,4 @@ jobs:
             with:
               cache-read-only: false
           - name: run websitePreCommit script
-            run: ./gradlew :websitePreCommit -Dorg.gradle.debug=true --no-daemon
+            run: ./gradlew :websitePreCommit --debug
