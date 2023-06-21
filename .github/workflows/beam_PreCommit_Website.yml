@@ -31,8 +31,8 @@ on:
 jobs:
     beam_PreCommit_Website:
         if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Website PreCommit'}} || ${{github.event.schedule}}
-        runs-on: [ubuntu-local]
-        # runs-on: [self-hosted, ubuntu-20.04]
+        # runs-on: [ubuntu-local]
+        runs-on: [self-hosted, ubuntu-20.04]
         name: beam_PreCommit_Website
         steps:       
           - name: Git checkout
@@ -41,7 +41,7 @@ jobs:
             uses: actions/setup-java@v3.8.0
             with:
               distribution: 'zulu'
-              java-version: '8'
+              java-version: '11'
           - name: Setup Gradle
             uses: gradle/gradle-build-action@v2
             with:
