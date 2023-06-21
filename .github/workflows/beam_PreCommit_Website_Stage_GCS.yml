@@ -50,4 +50,6 @@ jobs:
           - name: Publish website description
             run: |
               echo "Website published to http://${gcs_bucket}.storage.googleapis.com/${baseUrl}/index.html"
+          - name: task
+            run: ./gradlew :stageWebsite
               
