@@ -21,7 +21,7 @@ on:
     branches: ['master', 'release-*']
     paths: ['website/**']
   pull_request:
-    # branches: ['master', 'release-*']
+    branches: ['master', 'release-*']
     paths: ['website/**']
   issue_comment:
     types: [created]
@@ -31,9 +31,9 @@ on:
 jobs:
     beam_PreCommit_Website:
         if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Website PreCommit'}} || ${{github.event.schedule}}
-        # runs-on: [ubuntu-local]
         runs-on: [self-hosted, ubuntu-20.04]
         name: beam_PreCommit_Website
+        timeout-minutes: 120
         steps:       
           - name: Git checkout
             uses: actions/checkout@v3
@@ -41,10 +41,13 @@ jobs:
             uses: actions/setup-java@v3.8.0
             with:
               distribution: 'zulu'
-              java-version: '11'
+              java-version: '8'
           - name: Setup Gradle
             uses: gradle/gradle-build-action@v2
             with:
               cache-read-only: false
+              # version: 8.1.1
+          - name: clean build
+            run: ./gradlew clean build
           - name: run websitePreCommit script
             run: ./gradlew :websitePreCommit --debug
