@@ -42,12 +42,13 @@ jobs:
             with:
               distribution: 'zulu'
               java-version: '8'
-          - name: Setup Gradle
-            uses: gradle/gradle-build-action@v2
-            with:
-              cache-read-only: false
-          - name: stop gradle
-            run: gradlew --stop
+              cache: 'gradle'
+          # - name: Setup Gradle
+          #   uses: gradle/gradle-build-action@v2
+          #   with:
+          #     cache-read-only: false
+          # - name: stop gradle
+          #   run: gradlew --stop
             # run: find ~/.gradle -type f -name "*.lock" -delete
               # gradle-version: 7.5.1
           # - name: Set up Docker Buildx
