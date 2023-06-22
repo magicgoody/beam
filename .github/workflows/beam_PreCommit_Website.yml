@@ -48,6 +48,6 @@ jobs:
               cache-read-only: false
               # version: 8.1.1
           - name: clean build
-            run: ./gradlew clean build
+            run: ./gradlew clean
           - name: run websitePreCommit script
             run: ./gradlew :websitePreCommit --debug
