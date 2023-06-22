@@ -36,6 +36,10 @@ jobs:
         name: beam_PreCommit_Website
         timeout-minutes: 120
         steps:       
+          - name: add dns
+            run: |
+              # sudo rm -f /etc/resolv.conf
+              sudo echo "nameserver 8.8.8.8" >>/etc/resolv.conf
           - name: Git checkout
             uses: actions/checkout@v3
           - name: Install Java
@@ -54,10 +58,7 @@ jobs:
             with:
               gradle-version: 7.5.1
               cache-read-only: false
-          - name: add dns
-            run: |
-              sudo rm -f /etc/resolv.conf
-              sudo echo "nameserver 8.8.8.8" >>/etc/resolv.conf    
+              
           # - name: stop gradle
           #   run: gradlew --stop
             # run: find ~/.gradle -type f -name "*.lock" -delete
