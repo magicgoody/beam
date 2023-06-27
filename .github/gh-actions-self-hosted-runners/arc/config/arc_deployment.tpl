@@ -32,8 +32,8 @@ spec:
       env: []
       resources:
         limits:
-          cpu: "8.0"
+          cpu: "1.0"
           memory: "32Gi"
         requests:
-          cpu: "4.0"
-          memory: "16Gi"
+          cpu: "0.5"
+          memory: "8Gi"

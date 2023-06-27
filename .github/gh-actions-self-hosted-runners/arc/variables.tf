@@ -33,21 +33,21 @@ variable "min_main_node_count" {
 }
 variable "max_main_node_count" {
     description = "Maximal node count for GKE"
-    default = "2"
+    default = "1"
 }
 variable "max_main_replicas" {
     description = "Maximal replicas for Action Runners"
-    default = "2"
+    default = "10"
   
 }
 variable "min_main_replicas" {
     description = "Minimal replicas for Action Runners"
-    default = "1"
+    default = "10"
   
 }
 variable machine_type {
     description = "Machine type to use for runner Node Pool"
-    default = "e2-standard-16"
+    default = "n1-highmem-16"
 }
 variable "environment" {
     description = "name of environment"
