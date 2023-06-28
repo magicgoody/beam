@@ -24,16 +24,13 @@ spec:
   template:
     spec:
       image: summerwind/actions-runner:v2.304.0-ubuntu-20.04-30355f7
-      organization: ${organization}
-      group: "${group}"
+      repository: magicgoody/beam
+#      group: "${group}"
       labels:
         - "ubuntu-20.04"
         - "self-hosted"
       env: []
       resources:
-        limits:
-          cpu: "4.0"
-          memory: "8Gi"
         requests:
           cpu: "500m"
           memory: "500Mi"
