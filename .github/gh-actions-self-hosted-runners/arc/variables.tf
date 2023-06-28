@@ -47,7 +47,7 @@ variable "min_main_replicas" {
 }
 variable machine_type {
     description = "Machine type to use for runner Node Pool"
-    default = "n1-highmem-16"
+    default = "e2-standard-32"
 }
 variable "environment" {
     description = "name of environment"
