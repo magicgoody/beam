@@ -31,7 +31,7 @@ on:
 
 jobs:
   beam_PreCommit_SQL:
-    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
+    # if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
     runs-on: [self-hosted, ubuntu-20.04]
     name: "PreCommit SQL"
     steps:
