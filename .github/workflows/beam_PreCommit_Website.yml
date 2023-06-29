@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: beam_PreCommit_Website
+name: beam_PreCommit_Website_Stage_GCS
 
 on:
   push:
@@ -21,7 +21,7 @@ on:
     branches: ['master', 'release-*']
     paths: ['website/**']
   pull_request:
-    branches: ['master', 'release-*']
+    # branches: ['master', 'release-*']
     paths: ['website/**']
   issue_comment:
     types: [created]
@@ -29,21 +29,24 @@ on:
     - cron: '* */6 * * *'
 
 jobs:
-    beam_PreCommit_Website:
-        if: ${{github.event.issue.pull_request}} || ${{github.event.comment.body == 'Run Website PreCommit'}} || ${{github.event.schedule}}
+    beam_PreCommit_Website_Stage_GCS:
+        if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run Website_Stage_GCS PreCommit'
         runs-on: [self-hosted, ubuntu-20.04]
-        name: beam_PreCommit_Website
-        steps:       
+        name: "PreCommit Website Stage GCS"
+        steps:
           - name: Git checkout
             uses: actions/checkout@v3
-          - name: Install Java
-            uses: actions/setup-java@v3.8.0
+          - name: Setup self-hosted
+            uses: ./.github/actions/setup-self-hosted-action
             with:
-              distribution: 'zulu'
-              java-version: '8'
+              requires-py-37: false
+              requires-py-39: false
+              requires-go: false
           - name: Setup Gradle
             uses: gradle/gradle-build-action@v2
             with:
               cache-read-only: false
-          - name: run websitePreCommit script
-            run: ./gradlew :websitePreCommit
+          - name: Set up Cloud SDK
+            uses: google-github-actions/setup-gcloud@v1
+          - name: run website_stageWebsite script
+            run: ./gradlew :website:stageWebsite
