@@ -17,68 +17,62 @@ name: beam_PreCommit_SQL
 
 on:
   push:
-    paths:
-      - 'sdks/java/extensions/sql/**'
-  pull_request:
-    paths:
-      - 'sdks/java/extensions/sql/**'
+    tags: ['v*']
+    branches: ['master', 'release-*']
+    paths: [sdks/java/extensions/sql/**]
+  pull_request_target:
+    branches: ['master', 'release-*']
+    paths: [sdks/java/extensions/sql/**]
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: '* */6 * * *'
+
 
 jobs:
   beam_PreCommit_SQL:
-    # runs-on: [ubuntu-local]
+    if: github.event_name == 'push' || github.event_name == 'pull_request_target' || github.event_name == 'schedule' || github.event.comment.body == 'Run Website_Stage_GCS PreCommit'
     runs-on: [self-hosted, ubuntu-20.04]
-    name: beam_PreCommit_SQL
+    name: "PreCommit SQL"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+      - name: Setup self-hosted
+        uses: ./.github/actions/setup-self-hosted-action
+        with:
+          requires-py-37: false
+          requires-py-39: false
       - name: Set up Java
         uses: actions/setup-java@v3.8.0
         with:
           distribution: 'zulu'
           java-version: '8'
-      - name: Remove default github maven configuration
-        # This step is a workaround to avoid a decryption issue of Beam's
-        # net.linguica.gradle.maven.settings plugin and github's provided maven
-        # settings.xml file
-        run: rm ~/.m2/settings.xml
-
-      - name: Install Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.20'
-
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'     
-
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.2'
           channel: 'stable'
-
-      # - name: Build and Test
-      #   run: |
-      #     ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
-
-      # - name: Archive JUnit Test Results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: JUnit Test Results
-      #     path: '**/build/test-results/**/*.xml'
-
-      # - name: Run SpotBugs
-      #   # run: ./gradlew check
-      #   run: ./gradlew spotbugsMain --console=plain
-      #   continue-on-error: true
-
-      # - name: Archive SpotBugs Results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: SpotBugs Results
-      #     path: '**/build/reports/spotbugs/*.html'
+      - name: Remove default github maven configuration
+        # This step is a workaround to avoid a decryption issue of Beam's
+        # net.linguica.gradle.maven.settings plugin and github's provided maven
+        # settings.xml file
+        run: rm ~/.m2/settings.xml
+      - name: Build and Test
+        run: |
+          ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
+      - name: Archive JUnit Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: JUnit Test Results
+          path: '**/build/test-results/**/*.xml'
+      - name: Run SpotBugs
+        run: ./gradlew spotbugsMain --console=plain
+        continue-on-error: true
+      - name: Archive SpotBugs Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: SpotBugs Results
+          path: '**/build/reports/spotbugs/*.html'
 
 
       # - name: Generate JaCoCo Badge
