@@ -74,8 +74,8 @@ jobs:
         run: ./gradlew errorProneMain --console=plain
         continue-on-error: true
 
-      - name: Run JaCoCo Code Coverage
-        run: ./gradlew jacocoTestReport
+      # - name: Run JaCoCo Code Coverage
+      #   run: ./gradlew jacocoTestReport
 
       - name: Archive JaCoCo Code Coverage Report
         uses: actions/upload-artifact@v2
