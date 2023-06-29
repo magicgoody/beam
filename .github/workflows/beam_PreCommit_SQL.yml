@@ -20,8 +20,8 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
     paths: [sdks/java/extensions/sql/**]
-  pull_request_target:
-    branches: ['master', 'release-*']
+  pull_request:
+    # branches: ['master', 'release-*']
     paths: [sdks/java/extensions/sql/**]
   issue_comment:
     types: [created]
@@ -31,7 +31,7 @@ on:
 
 jobs:
   beam_PreCommit_SQL:
-    if: github.event_name == 'push' || github.event_name == 'pull_request_target' || github.event_name == 'schedule' || github.event.comment.body == 'Run Website_Stage_GCS PreCommit'
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run Website_Stage_GCS PreCommit'
     runs-on: [self-hosted, ubuntu-20.04]
     name: "PreCommit SQL"
     steps:
