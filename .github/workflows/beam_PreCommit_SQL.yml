@@ -36,16 +36,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Setup self-hosted
-        uses: ./.github/actions/setup-self-hosted-action
+  
+      - name: Set up Java
+        uses: actions/setup-java@v3.8.0
         with:
-          requires-py-37: false
-          requires-py-39: false
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.10.2'
-          channel: 'stable'
+          distribution: 'zulu'
+          java-version: '8'
+
+      # - name: Setup self-hosted
+      #   uses: ./.github/actions/setup-self-hosted-action
+      #   with:
+      #     requires-py-37: false
+      #     requires-py-39: false
+      # - name: Install Flutter
+      #   uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: '3.10.2'
+      #     channel: 'stable'
       - name: Remove default github maven configuration
         # This step is a workaround to avoid a decryption issue of Beam's
         # net.linguica.gradle.maven.settings plugin and github's provided maven
