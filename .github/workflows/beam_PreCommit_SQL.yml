@@ -43,6 +43,12 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
 
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.2'
+          channel: 'stable'          
+
       # - name: Setup self-hosted
       #   uses: ./.github/actions/setup-self-hosted-action
       #   with:
@@ -61,7 +67,7 @@ jobs:
       - name: Build and Test
         run: |
           
-          ./gradlew -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport --continue --max-workers=8 -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses :sqlPreCommit
+          ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport --continue --max-workers=8 -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses 
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
