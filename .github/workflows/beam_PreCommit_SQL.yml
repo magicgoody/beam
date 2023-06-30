@@ -31,7 +31,8 @@ on:
 jobs:
   beam_PreCommit_SQL:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
-    runs-on: [self-hosted, ubuntu-20.04]
+    runs-on: [ubuntu-local]
+    # runs-on: [self-hosted, ubuntu-20.04]
     name: "PreCommit SQL"
     env:
       FLUTTER_VERSION: '3.10.4'
@@ -45,24 +46,24 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
 
-      - name: 'Cache Flutter Dependencies'
-        uses: actions/cache@v3
-        with:
-          path: /opt/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
-          restore-keys: ${{ runner.OS }}-flutter-install-cache
+      # - name: 'Cache Flutter Dependencies'
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: /opt/hostedtoolcache/flutter
+      #     key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
+      #     restore-keys: ${{ runner.OS }}-flutter-install-cache
 
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: 'stable'
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: ${{ env.FLUTTER_VERSION }}
+      #     channel: 'stable'
 
-      - name: 'Install Dependencies'
-        working-directory: playground/frontend
-        run: |
-          cd playground_components && flutter pub get && cd ..
-          cd playground_components_dev && flutter pub get && cd ..
-          flutter pub get     
+      # - name: 'Install Dependencies'
+      #   working-directory: playground/frontend
+      #   run: |
+      #     cd playground_components && flutter pub get && cd ..
+      #     cd playground_components_dev && flutter pub get && cd ..
+      #     flutter pub get     
 
       # - name: Setup self-hosted
       #   uses: ./.github/actions/setup-self-hosted-action
@@ -80,9 +81,7 @@ jobs:
         # settings.xml file
         run: rm ~/.m2/settings.xml
       - name: Build and Test
-        run: |
-          
-          ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport --continue --max-workers=8 -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses --no-build-cache
+        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport --continue --max-workers=8 -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses --no-build-cache
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
