@@ -33,6 +33,8 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
     runs-on: [self-hosted, ubuntu-20.04]
     name: "PreCommit SQL"
+    env:
+      FLUTTER_VERSION: '3.10.4'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -43,11 +45,24 @@ jobs:
           distribution: 'zulu'
           java-version: '8'
 
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
+      - name: 'Cache Flutter Dependencies'
+        uses: actions/cache@v3
         with:
-          flutter-version: '3.10.2'
-          channel: 'stable'          
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
+          restore-keys: ${{ runner.OS }}-flutter-install-cache
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+
+      - name: 'Install Dependencies'
+        working-directory: playground/frontend
+        run: |
+          cd playground_components && flutter pub get && cd ..
+          cd playground_components_dev && flutter pub get && cd ..
+          flutter pub get     
 
       # - name: Setup self-hosted
       #   uses: ./.github/actions/setup-self-hosted-action
