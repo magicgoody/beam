@@ -60,7 +60,8 @@ jobs:
         run: rm ~/.m2/settings.xml
       - name: Build and Test
         run: |
-          ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
+          # ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
+          ./gradlew -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport --continue --max-workers=8 -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses :sqlPreCommit
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
