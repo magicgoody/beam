@@ -46,11 +46,11 @@ jobs:
         with:
           flutter-version: '3.10.2'
           channel: 'stable'
-      - name: Remove default github maven configuration
+      # - name: Remove default github maven configuration
         # This step is a workaround to avoid a decryption issue of Beam's
         # net.linguica.gradle.maven.settings plugin and github's provided maven
         # settings.xml file
-        run: rm ~/.m2/settings.xml
+        # run: rm ~/.m2/settings.xml
       - name: Build and Test
         run: |
           ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport
