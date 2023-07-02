@@ -32,7 +32,8 @@ on:
 jobs:
     beam_PreCommit_GoPortable:
         if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run GoPortable PreCommit'
-        runs-on: [self-hosted, ubuntu-20.04]
+        runs-on: [ubuntu-local]
+        # runs-on: [self-hosted, ubuntu-20.04]
         name: "PreCommit GoPortable"
         steps:       
           - name: Git checkout
