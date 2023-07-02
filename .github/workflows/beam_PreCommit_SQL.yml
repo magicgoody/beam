@@ -98,9 +98,25 @@ jobs:
           name: SpotBugs Results
           path: '**/build/reports/spotbugs/*.html'
 
-      - name: Run Error Prone
-        run: ./gradlew errorProneMain --console=plain
-        continue-on-error: true
+      # - name: Create Jacoco Report
+      #   run: |
+      #     java -jar jacococli.jar report '**/build/jacoco/*.exec'
+      #       **build/jacoco/test.exec
+        
+
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.3
+        with:
+          paths: ${{ github.workspace }}/**/build/jacoco/*.exec
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
+
+
+      # - name: Run Error Prone
+      #   run: ./gradlew errorProneMain --console=plain
+      #   continue-on-error: true
 
       - name: Run JaCoCo Code Coverage
         run: ./gradlew jacocoTestReport
