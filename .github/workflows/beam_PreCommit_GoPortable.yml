@@ -31,7 +31,10 @@ on:
 
 jobs:
     beam_PreCommit_GoPortable:
-        if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run GoPortable PreCommit'
+        if: github.event_name == 'push' || 
+            github.event_name == 'pull_request' || 
+            github.event_name == 'schedule' || 
+            github.event.comment.body == 'Run GoPortable PreCommit'
         runs-on: [ubuntu-local]
         # runs-on: [self-hosted, ubuntu-20.04]
         name: "PreCommit GoPortable"
@@ -44,7 +47,9 @@ jobs:
               requires-py-37: false
               requires-py-39: false
           - name: Set up Docker Buildx
-            uses: docker/setup-buildx-action@v2.7.0          
+            uses: docker/setup-buildx-action@v2.7.0
+          - name: Set up Cloud SDK
+            uses: google-github-actions/setup-gcloud@v1
           - name: run goPortablePreCommit script
             run: ./gradlew :goPortablePreCommit
             
