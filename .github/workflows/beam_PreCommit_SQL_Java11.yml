@@ -31,8 +31,8 @@ on:
 jobs:
   beam_PreCommit_SQL_Java11:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
-    # runs-on: [ubuntu-local]
-    runs-on: [self-hosted, ubuntu-20.04]
+    runs-on: [ubuntu-local]
+    # runs-on: [self-hosted, ubuntu-20.04]
     name: "PreCommit SQL Java11"
     steps:
       - name: Checkout repository
