@@ -24,6 +24,7 @@ plugins {
   id("net.researchgate.release") version "2.8.1"
   id("org.apache.beam.module")
   id("org.sonarqube") version "3.0"
+  jacoco
 }
 
 /*************************************************************************************************/
@@ -677,4 +678,13 @@ if (project.hasProperty("compileAndRunTestsWithJava11")) {
       exclude("**/JvmVerification.class")
     }
   }
+}
+
+// Jacoco define dependencies between code coverage reports and test execution
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
 }
