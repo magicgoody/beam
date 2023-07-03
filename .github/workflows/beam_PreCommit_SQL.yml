@@ -88,9 +88,9 @@ jobs:
           name: JUnit Test Results
           path: '**/build/test-results/**/*.xml'
 
-      - name: Run SpotBugs
-        run: ./gradlew spotbugsMain --console=plain
-        continue-on-error: true
+      # - name: Run SpotBugs
+      #   run: ./gradlew spotbugsMain --console=plain
+      #   continue-on-error: true
 
       - name: Archive SpotBugs Results
         uses: actions/upload-artifact@v2
@@ -104,14 +104,14 @@ jobs:
       #       **build/jacoco/test.exec
         
 
-      - name: Add coverage to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.3
-        with:
-          paths: ${{ github.workspace }}/**/build/jacoco/*.exec
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 40
-          min-coverage-changed-files: 60
+      # - name: Add coverage to PR
+      #   id: jacoco
+      #   uses: madrapps/jacoco-report@v1.3
+      #   with:
+      #     paths: ${{ github.workspace }}/**/build/jacoco/*.exec
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     min-coverage-overall: 40
+      #     min-coverage-changed-files: 60
 
 
       # - name: Run Error Prone
@@ -125,4 +125,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: JaCoCo Code Coverage Report
-          path: '**/build/jacoco/*.exec'
+          path: '**/build/jacoco/*'

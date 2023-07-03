@@ -22,6 +22,7 @@ import java.util.stream.Collectors
 plugins {
   id 'org.apache.beam.module'
   id 'ca.coglinc.javacc'
+  id 'jacoco'
 }
 applyJavaNature(
   generatedClassPatterns: [
@@ -279,4 +280,28 @@ test {
   evaluationDependsOn(":sdks:java:extensions:sql:udf-test-provider") // Needed to resolve jarPath.
   systemProperty "beam.sql.udf.test.jar_path", project(":sdks:java:extensions:sql:udf-test-provider").jarPath
   systemProperty "beam.sql.udf.test.empty_jar_path", emptyJar.archivePath
+}
+
+/* Jacoco config */
+jacoco {
+  toolVersion = "0.8.9"
+}
+
+test {
+    jacoco {
+        enabled = true
+        destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
+        includes = ["**/AutoValue_*"]
+        excludes = ["**/org/apache/beam/sdk/extensions/sql/**"]
+    }
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = true
+        html.required = true
+    }
+    dependsOn test // tests are required to run before generating the report
 }
