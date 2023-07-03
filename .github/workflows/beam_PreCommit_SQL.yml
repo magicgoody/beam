@@ -31,9 +31,9 @@ on:
 jobs:
   beam_PreCommit_SQL:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
-    runs-on: [ubuntu-local]
-    # runs-on: [self-hosted, ubuntu-20.04]
-    name: "PreCommit SQL"
+    # runs-on: [ubuntu-local]
+    runs-on: [self-hosted, ubuntu-20.04]
+    name: "beam_PreCommit_SQL"
     env:
       FLUTTER_VERSION: '3.10.4'
     steps:
@@ -104,14 +104,14 @@ jobs:
       #       **build/jacoco/test.exec
         
 
-      # - name: Add coverage to PR
-      #   id: jacoco
-      #   uses: madrapps/jacoco-report@v1.3
-      #   with:
-      #     paths: ${{ github.workspace }}/**/build/jacoco/*.exec
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     min-coverage-overall: 40
-      #     min-coverage-changed-files: 60
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.3
+        with:
+          paths: ${{ github.workspace }}/**/build/jacoco/*.exec
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
 
 
       # - name: Run Error Prone
