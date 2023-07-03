@@ -33,7 +33,7 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
     # runs-on: [ubuntu-local]
     runs-on: [self-hosted, ubuntu-20.04]
-    name: "PreCommit SQL Java11"
+    name: "beam_PreCommit_SQL_Java11"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -64,9 +64,6 @@ jobs:
         with:
           name: JUnit Test Results
           path: '**/build/test-results/**/*.xml'
-      - name: Run SpotBugs
-        run: ./gradlew spotbugsMain --console=plain
-        continue-on-error: true
       - name: Archive SpotBugs Results
         uses: actions/upload-artifact@v2
         with:
