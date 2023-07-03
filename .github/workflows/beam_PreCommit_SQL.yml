@@ -34,93 +34,28 @@ jobs:
     # runs-on: [ubuntu-local]
     runs-on: [self-hosted, ubuntu-20.04]
     name: "beam_PreCommit_SQL"
-    env:
-      FLUTTER_VERSION: '3.10.4'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-  
       - name: Set up Java
         uses: actions/setup-java@v3.8.0
         with:
           distribution: 'zulu'
           java-version: '8'
-
-      # - name: 'Cache Flutter Dependencies'
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: /opt/hostedtoolcache/flutter
-      #     key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
-      #     restore-keys: ${{ runner.OS }}-flutter-install-cache
-
-      # - uses: subosito/flutter-action@v2
-      #   with:
-      #     flutter-version: ${{ env.FLUTTER_VERSION }}
-      #     channel: 'stable'
-
-      # - name: 'Install Dependencies'
-      #   working-directory: playground/frontend
-      #   run: |
-      #     cd playground_components && flutter pub get && cd ..
-      #     cd playground_components_dev && flutter pub get && cd ..
-      #     flutter pub get     
-
-      # - name: Setup self-hosted
-      #   uses: ./.github/actions/setup-self-hosted-action
-      #   with:
-      #     requires-py-37: false
-      #     requires-py-39: false
-      # - name: Install Flutter
-      #   uses: subosito/flutter-action@v2
-      #   with:
-      #     flutter-version: '3.10.2'
-      #     channel: 'stable'
       - name: Remove default github maven configuration
-        # This step is a workaround to avoid a decryption issue of Beam's
-        # net.linguica.gradle.maven.settings plugin and github's provided maven
-        # settings.xml file
         run: rm ~/.m2/settings.xml
       - name: Build and Test
-        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport --continue --max-workers=8 -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses --no-build-cache
+        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PenableJacocoReport -Pdocker-pull-licenses
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
           name: JUnit Test Results
           path: '**/build/test-results/**/*.xml'
-
-      # - name: Run SpotBugs
-      #   run: ./gradlew spotbugsMain --console=plain
-      #   continue-on-error: true
-
       - name: Archive SpotBugs Results
         uses: actions/upload-artifact@v2
         with:
           name: SpotBugs Results
           path: '**/build/reports/spotbugs/*.html'
-
-      # - name: Create Jacoco Report
-      #   run: |
-      #     java -jar jacococli.jar report '**/build/jacoco/*.exec'
-      #       **build/jacoco/test.exec
-        
-
-      - name: Add coverage to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.3
-        with:
-          paths: ${{ github.workspace }}/**/build/jacoco/*.exec
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 40
-          min-coverage-changed-files: 60
-
-
-      # - name: Run Error Prone
-      #   run: ./gradlew errorProneMain --console=plain
-      #   continue-on-error: true
-
-      - name: Run JaCoCo Code Coverage
-        run: ./gradlew jacocoTestReport
-
       - name: Archive JaCoCo Code Coverage Report
         uses: actions/upload-artifact@v2
         with:
