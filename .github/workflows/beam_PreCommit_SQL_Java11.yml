@@ -27,16 +27,39 @@ on:
     types: [created]
   schedule:
     - cron: '* */6 * * *'
+#Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
+permissions:
+    actions: write
+    pull-requests: read
+    checks: read
+    contents: read
+    deployments: read
+    id-token: read
+    issues: read
+    discussions: read
+    packages: read
+    pages: read
+    repository-projects: read
+    security-events: read
+    statuses: read
 
 jobs:
   beam_PreCommit_SQL_Java11:
-    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
-    # runs-on: [ubuntu-local]
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL_Java11 PreCommit'
     runs-on: [self-hosted, ubuntu-20.04]
     name: "beam_PreCommit_SQL_Java11"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Rerun on comment
+        if: github.event.comment.body == 'Run SQL_Java11 PreCommit'
+        uses: ./.github/actions/rerun-job-action
+        with:
+          pull_request_url: ${{ github.event.issue.pull_request.url }}
+          github_repository: ${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_job: ${{ github.job }}
+          github_current_run_id: ${{ github.run_id }}
       - name: Set up Java
         uses: actions/setup-java@v3.8.0
         with:
@@ -58,7 +81,7 @@ jobs:
           flutter-version: '3.10.4'
           channel: 'stable'
       - name: Build and Test
-        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PcompileAndRunTestsWithJava11 -PskipCheckerFramework -Pjava11Home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.19-7/x64
+        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PcompileAndRunTestsWithJava11 -PskipCheckerFramework -Pjava11Home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.19-7/x64 -Pdocker-pull-licenses
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
