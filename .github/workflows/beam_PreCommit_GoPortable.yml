@@ -41,10 +41,6 @@ jobs:
         steps:       
           - name: Git checkout
             uses: actions/checkout@v3
-          - name: test
-            run: |
-              sudo apt-get update --yes
-              sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common --yes
           - name: Setup self-hosted
             uses: ./.github/actions/setup-self-hosted-action
             with:
