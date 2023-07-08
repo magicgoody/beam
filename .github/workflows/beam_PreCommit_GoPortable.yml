@@ -55,5 +55,5 @@ jobs:
           # - name: clean task
           #   run: ./gradlew clean :sdks:go:test:ulrValidatesRunner -Pdocker-pull-licenses
           - name: run goPortablePreCommit script
-            run: ./gradlew :goPortablePreCommit -Pdocker-pull-licenses
+            run: ./gradlew :goPortablePreCommit -Pdocker-pull-licenses -debug
             
