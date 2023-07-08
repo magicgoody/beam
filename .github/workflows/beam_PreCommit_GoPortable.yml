@@ -46,8 +46,8 @@ jobs:
             with:
               requires-py-37: false
               requires-py-39: false
-          - name: Setup default test properties
-            uses: ./.github/actions/setup-default-test-properties
+          - name: Common rc validation
+            uses: ./.github/actions/common-rc-validation
           - name: Set up Docker Buildx
             uses: docker/setup-buildx-action@v2.7.0
           - name: Set up Cloud SDK
