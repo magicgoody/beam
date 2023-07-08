@@ -51,7 +51,7 @@ jobs:
           - name: Set up Cloud SDK
             uses: google-github-actions/setup-gcloud@v1
           - name: clean task
-            run: ./gradlew clean :sdks:go:test:ulrValidatesRunner
+            run: ./gradlew clean :sdks:go:test:ulrValidatesRunner -Pdocker-pull-licenses
           - name: run goPortablePreCommit script
-            run: ./gradlew :goPortablePreCommit
+            run: ./gradlew :goPortablePreCommit -Pdocker-pull-licenses
             
