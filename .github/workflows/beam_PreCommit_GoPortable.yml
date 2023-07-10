@@ -51,8 +51,15 @@ jobs:
             id: local_env_install_ubuntu
           - name: Set up Docker Buildx
             uses: docker/setup-buildx-action@v2.7.0
-          - name: Set up Cloud SDK
-            uses: google-github-actions/setup-gcloud@v1
+          - name: Authenticate on GCP
+            uses: google-github-actions/setup-gcloud@v0
+            with:
+              service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+              service_account_key: ${{ secrets.GCP_SA_KEY }}
+              project_id: ${{ secrets.GCP_PROJECT_ID }}
+              export_default_credentials: true
+          # - name: Set up Cloud SDK
+          #   uses: google-github-actions/setup-gcloud@v1
           - name: Remove default github maven configuration
             run: rm ~/.m2/settings.xml
           # - name: clean task
