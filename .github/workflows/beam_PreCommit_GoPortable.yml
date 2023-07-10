@@ -46,11 +46,29 @@ jobs:
             with:
               requires-py-37: false
               requires-py-39: false
-          - name: "Installing local env dependencies"
-            run: "sudo ./local-env-setup.sh"
-            id: local_env_install_ubuntu
+          - name: docker manual install
+            run: |
+              apt-get install -y ca-certificates curl gnupg && \
+              sudo install -m 0755 -d /etc/apt/keyrings && \
+              curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+              sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+              echo   "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+              "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+              sudo apt-get update
+
+              sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+              
+          # - name: "Installing local env dependencies"
+          #   run: "sudo ./local-env-setup.sh"
+          #   id: local_env_install_ubuntu
+          # - name: Set up QEMU
+          #   uses: docker/setup-qemu-action@v2
           # - name: Set up Docker Buildx
           #   uses: docker/setup-buildx-action@v2.7.0
+          # - name: sdks
+          #   run: |
+          #     sudo ./sdks/go/prepare_go_version.sh
           # - name: Set up Cloud SDK
           #   uses: google-github-actions/setup-gcloud@v1
           # - name: Activate Service Account
