@@ -31,12 +31,11 @@ on:
 
 jobs:
     beam_PreCommit_GoPortable:
-        container: us-central1-docker.pkg.dev/apache-beam-testing/beam-github-actions/beam-arc-runner:dev5
         if: github.event_name == 'push' || 
             github.event_name == 'pull_request' || 
             github.event_name == 'schedule' || 
             github.event.comment.body == 'Run GoPortable PreCommit'
-        runs-on: [ubuntu-local]
+        runs-on: [ubuntu-local-container]
         # runs-on: [self-hosted, ubuntu-20.04]
         name: "PreCommit GoPortable"
         steps:       
