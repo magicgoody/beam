@@ -31,6 +31,7 @@ on:
 
 jobs:
     beam_PreCommit_GoPortable:
+        container: us-central1-docker.pkg.dev/apache-beam-testing/beam-github-actions/beam-arc-runner@sha256:ef6818035968285253cc390d0ac8742d542119a6ba42de7c90bd0abfd07814c8
         if: github.event_name == 'push' || 
             github.event_name == 'pull_request' || 
             github.event_name == 'schedule' || 
@@ -46,8 +47,8 @@ jobs:
             with:
               requires-py-37: false
               requires-py-39: false
-          - name: Install Docker Engine on Ubuntu
-            uses: ./.github/actions/install-docker-engine-on-ubuntu
+          # - name: Install Docker Engine on Ubuntu
+          #   uses: ./.github/actions/install-docker-engine-on-ubuntu
           # - name: docker manual install
           #   run: |
           #     sudo apt-get update 
