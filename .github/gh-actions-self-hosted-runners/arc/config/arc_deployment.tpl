@@ -23,7 +23,7 @@ metadata:
 spec:
   template:
     spec:
-      image: us-central1-docker.pkg.dev/apache-beam-testing/beam-github-actions/beam-arc-runner:dev5
+      image: us-central1-docker.pkg.dev/apache-beam-testing/beam-github-actions/beam-arc-runner:738c02cac4d6a88faa3dd02606d50f1d2efed5e7
       repository: magicgoody/beam
 #      group: "${group}"
       labels:
