@@ -23,7 +23,7 @@ metadata:
 spec:
   template:
     spec:
-      image: summerwind/actions-runner:v2.304.0-ubuntu-20.04-30355f7
+      image: us-central1-docker.pkg.dev/apache-beam-testing/beam-github-actions/beam-arc-runner:dev5
       repository: magicgoody/beam
 #      group: "${group}"
       labels:
