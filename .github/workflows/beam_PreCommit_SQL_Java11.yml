@@ -13,66 +13,88 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: beam_PreCommit_SQL
+name: beam PreCommit SQL Java11
 
 on:
   push:
-    paths:
-      - 'sdks/java/extensions/sql/**'
+    tags: ['v*']
+    branches: ['master', 'release-*']
+    paths: [sdks/java/extensions/sql/**]
   pull_request:
-    paths:
-      - 'sdks/java/extensions/sql/**'
+    branches: ['master', 'release-*']
+    paths: [sdks/java/extensions/sql/**]
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: '* */6 * * *'
+#Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
+permissions:
+    actions: write
+    pull-requests: read
+    checks: read
+    contents: read
+    deployments: read
+    id-token: none
+    issues: read
+    discussions: read
+    packages: read
+    pages: read
+    repository-projects: read
+    security-events: read
+    statuses: read
 
 jobs:
-  beam_PreCommit_SQL:
-    # runs-on: [ubuntu-local]
+  beam_PreCommit_SQL_Java11:
+    if: |
+      github.event_name == 'push' || 
+      github.event_name == 'pull_request_target' || 
+      github.event.comment.body == 'Run SQL_Java11 PreCommit' || 
+      github.event_name == 'schedule'
     runs-on: [self-hosted, ubuntu-20.04]
-    name: beam_PreCommit_SQL
+    name: "beam_PreCommit_SQL_Java11"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Rerun on comment
+        if: github.event.comment.body == 'Run SQL_Java11 PreCommit'
+        uses: ./.github/actions/rerun-job-action
+        with:
+          pull_request_url: ${{ github.event.issue.pull_request.url }}
+          github_repository: ${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_job: ${{ github.job }}
+          github_current_run_id: ${{ github.run_id }}
       - name: Set up Java
         uses: actions/setup-java@v3.8.0
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '11'
-
       - name: Remove default github maven configuration
         run: rm ~/.m2/settings.xml
-
       - name: Install Go
         uses: actions/setup-go@v3
         with:
           go-version: '1.20'
-
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'     
-
+          python-version: '3.8'
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.2'
+          flutter-version: '3.10.4'
           channel: 'stable'
-
-      - name: Build and run precommit
-        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PcompileAndRunTestsWithJava11 -PskipCheckerFramework
-
+      - name: Build and Test
+        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PcompileAndRunTestsWithJava11 -PskipCheckerFramework -Pjava11Home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/11.0.19-7/x64 -Pdocker-pull-licenses
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
           name: JUnit Test Results
           path: '**/build/test-results/**/*.xml'
-
-      - name: Run SpotBugs
-        run: ./gradlew spotbugsMain --console=plain
-        continue-on-error: true
-
       - name: Archive SpotBugs Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: SpotBugs Results
           path: '**/build/reports/spotbugs/*.html'
-
