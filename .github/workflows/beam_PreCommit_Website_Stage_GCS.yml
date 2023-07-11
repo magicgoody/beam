@@ -5,7 +5,7 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
     paths: ['website/**']
-  pull_request:
+  pull_request_target:
     #branches: ['master', 'release-*']
     paths: ['website/**']
   issue_comment:
