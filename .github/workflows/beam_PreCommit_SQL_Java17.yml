@@ -57,10 +57,9 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          gradle-version: 7.6
+      - name: Java Home 17
+        run: |
+          export JAVA_HOME_17_X64=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
