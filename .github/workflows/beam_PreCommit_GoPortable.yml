@@ -40,11 +40,11 @@ jobs:
         steps:       
           - name: Git checkout
             uses: actions/checkout@v3
-          # - name: Setup self-hosted
-          #   uses: ./.github/actions/setup-self-hosted-action
-          #   with:
-          #     requires-py-37: false
-          #     requires-py-39: false
+          - name: Setup self-hosted
+            uses: ./.github/actions/setup-self-hosted-action
+            with:
+              requires-py-37: false
+              requires-py-39: false
           # - name: Remove default github maven configuration
           #   run: rm ~/.m2/settings.xml
           - name: run goPortablePreCommit script
