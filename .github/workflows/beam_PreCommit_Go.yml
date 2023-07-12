@@ -1,11 +1,12 @@
-name: beam_PreCommit_Go
+name: Go PreCommit
 
 on:
   push:
     tags: ['v*']
     branches: ['master', 'release-*']
-  pull_request:
-    branches: ['master']
+    paths: ['model/**', 'sdks/go.**', 'release/**', '.github/workflows/beam_PreCommit_Go.yml']
+  pull_request_target:
+    branches: ['master', 'release-*' ]
     paths: ['model/**', 'sdks/go.**', 'release/**']
   issue_comment:
     types: [created]
