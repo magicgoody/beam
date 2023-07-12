@@ -63,7 +63,7 @@ jobs:
           -PdisableCheckStyle=true 
           -PcompileAndRunTestsWithJava17 
           -PskipCheckerFramework 
-          -Pjava17Home=/home/user/actions-runner/_work/_tool/Java_Temurin-Hotspot_jdk/17.0.7-7/x64
+          -Pjava17Home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64
           -Pdocker-pull-licenses
         #/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64 -Pdocker-pull-licenses
       - name: Archive JUnit Test Results
