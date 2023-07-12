@@ -36,7 +36,7 @@ jobs:
             github.event_name == 'schedule' || 
             github.event.comment.body == 'Run GoPortable PreCommit'
         # runs-on: [ubuntu-local-container]
-        runs-on: [self-hosted, ubuntu-20.04]
+        runs-on: [self-hosted, ubuntu-20.04, main]
         name: "PreCommit GoPortable"
         steps:       
           - name: Git checkout
