@@ -56,7 +56,11 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.4'
-          channel: 'stable'  
+          channel: 'stable' 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 8.2
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
