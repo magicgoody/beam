@@ -33,7 +33,7 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
     # runs-on: [ubuntu-local]
     runs-on: [self-hosted, ubuntu-20.04, main]
-    container: openjdk:17.0-jdk-bullseye
+    container: openjdk:17.0.2-jdk-slim-bullseye
     name: "beam_PreCommit_SQL_Java17"
     steps:
       - name: Checkout repository
