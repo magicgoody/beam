@@ -33,15 +33,16 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'schedule' || github.event.comment.body == 'Run SQL PreCommit'
     # runs-on: [ubuntu-local]
     runs-on: [self-hosted, ubuntu-20.04, main]
+    container: openjdk:17-jdk-slim
     name: "beam_PreCommit_SQL_Java17"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Set up Java
-        uses: actions/setup-java@v3.8.0
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      # - name: Set up Java
+      #   uses: actions/setup-java@v3.8.0
+      #   with:
+      #     distribution: 'temurin'
+      #     java-version: '17'
       - name: Remove default github maven configuration
         run: rm ~/.m2/settings.xml
       - name: Install Go
@@ -57,10 +58,6 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
-      - name: Java Home 17
-        run: |
-          sudo echo 'JAVA_HOME_17_X64=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64' >> /etc/environment
-          sudo source /etc/environment
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
