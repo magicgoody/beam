@@ -36,7 +36,7 @@ spec:
       %{~ endif ~}
       image: ${image}
       organization: ${organization}
-      group: "${group}"
+#      group: "${group}"
       labels:
       %{~ for label in labels ~}
         - ${label}
