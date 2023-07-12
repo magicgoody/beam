@@ -45,6 +45,8 @@ jobs:
             with:
               requires-py-37: false
               requires-py-39: false
+              requires-java-8: false
+              requires-go: false
           # - name: Remove default github maven configuration
           #   run: rm ~/.m2/settings.xml
           - name: run goPortablePreCommit script
