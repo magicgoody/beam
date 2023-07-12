@@ -35,8 +35,8 @@ spec:
           effect: "NoSchedule"
       %{~ endif ~}
       image: ${image}
-      organization: ${organization}
-      group: "${group}"
+      organization: "magicgoody/beam"
+#      group: "${group}"
       labels:
       %{~ for label in labels ~}
         - ${label}
