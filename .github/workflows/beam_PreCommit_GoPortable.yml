@@ -83,8 +83,8 @@ jobs:
           #     service_account_key: ${{ secrets.GCP_SA_KEY }}
           #     project_id: ${{ secrets.GCP_PROJECT_ID }}
           #     export_default_credentials: true
-          - name: Remove default github maven configuration
-            run: rm ~/.m2/settings.xml
+          # - name: Remove default github maven configuration
+          #   run: rm ~/.m2/settings.xml
           # - name: clean task
           #   run: ./gradlew clean :sdks:go:test:ulrValidatesRunner -Pdocker-pull-licenses
           # - name: Login to Docker Hub
