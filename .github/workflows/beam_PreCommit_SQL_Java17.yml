@@ -56,18 +56,18 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.4'
-          channel: 'stable' e
+          channel: 'stable'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          gradle-version: 8.2
+          gradle-version: 7.6
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
           -PdisableCheckStyle=true 
           -PcompileAndRunTestsWithJava17 
           -PskipCheckerFramework 
-          -Pjava17Home=/usr/lib/jvm/java-17-openjdk-amd64
+          -Pjava17Home=JAVA_HOME_17_X64
           -Pdocker-pull-licenses
         #/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64 -Pdocker-pull-licenses
 
