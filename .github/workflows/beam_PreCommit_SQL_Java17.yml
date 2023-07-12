@@ -56,7 +56,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.4'
-          channel: 'stable' 
+          channel: 'stable' e
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -67,9 +67,16 @@ jobs:
           -PdisableCheckStyle=true 
           -PcompileAndRunTestsWithJava17 
           -PskipCheckerFramework 
-          -Pjava17Home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64
+          -Pjava17Home=/usr/lib/jvm/java-17-openjdk-amd64
           -Pdocker-pull-licenses
         #/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64 -Pdocker-pull-licenses
+
+        # -PdisableSpotlessCheck=true
+        # -PdisableCheckStyle=true 
+        # -PcompileAndRunTestsWithJava17 
+        # -PskipCheckerFramework 
+        # -Pjava17Home=/usr/lib/jvm/java-17-openjdk-amd64 
+        # -Pdocker-pull-licenses
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
