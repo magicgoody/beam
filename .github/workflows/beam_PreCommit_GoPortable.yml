@@ -49,9 +49,9 @@ jobs:
               requires-go: false
           # - name: Remove default github maven configuration
           #   run: rm ~/.m2/settings.xml
-          - name: run goPortablePreCommit script
-            uses: ./.github/actions/gradle-command-self-hosted-action
-            with:
-              gradle-command: :goPortablePreCommit
           # - name: run goPortablePreCommit script
-          #   run: ./gradlew :goPortablePreCommit -Pdocker-pull-licenses
+          #   uses: ./.github/actions/gradle-command-self-hosted-action
+          #   with:
+          #     gradle-command: :goPortablePreCommit
+          - name: run goPortablePreCommit script
+            run: ./gradlew :goPortablePreCommit -Pdocker-pull-licenses
