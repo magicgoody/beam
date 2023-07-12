@@ -41,7 +41,7 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3.8.0
         with:
-          distribution: 'temurin'
+          distribution: 'zulu'
           java-version: '17'
       - name: Remove default github maven configuration
         run: rm ~/.m2/settings.xml
@@ -58,24 +58,14 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
-      - name: check
-        run: run env
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
           -PdisableCheckStyle=true 
           -PcompileAndRunTestsWithJava17 
           -PskipCheckerFramework 
-          -Pjava17Home=JAVA_HOME
+          -Pjava17Home= JAVA_HOME_17_X64
           -Pdocker-pull-licenses
-        #/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64 -Pdocker-pull-licenses
-
-        # -PdisableSpotlessCheck=true
-        # -PdisableCheckStyle=true 
-        # -PcompileAndRunTestsWithJava17 
-        # -PskipCheckerFramework 
-        # -Pjava17Home=/usr/lib/jvm/java-17-openjdk-amd64 
-        # -Pdocker-pull-licenses
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
