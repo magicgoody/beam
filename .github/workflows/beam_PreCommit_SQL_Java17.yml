@@ -59,7 +59,8 @@ jobs:
           channel: 'stable'
       - name: Java Home 17
         run: |
-          export JAVA_HOME_17_X64=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64
+          echo 'JAVA_HOME_17_X64=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64' >> /etc/environment
+          source /etc/environment
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
