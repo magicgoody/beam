@@ -58,8 +58,8 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           cache: 'gradle'
-      - name: check java
-        run: ls -lah /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64
+      # - name: check java
+      #   run: ls -lah /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64
       - name: Remove default github maven configuration
         run: rm ~/.m2/settings.xml
       - name: Install Go
