@@ -50,7 +50,7 @@ task verifyJavaVersion(type: Test) {
     includeTestsMatching 'org.apache.beam.sdk.testutils.jvmverification.JvmVerification.verifyRunningJVMVersionIs11'
   }
   doLast {
-    println 'Java verified'e 
+    println 'Java verified'
   }
 }
 
