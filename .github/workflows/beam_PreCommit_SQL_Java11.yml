@@ -81,6 +81,8 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
+      - name: java test
+        run: echo $JAVA_HOME_11_X64
       # - name: Authenticate on GCP
       #   uses: google-github-actions/setup-gcloud@v0
       #   with:
@@ -95,7 +97,7 @@ jobs:
           -PskipCheckerFramework 
           -Pdocker-pull-licenses
           -PcompileAndRunTestsWithJava11 
-          -Pjava11Home=${JAVA_HOME_11_X64}
+          -Pjava11Home=$JAVA_HOME_11_X64
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
