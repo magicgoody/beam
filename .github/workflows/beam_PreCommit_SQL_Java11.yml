@@ -66,8 +66,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Remove default github maven configuration
-        run: rm ~/.m2/settings.xml
+      # - name: Remove default github maven configuration
+      #   run: rm ~/.m2/settings.xml
       - name: Install Go
         uses: actions/setup-go@v3
         with:
@@ -82,7 +82,7 @@ jobs:
           flutter-version: '3.10.4'
           channel: 'stable'
       - name: Build and Test
-        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PskipCheckerFramework -Pjava11Home=JAVA_HOME_11_X64 -Pdocker-pull-licenses
+        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PskipCheckerFramework -PcompileAndRunTestsWithJava11 -Pjava11Home=JAVA_HOME_11_X64 -Pdocker-pull-licenses
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
