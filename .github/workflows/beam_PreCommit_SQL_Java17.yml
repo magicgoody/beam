@@ -64,7 +64,6 @@ jobs:
           -PdisableCheckStyle=true 
           -PcompileAndRunTestsWithJava17 
           -PskipCheckerFramework 
-          -Pjava17Home=JAVA_HOME_17_X64
           -Pdocker-pull-licenses
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
