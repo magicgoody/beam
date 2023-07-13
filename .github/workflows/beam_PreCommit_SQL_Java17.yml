@@ -47,11 +47,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Set up Java
-        uses: actions/setup-java@v3.8.0
-        with:
-          distribution: 'temurin'
-          java-version: '11'
+      - name: check java
+        run: ls -lah /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64
+      # - name: Set up Java
+      #   uses: actions/setup-java@v3.8.0
+      #   with:
+      #     distribution: 'temurin'
+      #     java-version: '11'
       - name: Remove default github maven configuration
         run: rm ~/.m2/settings.xml
       - name: Install Go
@@ -78,6 +80,20 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           export_default_credentials: true
+      - name: Buildo and Testo
+        run: ./gradlew
+          -PdisableSpotlessCheck=true 
+          -PdisableCheckStyle=true 
+          -PcompileAndRunTestsWithJava17 
+          -PskipCheckerFramework 
+          -Pjava17Home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64 
+          --continue 
+          --max-workers=8 
+          -Dorg.gradle.jvmargs=-Xms2g 
+          -Dorg.gradle.jvmargs=-Xmx6g 
+          -Dorg.gradle.vfs.watch=false 
+          -Pdocker-pull-licenses 
+          :sqlPreCommit     
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
@@ -96,3 +112,4 @@ jobs:
         with:
           name: SpotBugs Results
           path: '**/build/reports/spotbugs/*.html'
+          
