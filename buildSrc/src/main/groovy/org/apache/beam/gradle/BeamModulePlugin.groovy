@@ -850,7 +850,6 @@ class BeamModulePlugin implements Plugin<Project> {
 
     project.ext.setJava17Options = { CompileOptions options ->
       def java17Home = project.findProperty("java17Home")
-      println "java17Home"
       options.fork = true
       options.forkOptions.javaHome = java17Home as File
       options.compilerArgs += ['-Xlint:-path']
