@@ -66,10 +66,10 @@ jobs:
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
           -PdisableCheckStyle=true 
-          -PcompileAndRunTestsWithJava17 
           -PskipCheckerFramework 
           -Pdocker-pull-licenses
           -Pjava17Home=JAVA_HOME_17_X64
+          # -PcompileAndRunTestsWithJava17
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:

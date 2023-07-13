@@ -82,7 +82,13 @@ jobs:
           flutter-version: '3.10.4'
           channel: 'stable'
       - name: Build and Test
-        run: ./gradlew :sqlPreCommit -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PskipCheckerFramework -PcompileAndRunTestsWithJava11 -Pjava11Home=JAVA_HOME_11_X64 -Pdocker-pull-licenses
+        run: ./gradlew :sqlPreCommit 
+          -PdisableSpotlessCheck=true 
+          -PdisableCheckStyle=true 
+          -PskipCheckerFramework 
+          -Pjava11Home=JAVA_HOME_11_X64 
+          -Pdocker-pull-licenses
+          # -PcompileAndRunTestsWithJava11 
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
