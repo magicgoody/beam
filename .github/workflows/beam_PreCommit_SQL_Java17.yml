@@ -104,6 +104,7 @@ jobs:
           -Dorg.gradle.vfs.watch=false 
           -Pdocker-pull-licenses 
           -XepDisableAllChecks
+          -PjavaVersion=17
 
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
