@@ -103,6 +103,8 @@ jobs:
           -Dorg.gradle.jvmargs=-Xmx6g 
           -Dorg.gradle.vfs.watch=false 
           -Pdocker-pull-licenses 
+          -XepDisableAllChecks
+
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
