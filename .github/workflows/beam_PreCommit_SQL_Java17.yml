@@ -107,7 +107,7 @@ jobs:
           -PskipCheckerFramework 
           -Pdocker-pull-licenses
           -PcompileAndRunTestsWithJava17
-          -Pjava17Home=/usr/lib/jvm/java-17-openjdk-amd64
+          -Pjava17Home=$JAVA_HOME_17_X64
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
