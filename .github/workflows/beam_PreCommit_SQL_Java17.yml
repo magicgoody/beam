@@ -92,7 +92,7 @@ jobs:
           -PdisableCheckStyle=true 
           -PcompileAndRunTestsWithJava17 
           -PskipCheckerFramework 
-          -Pjava17Home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.7-7/x64 
+          -Pjava17Home=$JAVA_HOME_17_X64
           --continue 
           --max-workers=8 
           -Dorg.gradle.jvmargs=-Xms2g 
