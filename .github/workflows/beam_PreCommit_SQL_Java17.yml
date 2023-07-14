@@ -91,7 +91,7 @@ jobs:
       #     project_id: ${{ secrets.GCP_PROJECT_ID }}
       #     export_default_credentials: true
       - name: Buildo and Testo
-        run: ./gradlew
+        run: ./gradlew :sqlPreCommit  
           -PdisableSpotlessCheck=true 
           -PdisableCheckStyle=true 
           -PcompileAndRunTestsWithJava17 
@@ -103,7 +103,7 @@ jobs:
           -Dorg.gradle.jvmargs=-Xmx6g 
           -Dorg.gradle.vfs.watch=false 
           -Pdocker-pull-licenses 
-          :sqlPreCommit     
+          --release=17
       - name: Build and Test
         run: ./gradlew :sqlPreCommit 
           -PdisableSpotlessCheck=true 
