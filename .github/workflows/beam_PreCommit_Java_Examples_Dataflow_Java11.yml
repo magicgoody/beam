@@ -93,6 +93,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+      - name: Remove default github maven configuration
+        run: rm ~/.m2/settings.xml
       # - name: run clean script
       #   uses: ./.github/actions/gradle-command-self-hosted-action
       #   with:
@@ -105,7 +107,7 @@ jobs:
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :javaExamplesDataflowPrecommit
-          arguments: -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PskipCheckerFramework -PcompileAndRunTestsWithJava11 -Pjava11Home=$JAVA_HOME_11_X64
+          arguments: -PdisableSpotlessCheck=true -PdisableCheckStyle=true -PskipCheckerFramework -PcompileAndRunTestsWithJava11 -Pjava11Home=$JAVA_HOME_11_X64 -Pdocker-pull-licenses
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
