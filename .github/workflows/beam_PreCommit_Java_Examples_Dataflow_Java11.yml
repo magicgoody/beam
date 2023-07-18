@@ -58,6 +58,12 @@ permissions:
   repository-projects: read
   security-events: read
   statuses: read
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
 jobs:
   beam_PreCommit_Java_Examples_Dataflow_Java11:
     name: beam_PreCommit_Java_Examples_Dataflow_Java11
@@ -102,7 +108,7 @@ jobs:
             -PdisableCheckStyle=true \
             -PskipCheckerFramework \
             -PcompileAndRunTestsWithJava11 \
-            -Pjava11Home=$JAVA_HOME_11_X64
+            -Pjava11Home=$JAVA_HOME_11_X64 \
       - name: Upload test report
         uses: actions/upload-artifact@v3
         with:
