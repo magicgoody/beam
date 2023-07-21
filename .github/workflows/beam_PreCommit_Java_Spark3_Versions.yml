@@ -84,10 +84,12 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           export_default_credentials: true
+      - id: cache-path
+        run: echo "dir=$(mvn help:evaluate -Dexpression=settings.localRepository | grep 'm2/repository')"
       - name: Cache local Maven repository
         uses: actions/cache@v3
         with:
-          path: ${{ github.workspace }}/.m2/repository
+          path: ${{ steps.cache-path.outputs.dir }}
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
