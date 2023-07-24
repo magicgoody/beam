@@ -79,4 +79,4 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
       - name: run website_stageWebsite script
-        run: ./gradlew :website:stageWebsite
+        run: ./gradlew :website:stageWebsite -PwebsiteBucket=precommit-stagewebsite
