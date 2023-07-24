@@ -17,9 +17,9 @@ name: beam PreCommit Website Stage GCS
 
 on:
   push:
-    tags: ['v*']
-    branches: ['master', 'release-*']
-    paths: ['website/**']
+    # tags: ['v*']
+    # branches: ['master', 'release-*']
+    # paths: ['website/**']
   pull_request:
     #branches: ['master', 'release-*']
     paths: ['website/**']
