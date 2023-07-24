@@ -46,6 +46,7 @@ permissions:
 env:
   # PR_ID: ${{ github.event.number }} 
   ghprbPullId: ${{ github.event.pull_request.number }}
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   beam_PreCommit_Website_Stage_GCS:
