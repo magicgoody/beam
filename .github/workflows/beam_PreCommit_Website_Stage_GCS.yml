@@ -20,7 +20,7 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
     paths: ['website/**']
-  pull_request_target:
+  pull_request:
     #branches: ['master', 'release-*']
     paths: ['website/**']
   issue_comment:
@@ -47,7 +47,7 @@ jobs:
     beam_PreCommit_Website_Stage_GCS:
         if: |
           github.event_name == 'push' || 
-          github.event_name == 'pull_request_target' || 
+          github.event_name == 'pull_request' || 
           github.event.comment.body == 'Run Website_Stage_GCS PreCommit' || 
           github.event_name == 'schedule'
         runs-on: [self-hosted, ubuntu-20.04, main]
