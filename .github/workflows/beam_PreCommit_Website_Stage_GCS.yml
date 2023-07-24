@@ -93,5 +93,5 @@ jobs:
       - name: run website_stageWebsite script
         run: ./gradlew :website:stageWebsite
       - name: publish results
-        run: echo 'Website published to http://' + ${gcs_bucket} + '.storage.googleapis.com/' + ${baseUrl} + '/index.html' >> $GITHUB_STEP_SUMMARY
+        run: echo "Website published to http://${gcs_bucket}.storage.googleapis.com/${baseUrl}/index.html" >> $GITHUB_STEP_SUMMARY
         # run: gh run view --job=${{ github.run_id }} --log | grep -i 'Website published to'
