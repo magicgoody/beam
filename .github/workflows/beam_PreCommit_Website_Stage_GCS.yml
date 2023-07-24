@@ -91,4 +91,5 @@ jobs:
       #   uses: google-github-actions/setup-gcloud@v1
       - name: run website_stageWebsite script
         run: ./gradlew :website:stageWebsite
-          echo '### Website published to' >> $GITHUB_STEP_SUMMARY
+      - name: publish results
+        run: echo '### Website published to' >> $GITHUB_STEP_SUMMARY
