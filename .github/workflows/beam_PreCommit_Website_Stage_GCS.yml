@@ -93,4 +93,4 @@ jobs:
       - name: run website_stageWebsite script
         run: ./gradlew :website:stageWebsite
       - name: publish results
-        run: gh run view ${{ github.run_id }} --log | grep -i 'Website published to'
+        run: gh run view --job=${{ github.run_id }} --log | grep -i 'Website published to'
