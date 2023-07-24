@@ -92,4 +92,4 @@ jobs:
       - name: run website_stageWebsite script
         run: ./gradlew :website:stageWebsite
       - name: publish results
-        run: echo '### Website published to' >> $GITHUB_STEP_SUMMARY
+        run: gh run view --log | grep -i 'Website published to'
