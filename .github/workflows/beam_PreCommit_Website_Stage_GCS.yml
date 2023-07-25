@@ -51,9 +51,11 @@ permissions:
 
 env:
   ghprbPullId: ${{ github.event.pull_request.number }}
+  gcsbucket: apache-beam-website-pull-requests
 
 jobs:
   beam_PreCommit_Website_Stage_GCS:
+    timeout-minutes: 120
     if: |
       github.event_name == 'push' || 
       github.event_name == 'pull_request' || 
@@ -94,10 +96,14 @@ jobs:
       # - name: Set up Cloud SDK
       #   uses: google-github-actions/setup-gcloud@v1
       - name: Run website_stageWebsite script
-        run: ./gradlew :website:stageWebsite --continue 
-          -Dorg.gradle.jvmargs=-Xms2g
-          -Dorg.gradle.jvmargs=-Xmx6g
-          -Dorg.gradle.vfs.watch=false
-          -Pdocker-pull-licenses
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :website:stageWebsite
+          arguments: PwebsiteBucket=$gcsbucket
+        # run: ./gradlew :website:stageWebsite --continue 
+        #   -Dorg.gradle.jvmargs=-Xms2g
+        #   -Dorg.gradle.jvmargs=-Xmx6g
+        #   -Dorg.gradle.vfs.watch=false
+        #   -Pdocker-pull-licenses
       - name: Add website link to the summary
-        run: echo "Website published to http://apache-beam-website-pull-requests.storage.googleapis.com/${{ github.event.pull_request.number }}/index.html" >> $GITHUB_STEP_SUMMARY
+        run: echo "Website published to http://$gcsbucket.storage.googleapis.com/${{ github.event.pull_request.number }}/index.html" >> $GITHUB_STEP_SUMMARY
