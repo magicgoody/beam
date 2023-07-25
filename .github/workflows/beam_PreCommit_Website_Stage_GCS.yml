@@ -50,7 +50,7 @@ permissions:
   statuses: read
 
 env:
-  ghprbPullId: ${{ github.event.pull_request.number }}
+  ghprbPullId: ${{ github.event.number }}
   gcsbucket: apache-beam-website-pull-requests
 
 jobs:
@@ -106,4 +106,4 @@ jobs:
         #   -Dorg.gradle.vfs.watch=false
         #   -Pdocker-pull-licenses
       - name: Add website link to the summary
-        run: echo "Website published to http://$gcsbucket.storage.googleapis.com/$ghprbPullId/index.html" >> $GITHUB_STEP_SUMMARY
+        run: echo "Website published to http://$gcsbucket.storage.googleapis.com/${{ github.event.pull_request.number }}/index.html" >> $GITHUB_STEP_SUMMARY
