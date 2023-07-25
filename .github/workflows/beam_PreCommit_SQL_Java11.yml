@@ -17,8 +17,8 @@ name: PreCommit SQL Java11
 
 on:
   push:
-    tags: ['v*']
-    branches: ['master', 'release-*']
+    # tags: ['v*']
+    # branches: ['master', 'release-*']
     paths: ['sdks/java/extensions/sql/**','.github/workflows/beam_PreCommit_SQL_Java11.yml']
   pull_request:
     # branches: ['master', 'release-*']
