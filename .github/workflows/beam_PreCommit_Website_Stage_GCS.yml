@@ -44,7 +44,6 @@ permissions:
   statuses: read
 
 env:
-  # PR_ID: ${{ github.event.number }} 
   ghprbPullId: ${{ github.event.pull_request.number }}
 
 jobs:
@@ -73,7 +72,6 @@ jobs:
       - name: Setup self-hosted
         uses: ./.github/actions/setup-self-hosted-action
         with:
-          requires-py-37: false
           requires-py-39: false
           requires-go: false
       - name: Setup Gradle
