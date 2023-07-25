@@ -50,7 +50,7 @@ permissions:
   statuses: read
 
 env:
-  # ghprbPullId: ${{ github.event.issue.number }}
+  ghprbPullId: ''
   #   # ${{ github.event.pull_request.number || github.event.issue.number || github.event}}
   #   # ${{ github.event.pull_request }}
   gcsbucket: apache-beam-website-pull-requests
