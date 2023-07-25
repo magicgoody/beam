@@ -27,6 +27,12 @@ on:
     types: [created]
   schedule:
     - cron: '* */6 * * *'
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
   actions: write
@@ -78,17 +84,16 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
-      - name: Authenticate on GCP
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          export_default_credentials: true
-      # - name: Set up Cloud SDK
-      #   uses: google-github-actions/setup-gcloud@v1
-      - name: run website_stageWebsite script
-        run: ./gradlew :website:stageWebsite
-      - name: publish results
+      # - name: Authenticate on GCP
+      #   uses: google-github-actions/setup-gcloud@v0
+      #   with:
+      #     service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+      #     service_account_key: ${{ secrets.GCP_SA_KEY }}
+      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
+      #     export_default_credentials: true
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+      - name: Run website_stageWebsite script
+        run: ./gradlew :website:stageWebsite --continue -Dorg.gradle.jvmargs=-Xms2g -Dorg.gradle.jvmargs=-Xmx6g -Dorg.gradle.vfs.watch=false -Pdocker-pull-licenses
+      - name: Publish results
         run: echo "Website published to http://apache-beam-website-pull-requests.storage.googleapis.com/${{ github.event.pull_request.number }}/index.html" >> $GITHUB_STEP_SUMMARY
-        # run: gh run view --job=${{ github.run_id }} --log | grep -i 'Website published to'
