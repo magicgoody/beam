@@ -68,7 +68,7 @@ public class WordCountIT {
             .toString());
     WordCount.runWordCount(options);
     assertThat(
-        new NumberedShardedFile(options.getOutput()),
+        new NumberedShardedFile(options.getOutput() + "*-of-*"),
         fileContentsHaveChecksum(DEFAULT_OUTPUT_CHECKSUM));
   }
 }
