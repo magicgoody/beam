@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Website Stage GCS PreCommit 
+name: PreCommit Website Stage GCS  
 
 on:
   push:
@@ -26,12 +26,12 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '* */6 * * *'
+    - cron: '*/10 * * * *'
 
-# This allows a subsequently queued workflow run to interrupt previous runs
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
+# # This allows a subsequently queued workflow run to interrupt previous runs
+# concurrency:
+#   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+#   cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
@@ -50,7 +50,7 @@ permissions:
   statuses: read
 
 env:
-  gcsbucket: apache-beam-website-pull-requests
+  gcsbucket: apache-beam-website-pull-requests  
 
 jobs:
   beam_PreCommit_Website_Stage_GCS:
@@ -82,7 +82,7 @@ jobs:
         with:
           # Can be "open", "closed", or "all".  Defaults to "open".
           state: open
-      - name: echo PR name
+      - name: echo PR number
         if: success() && steps.findPr.outputs.number
         run: echo "ghprbPullId=${{ steps.findPr.outputs.pr }}" >> $GITHUB_ENV
       - name: Setup self-hosted
@@ -106,12 +106,12 @@ jobs:
         with:
           gradle-command: :website:stageWebsite
           arguments: -PwebsiteBucket=$gcsbucket
-      - name: Add website link to the summary if push, PR, comment
+      - name: Add website link to the summary
         if: |
-          github.event_name == 'push' ||
-          github.event_name == 'pull_request' ||
-          github.event.comment.body == 'Run Website_Stage_GCS PreCommit'
+          ${{ github.event_name == 'push' || github.event_name == 'pull_request_target' }} && ${{ github.ref != 'refs/heads/master' }}
         run: echo "Website published to http://$gcsbucket.storage.googleapis.com/$ghprbPullId/index.html" >> $GITHUB_STEP_SUMMARY
       - name: Add website link to the summary if cron
-        if: github.event_name == 'schedule'
-        run: echo "Website published to http://$gcsbucket.storage.googleapis.com/$baseUrl/index.html" >> $GITHUB_STEP_SUMMARY
+        if: ${{github.event_name != 'pull_request_target'}}
+        run: |
+          USERNAME="$(whoami)"
+          echo "Website published to http://$gcsbucket.storage.googleapis.com/$USERNAME-${GITHUB_REF##*/}/index.html" >> $GITHUB_STEP_SUMMARY 
