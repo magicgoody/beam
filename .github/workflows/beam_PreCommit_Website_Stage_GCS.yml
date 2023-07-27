@@ -26,11 +26,12 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '* */6 * * *'
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
   cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -61,7 +62,7 @@ jobs:
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Website_Stage_GCS PreCommit' 
     runs-on: [self-hosted, ubuntu-20.04, main]
-    name: beam_PreCommit_Website_Stage_GCS
+    name: beam_PreCommit_Website_Stage_GCS (Run Website_Stage_GCS PreCommit)
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
@@ -80,11 +81,13 @@ jobs:
         uses: jwalton/gh-find-current-pr@v1
         id: findPr
         with:
-          # Can be "open", "closed", or "all".  Defaults to "open".
           state: open
-      - name: echo PR number
+      - name: Echo PR number
         if: success() && steps.findPr.outputs.number
         run: echo "ghprbPullId=${{ steps.findPr.outputs.pr }}" >> $GITHUB_ENV
+      - name: Echo PR number on comment
+        if: github.event.comment.body == 'Run Website_Stage_GCS PreCommit'
+        run: echo "ghprbPullId=${{ github.event.issue.number }}" >> $GITHUB_ENV
       - name: Setup self-hosted
         uses: ./.github/actions/setup-self-hosted-action
         with:
@@ -106,8 +109,11 @@ jobs:
         with:
           gradle-command: :website:stageWebsite
           arguments: -PwebsiteBucket=$gcsbucket
-      - name: Add website link to the summary
-        if: |
-          github.event_name == 'push' ||
-          github.event_name == 'pull_request_target'
+      - name: Add website link to the summary if pr
+        if: steps.findPr.outputs.pr != null || github.event.issue.number != null
         run: echo "Website published to http://$gcsbucket.storage.googleapis.com/$ghprbPullId/index.html" >> $GITHUB_STEP_SUMMARY
+      - name: Add website link to the summary
+        if: steps.findPr.outputs.pr == null && github.event.issue.number == null
+        run: |
+          USERNAME="$(whoami)"
+          echo "Website published to http://$gcsbucket.storage.googleapis.com/$USERNAME-${GITHUB_REF##*/}/index.html" >> $GITHUB_STEP_SUMMARY 
