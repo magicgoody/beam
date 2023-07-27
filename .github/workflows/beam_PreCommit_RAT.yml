@@ -54,7 +54,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: refs/pull/${{ github.event.issue.number }}/head
       - name: Rerun on comment
         if: github.event.comment.body == 'Run RAT PreCommit'
         uses: ./.github/actions/rerun-job-action
