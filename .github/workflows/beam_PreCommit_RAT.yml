@@ -51,10 +51,12 @@ jobs:
     runs-on: [self-hosted, ubuntu-20.04]
     name: beam_PreCommit_RAT
     steps:
+      - uses: xt0rted/pull-request-comment-branch@v2
+        id: comment-branch
       - name: Check out repository code
         uses: actions/checkout@v3
         with:
-          ref: refs/pull/${{ github.event.issue.number }}/head
+          ref: ${{ steps.comment-branch.outputs.head_ref }}
       - name: Rerun on comment
         if: github.event.comment.body == 'Run RAT PreCommit'
         uses: ./.github/actions/rerun-job-action
