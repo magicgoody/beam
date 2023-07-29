@@ -93,11 +93,11 @@ jobs:
         with:
           gradle-command: :sqlPreCommit
           arguments: |
-            -PdisableSpotlessCheck=true
-            -PdisableCheckStyle=true
-            -PcompileAndRunTestsWithJava17
-            -PskipCheckerFramework
-            -Pjava17Home=$JAVA_HOME_17_X64
+            -PdisableSpotlessCheck=true \
+            -PdisableCheckStyle=true \
+            -PcompileAndRunTestsWithJava17 \
+            -PskipCheckerFramework \
+            -Pjava17Home=$JAVA_HOME_17_X64 \
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
