@@ -88,8 +88,6 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
-      - name: javac
-        run: export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -100,6 +98,7 @@ jobs:
             -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
             -Pjava17Home=$JAVA_HOME_17_X64 \
+            -PDorg.gradle.java.home=$JAVA_HOME_17_X64 \
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
