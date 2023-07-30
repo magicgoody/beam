@@ -98,7 +98,8 @@ jobs:
             -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
             -Pjava17Home=$JAVA_HOME_17_X64 \
-            -PXepDisableAllChecks=false \
+            -Ptarget=17 \
+            -Psource 17 \
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
