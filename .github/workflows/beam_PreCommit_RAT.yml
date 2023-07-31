@@ -61,7 +61,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-        if: contains(fromJSON('["push", "pull_request_target", "schedule1"]'), github.event_name)
+        if: contains(fromJSON('["push", "pull_request_target", "schedule"]'), github.event_name)
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Check out repository code if comment
