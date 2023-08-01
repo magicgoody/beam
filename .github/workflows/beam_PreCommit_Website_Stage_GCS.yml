@@ -78,16 +78,21 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
-      - name: Get Pull Request Number
+      # - name: Get Pull Request Number
+      #   id: pr
+      #   run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set output
         id: pr
-        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Find Current Pull Request
-        uses: jwalton/gh-find-current-pr@v1
-        id: findPr
-        with:
-          state: open
+        run: echo "ghprbPullId=$(gh pr view --json number -q .number || echo "")" >> $GITHUB_ENV
+      # - name: Find Current Pull Request
+      #   uses: jwalton/gh-find-current-pr@v1
+      #   id: findPr
+      #   with:
+      #     state: open
+      - name: echo PR
+        run: echo "$ghprbPullId"
       - name: Echo PR number
         run: echo "ghprbPullId=${{ steps.findPr.outputs.pr || github.event.issue.number }}" >> $GITHUB_ENV
       - name: Setup self-hosted
