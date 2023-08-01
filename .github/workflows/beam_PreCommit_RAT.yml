@@ -61,8 +61,14 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+        if: contains(fromJSON('["push", "pull_request_target", "schedule", "workflow_dispatch"]'), github.event_name)
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - name: Check out repository code if comment
+        uses: actions/checkout@v3
+        if: github.event.comment.body == 'Run RAT PreCommit'
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
       - name: Rerun on comment
         if: github.event.comment.body == 'Run RAT PreCommit'
         uses: ./.github/actions/rerun-job-action
