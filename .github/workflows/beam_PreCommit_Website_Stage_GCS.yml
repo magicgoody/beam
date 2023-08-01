@@ -79,7 +79,7 @@ jobs:
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}  
       - name: script
-        if: github.ref_name != 'master' || startsWith('release-', 're')
+        if: github.ref_name != 'master' || github.ref_name != startsWith('release-', 're')
         uses: actions/github-script@v6
         id: get_issue_number
         with:
