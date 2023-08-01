@@ -77,7 +77,7 @@ jobs:
         with:
           ref: refs/pull/${{ github.event.issue.number }}/head
       - name: Rerun on comment
-        if: github.event.comment.body == 'Run RAT PreCommit'
+        if: github.event.comment.body == 'Run Website_Stage_GCS PreCommit'
         uses: ./.github/actions/rerun-job-action
         with:
           pull_request_url: ${{ github.event.issue.pull_request.url }}
