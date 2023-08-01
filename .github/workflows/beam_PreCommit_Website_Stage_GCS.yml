@@ -76,6 +76,15 @@ jobs:
         if: github.event.comment.body == 'Run Website_Stage_GCS PreCommit'
         with:
           ref: refs/pull/${{ github.event.issue.number }}/head
+      - name: Rerun on comment
+        if: github.event.comment.body == 'Run RAT PreCommit'
+        uses: ./.github/actions/rerun-job-action
+        with:
+          pull_request_url: ${{ github.event.issue.pull_request.url }}
+          github_repository: ${{ github.repository }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_job: ${{ github.job }}
+          github_current_run_id: ${{ github.run_id }}
       - name: Get PR number on push
         if: github.ref_name != 'master' && startsWith(github.ref_name , 'release-') == false
         uses: actions/github-script@v6
