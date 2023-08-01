@@ -96,10 +96,8 @@ jobs:
                   repo: context.repo.repo,
                 })
               ).data[0].number;
-            }
-            if (steps.get_issue_number.outputs.result === null) {
-              continue
-            }
+            } else { continue }
+
           result-encoding: string
       - name: Issue number
         run: echo '${{steps.get_issue_number.outputs.result}}'
