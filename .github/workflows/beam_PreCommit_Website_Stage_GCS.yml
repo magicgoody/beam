@@ -78,6 +78,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
+      - name: Get Pull Request Number
+        id: pr
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Find Current Pull Request
         uses: jwalton/gh-find-current-pr@v1
         id: findPr
