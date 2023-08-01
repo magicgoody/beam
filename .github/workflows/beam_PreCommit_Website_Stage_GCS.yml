@@ -83,9 +83,29 @@ jobs:
         if: startsWith(github.ref_name , 'gimlis-') == false
         run: echo "$env.branchName and $github.ref_name"
       - name: script
-        if: github.ref_name != 'master' || startsWith(github.ref_name , 'release-') == false
+        if: github.ref_name != 'master'
         uses: actions/github-script@v6
         id: get_issue_number
+        with:
+          script: |
+            if (context.issue.number) {
+              // Return issue number if present
+              return context.issue.number;
+            } else {
+              // Otherwise return issue number from commit
+              return (
+                await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                  commit_sha: context.sha,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                })
+              ).data[0].number;
+            }
+          result-encoding: string
+      - name: script
+        if: startsWith(github.ref_name , 'release-') == false
+        uses: actions/github-script@v6
+        id: get_issue_numbero
         with:
           script: |
             if (context.issue.number) {
