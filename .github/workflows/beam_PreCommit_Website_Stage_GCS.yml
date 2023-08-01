@@ -83,7 +83,7 @@ jobs:
         if: startsWith(github.ref_name , 'gimlis-') == false
         run: echo "$env.branchName and $github.ref_name"
       - name: script
-        if: ${{ github.ref_name != 'master'}} || ${{ startsWith(github.ref_name , 'release-') == false }}
+        if: ${{ github.ref_name != 'master'}} && ${{ startsWith(github.ref_name , 'release-') == false }}
         uses: actions/github-script@v6
         id: get_issue_number
         with:
