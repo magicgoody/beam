@@ -78,7 +78,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}  
-      - name: script
+      - name: Get PR number on push
+        if: github.ref_name != 'master' && startsWith(github.ref_name , 'release-') == false
         uses: actions/github-script@v6
         id: get_issue_number
         with:
@@ -97,8 +98,6 @@ jobs:
               ).data[0].number;
             }
           result-encoding: string
-      - name: Issue number
-        run: echo '${{steps.get_issue_number.outputs.result}}'
       - name: Echo PR number
         run: echo "ghprbPullId=${{ steps.get_issue_number.outputs.result || github.event.issue.number }}" >> $GITHUB_ENV
       - name: Setup self-hosted
