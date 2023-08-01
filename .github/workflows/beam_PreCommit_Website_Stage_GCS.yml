@@ -79,7 +79,7 @@ jobs:
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}  
       - name: script
-        if: github.ref_name != 'master' || github.ref_name != 'release-**'
+        if: github.ref_name != 'master' || startsWith('release-', 'release')
         uses: actions/github-script@v6
         id: get_issue_number
         with:
@@ -96,8 +96,7 @@ jobs:
                   repo: context.repo.repo,
                 })
               ).data[0].number;
-            } else { continue }
-
+            }
           result-encoding: string
       - name: Issue number
         run: echo '${{steps.get_issue_number.outputs.result}}'
