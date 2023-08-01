@@ -78,6 +78,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}  
+      - name: get push number
+        run: |
+          echo "ghprbPullId=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
+      - name: get
+        run: echo "$ghprbPullId"
       - name: script
         if: github.ref_name != 'master'
         uses: actions/github-script@v6
