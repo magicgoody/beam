@@ -100,7 +100,7 @@ jobs:
       - name: Issue number
         run: echo '${{steps.get_issue_number.outputs.result}}'
       - name: Echo PR number
-        run: echo "ghprbPullId=${{ github.event.pull_request.number || steps.get_issue_number.outputs.result || github.event.issue.number }}" >> $GITHUB_ENV
+        run: echo "ghprbPullId=${{ steps.get_issue_number.outputs.result || github.event.issue.number }}" >> $GITHUB_ENV
       - name: Setup self-hosted
         uses: ./.github/actions/setup-self-hosted-action
         with:
