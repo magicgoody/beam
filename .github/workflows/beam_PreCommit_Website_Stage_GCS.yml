@@ -80,7 +80,7 @@ jobs:
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}  
       - name: test
-        if: startsWith(github.ref_name , 'release-')
+        if: startsWith(github.ref_name , 'gimlis-')
         run: echo "$env.branchName and $github.ref_name"
       - name: script
         if: github.ref_name != 'master' || startsWith(github.ref_name , 'release-') == ${{ false }}
