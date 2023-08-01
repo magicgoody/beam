@@ -82,11 +82,11 @@ jobs:
       - name: test
         run: echo "$env.branchName and $github.ref_name"
       - name: script
-        if: ${{ github.ref_name != 'master' || startsWith(github.ref_name, 'release-')  == false }}
+        if: !(github.ref_name == 'master' || startsWith(github.ref_name , 'release-'))
         uses: actions/github-script@v6
         id: get_issue_number
         with:
-          script: |
+          script: 
             if (context.issue.number) {
               // Return issue number if present
               return context.issue.number;
