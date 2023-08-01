@@ -53,7 +53,6 @@ permissions:
 env:
   gcsbucket: apache-beam-website-pull-requests  
   ghprbPullId:
-
 jobs:
   beam_PreCommit_Website_Stage_GCS:
     timeout-minutes: 120
@@ -79,7 +78,7 @@ jobs:
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}  
       - name: script
-        if: github.ref_name != 'master' || startsWith('release-', 're').github.ref_name
+        if: github.ref_name != 'master' || (startsWith('github.ref_name', 'release-'))
         uses: actions/github-script@v6
         id: get_issue_number
         with:
