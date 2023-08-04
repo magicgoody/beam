@@ -79,10 +79,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Java Home env set
-        run: echo "$JAVA_HOME_17_X64"
-        env: 
-          java17Home: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.8-7/x64
+      # - name: Java Home env set
+      #   run: echo "$JAVA_HOME_17_X64"
+      #   env: 
+      #     java17Home: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.8-7/x64
       - name: Install Python
         uses: actions/setup-python@v4
         with:
