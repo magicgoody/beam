@@ -91,7 +91,7 @@ jobs:
           flutter-version: '3.10.4'
           channel: 'stable'
       - name: Java home path
-        run: echo "$JAVA_HOME and $JAVA_HOME_17_X64 and @java17Home"
+        run: echo "$JAVA_HOME and $JAVA_HOME_17_X64 and $java17Home"
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
