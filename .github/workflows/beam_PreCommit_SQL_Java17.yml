@@ -50,9 +50,6 @@ permissions:
   security-events: read
   statuses: read
 
-# env:
-#   JAVA_HOME_17_X64:
-
 jobs:
   beam_PreCommit_SQL_Java17:
     timeout-minutes: 120
@@ -82,6 +79,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+      - name: Java Home env set
+        run: java17Home="$JAVA_HOME_17_X64"     
       - name: Install Python
         uses: actions/setup-python@v4
         with:
@@ -92,7 +91,7 @@ jobs:
           flutter-version: '3.10.4'
           channel: 'stable'
       - name: Java home path
-        run: echo "$JAVA_HOME and $JAVA_HOME_17_X64"
+        run: echo "$JAVA_HOME and $JAVA_HOME_17_X64 and @java17Home"
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -103,7 +102,6 @@ jobs:
             -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
             -Pjava17Home=$JAVA_HOME_17_X64 \
-            -PimageJavaVersion=17
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
