@@ -74,6 +74,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
+      - name: Set up Java 9
+        uses: actions/setup-java@v3.11.0
+        with:
+          distribution: 'temurin'
+          java-version: '9'
       - name: Set up Java 17
         uses: actions/setup-java@v3.11.0
         with:
