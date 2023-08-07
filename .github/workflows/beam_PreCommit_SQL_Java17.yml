@@ -91,7 +91,7 @@ jobs:
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: cleanTest :sqlPreCommit
+          gradle-command: :sqlPreCommit --no-build-cache
           arguments: |
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
