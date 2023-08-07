@@ -47,7 +47,7 @@ gradleEnterprise {
 
 buildCache {
   local {
-    isEnabled = true
+    isEnabled = false
   }
   remote<HttpBuildCache> {
     url = uri("https://beam-cache.apache.org/cache/")
