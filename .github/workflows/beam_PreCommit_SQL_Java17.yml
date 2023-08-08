@@ -98,7 +98,6 @@ jobs:
             -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
             -Pjava17Home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.8-7/x64 \
-            -PDorg.gradle.java.home=/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.8-7/x64 \
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
