@@ -74,6 +74,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ github.job }}
           github_current_run_id: ${{ github.run_id }}
+      - name: Set up Java 17
+        uses: actions/setup-java@v3.11.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Set up Java 11
         uses: actions/setup-java@v3.11.0
         with:
@@ -97,7 +102,7 @@ jobs:
             -PdisableCheckStyle=true \
             -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
-            -Pjava17Home=$JAVA_HOME \
+            -Pjava17Home=$JAVA_HOME_17_X64 \
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
