@@ -94,7 +94,9 @@ jobs:
           flutter-version: '3.10.4'
           channel: 'stable'
       - name: Env Java set
-        run: echo "JAVA_HOME=$JAVA_HOME JAVA_HOME_11=$JAVA_HOME_11_X64 JAVA_HOME_17=$JAVA_HOME_17_X64"
+        run: | 
+          echo "JAVA_HOME=$JAVA_HOME JAVA_HOME_11=$JAVA_HOME_11_X64 JAVA_HOME_17=$JAVA_HOME_17_X64"
+          gradle -v
         env:
           java17Home: $JAVA_HOME_17_X64
       - name: Build and Test
