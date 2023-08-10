@@ -17,7 +17,7 @@
  */
 package org.apache.beam.sdk.io.neo4j;
 
-import static org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Preconditions.checkArgument;
+import static org.apache.beam.vendor.guava.v32_1_2_jre.com.google.common.base.Preconditions.checkArgument;
 
 import com.google.auto.value.AutoValue;
 import java.io.Serializable;
@@ -45,7 +45,7 @@ import org.apache.beam.sdk.transforms.display.HasDisplayData;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.PDone;
 import org.apache.beam.sdk.values.TypeDescriptor;
-import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Preconditions;
+import org.apache.beam.vendor.guava.v32_1_2_jre.com.google.common.base.Preconditions;
 import org.checkerframework.checker.initialization.qual.Initialized;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -1164,13 +1164,7 @@ public class Neo4jIO {
       //
       TransactionWork<Void> transactionWork =
           transaction -> {
-            Result result = transaction.run(cypher, parametersMap);
-            while (result.hasNext()) {
-              // This just consumes any output but the function basically has no output
-              // To be revisited based on requirements.
-              //
-              result.next();
-            }
+            transaction.run(cypher, parametersMap).consume();
             return null;
           };
 
