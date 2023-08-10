@@ -96,7 +96,6 @@ jobs:
       - name: Env Java set
         run: | 
           echo "JAVA_HOME=$JAVA_HOME JAVA_HOME_11=$JAVA_HOME_11_X64 JAVA_HOME_16=$JAVA_HOME_16_X64"
-          gradle -v
         env:
           java17Home: $JAVA_HOME_16_X64
       - name: Build and Test
