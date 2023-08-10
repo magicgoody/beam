@@ -93,15 +93,10 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
-      - name: Env Java set
-        run: | 
-          echo "JAVA_HOME=$JAVA_HOME JAVA_HOME_18=$JAVA_HOME_8_X64 JAVA_HOME_17=$JAVA_HOME_17_X64"
-        env:
-          java17Home: $JAVA_HOME_16_X64
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sqlPreCommit --rerun-tasks --continue -Dorg.gradle.java.home=$JAVA_HOME
+          gradle-command: :sqlPreCommit
           arguments: |
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
