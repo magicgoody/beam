@@ -93,9 +93,10 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
-      - name: "Gradle check"
-        run: "./gradlew checkSetup"
-        id: local_env_install_gradle_check_ubuntu
+      - name: Env Java set
+        run: echo "JAVA_HOME=$JAVA_HOME JAVA_HOME_11=$JAVA_HOME_11_X64 JAVA_HOME_17=$JAVA_HOME_17_X64"
+        env:
+          java17Home: $JAVA_HOME_17_X64
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -105,7 +106,6 @@ jobs:
             -PdisableCheckStyle=true \
             -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
-            -Pjava17Home=$JAVA_HOME_11_X64 \
       - name: Archive JUnit Test Results
         uses: actions/upload-artifact@v3
         with:
