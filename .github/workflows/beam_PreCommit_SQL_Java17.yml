@@ -93,6 +93,9 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
+      - name: "Gradle check"
+        run: "./gradlew checkSetup"
+        id: local_env_install_gradle_check_ubuntu
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
