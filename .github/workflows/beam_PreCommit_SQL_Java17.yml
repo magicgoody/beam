@@ -99,7 +99,7 @@ jobs:
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sqlPreCommit --rerun-tasks
+          gradle-command: :sqlPreCommit --rerun-tasks --continue
           arguments: |
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
