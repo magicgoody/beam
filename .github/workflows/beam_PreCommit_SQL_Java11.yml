@@ -110,12 +110,12 @@ jobs:
         with:
           name: JUnit Test Results
           path: '**/build/test-results/**/*.xml'
-      - name: Archive SpotBugs Results
-        uses: actions/upload-artifact@v2
-        with:
-          name: SpotBugs Results
-          path: '**/build/reports/spotbugs/*.html'
+      # - name: Archive SpotBugs Results
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: SpotBugs Results
+      #     path: '**/build/reports/spotbugs/*.xml'
       - name: SpotBugs
         uses: jwgmeligmeyling/spotbugs-github-action@master
         with:
-          path: '**/build/reports/spotbugs/*.html'
+          path: '**/build/reports/spotbugs/*.xml'
