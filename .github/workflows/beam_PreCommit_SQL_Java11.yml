@@ -17,63 +17,62 @@ name: PreCommit SQL Java11
 
 on:
   push:
-    tags: ['v*']
-    branches: ['master', 'release-*']
+    # tags: ['v*']
+    # branches: ['master', 'release-*']
     paths: ['sdks/java/extensions/sql/**','.github/workflows/beam_PreCommit_SQL_Java11.yml']
-  pull_request_target:
-    branches: ['master', 'release-*']
-    paths: [sdks/java/extensions/sql/**]
+  pull_request:
+    # branches: ['master', 'release-*']
+    # paths: [sdks/java/extensions/sql/**]
   issue_comment:
     types: [created]
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
-
-#Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
-permissions:
-  actions: write
-  pull-requests: read
-  checks: read
-  contents: read
-  deployments: read
-  id-token: none
-  issues: read
-  discussions: read
-  packages: read
-  pages: read
-  repository-projects: read
-  security-events: read
-  statuses: read
-
+    - cron: '* */6 * * *'
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
+
+# Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
+permissions:
+    actions: write
+    pull-requests: read
+    checks: read
+    contents: read
+    deployments: read
+    id-token: none
+    issues: read
+    discussions: read
+    packages: read
+    pages: read
+    repository-projects: read
+    security-events: read
+    statuses: read
 
 jobs:
   beam_PreCommit_SQL_Java11:
-    name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-    strategy:
-      matrix:
-        job_name: ["beam_PreCommit_SQL_Java11"]
-        job_phrase: ["Run SQL_Java11 PreCommit"]
     timeout-minutes: 120
     if: |
       github.event_name == 'push' ||
-      github.event_name == 'pull_request_target' ||
+      github.event_name == 'pull_request' ||
       github.event_name == 'schedule' ||
-      github.event_name == 'workflow_dispatch' ||
       github.event.comment.body == 'Run SQL_Java11 PreCommit'
     runs-on: [self-hosted, ubuntu-20.04, main]
+    name: beam_PreCommit_SQL_Java11
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup repository
-        uses: ./.github/actions/setup-action
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          comment_phrase: ${{ matrix.job_phrase }}
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Rerun on comment
+        if: github.event.comment.body == 'Run SQL_Java11 PreCommit'
+        uses: ./.github/actions/rerun-job-action
+        with:
+          pull_request_url: ${{ github.event.issue.pull_request.url }}
+          github_repository: ${{ github.repository }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+          github_job: ${{ github.job }}
+          github_current_run_id: ${{ github.run_id }}
       - name: Set up Java
         uses: actions/setup-java@v3.8.0
         with:
@@ -111,11 +110,11 @@ jobs:
         with:
           name: JUnit Test Results
           path: '**/build/test-results/**/*.xml'
-      # - name: Archive SpotBugs Results
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: SpotBugs Results
-      #     path: '**/build/reports/spotbugs/*.xml'
+      - name: Archive SpotBugs Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: SpotBugs Results
+          path: '**/build/reports/spotbugs/*.html'
       - name: SpotBugs
         uses: jwgmeligmeyling/spotbugs-github-action@master
         with:
