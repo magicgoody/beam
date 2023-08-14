@@ -22,6 +22,8 @@ import java.util.stream.Collectors
 plugins {
   id 'org.apache.beam.module'
   id 'ca.coglinc.javacc'
+  id 'java'
+  id 'com.github.spotbugs' version '5.0.14'
 }
 applyJavaNature(
   generatedClassPatterns: [
@@ -279,4 +281,16 @@ test {
   evaluationDependsOn(":sdks:java:extensions:sql:udf-test-provider") // Needed to resolve jarPath.
   systemProperty "beam.sql.udf.test.jar_path", project(":sdks:java:extensions:sql:udf-test-provider").jarPath
   systemProperty "beam.sql.udf.test.empty_jar_path", emptyJar.archivePath
+}
+
+  // Run SpotBugs check
+spotbugsMain {
+  ignoreFailures = true
+  dependencies {
+    spotbugs 'com.github.spotbugs:spotbugs:4.7.3'
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
+  }
+  reports {
+    xml.enabled = true
+  }
 }
