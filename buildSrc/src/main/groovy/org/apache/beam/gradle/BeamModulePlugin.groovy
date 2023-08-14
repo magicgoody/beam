@@ -1341,6 +1341,7 @@ class BeamModulePlugin implements Plugin<Project> {
           reports {
             html.enabled = !project.jenkins.isCIBuild
             xml.enabled = project.jenkins.isCIBuild
+            xml.enabled = true
           }
         }
       }
