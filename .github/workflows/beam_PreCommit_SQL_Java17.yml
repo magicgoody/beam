@@ -42,8 +42,8 @@ permissions:
   packages: read
   pages: read
   repository-projects: read
-  security-events: read
-  statuses: write
+  security-events: write
+  statuses: read
 
 # # This allows a subsequently queued workflow run to interrupt previous runs
 # concurrency:
