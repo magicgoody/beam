@@ -13,15 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: PreCommit SQL Java17
+name: PreCommit Java GCP IO Direct
 
 on:
   push:
     tags: ['v*']
     branches: ['master', 'release-*']
     paths: ['sdks/java/extensions/sql/**','.github/workflows/beam_PreCommit_SQL_Java17.yml']
+
   pull_request_target:
-    branches: ['master', 'release-*', '100823*']
+    branches: ['master', 'release-*']
     paths: [sdks/java/extensions/sql/**]
   issue_comment:
     types: [created]
@@ -51,19 +52,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  beam_PreCommit_SQL_Java17:
+  beam_PreCommit_Java_GCP_IO_Direct_Commit:
     name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
     strategy:
       matrix:
-        job_name: ["beam_PreCommit_SQL_Java17"]
-        job_phrase: ["Run SQL_Java17 PreCommit"]
+        job_name: ["beam_PreCommit_Java_GCP_IO_Direct_Commit"]
+        job_phrase: ["Run Java_GCP_IO_Direct PreCommit"]
     timeout-minutes: 120
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request_target' ||
       github.event_name == 'schedule' ||
       github.event_name == 'workflow_dispatch' ||
-      github.event.comment.body == 'Run SQL_Java17 PreCommit'
+      github.event.comment.body == 'Run Java_GCP_IO_Direct PreCommit'
     runs-on: [self-hosted, ubuntu-20.04, main]
     steps:
       - uses: actions/checkout@v3
@@ -112,8 +113,9 @@ jobs:
         with:
           name: SpotBugs Results
           path: '**/build/reports/spotbugs/*.html'
-      - name: Publish Spotbugs Results
-        uses: jwgmeligmeyling/spotbugs-github-action@v1.2
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
         with:
-          name: Spotbugs
-          path: build/reports/spotbugs/*.xml
+          files: |
+            build/test-results/test/*.xml
