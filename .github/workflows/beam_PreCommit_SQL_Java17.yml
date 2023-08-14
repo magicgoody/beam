@@ -30,20 +30,20 @@ on:
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
-permissions:
-  actions: write
-  pull-requests: read
-  checks: read
-  contents: read
-  deployments: read
-  id-token: write
-  issues: read
-  discussions: read
-  packages: read
-  pages: read
-  repository-projects: read
-  security-events: read
-  statuses: read
+permissions: write-all
+  # actions: write
+  # pull-requests: read
+  # checks: read
+  # contents: read
+  # deployments: read
+  # id-token: none
+  # issues: read
+  # discussions: read
+  # packages: read
+  # pages: read
+  # repository-projects: read
+  # security-events: read
+  # statuses: read
 
 # # This allows a subsequently queued workflow run to interrupt previous runs
 # concurrency:
@@ -92,10 +92,10 @@ jobs:
         with:
           flutter-version: '3.10.4'
           channel: 'stable'
-      - name: Get registration token
-        id: getRegToken
-        run: |
-          curl -X POST -H \"Accept: application/vnd.github.v3+json\"  -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/myprofile/myrepo/actions/runners/registration-token
+      # - name: Get registration token
+      #   id: getRegToken
+      #   run: |
+      #     curl -X POST -H \"Accept: application/vnd.github.v3+json\"  -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/myprofile/myrepo/actions/runners/registration-token
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
