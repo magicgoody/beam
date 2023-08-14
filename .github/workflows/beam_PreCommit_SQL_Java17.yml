@@ -33,14 +33,14 @@ on:
 permissions:
   actions: write
   pull-requests: read
-  checks: read
+  checks: write
   contents: read
   deployments: read
   id-token: none
   issues: read
   discussions: read
   packages: read
-  pages: write
+  pages: read
   repository-projects: read
   security-events: read
   statuses: read
