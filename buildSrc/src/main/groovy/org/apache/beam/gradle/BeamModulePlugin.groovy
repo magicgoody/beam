@@ -1339,9 +1339,8 @@ class BeamModulePlugin implements Plugin<Project> {
         }
         project.tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
           reports {
-            // html.enabled = !project.jenkins.isCIBuild
-            // xml.enabled = project.jenkins.isCIBuild
-            xml.enabled = true
+            html.enabled = !project.jenkins.isCIBuild
+            xml.enabled = !project.jenkins.isCIBuild
           }
         }
       }
