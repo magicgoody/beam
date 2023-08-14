@@ -120,5 +120,5 @@ jobs:
         uses: jwgmeligmeyling/spotbugs-github-action@v1.2
         with:
           name: Spotbugs
-          path: build/reports/spotbugs/*.xml
+          path: '**/build/reports/spotbugs/*.xml'
           
