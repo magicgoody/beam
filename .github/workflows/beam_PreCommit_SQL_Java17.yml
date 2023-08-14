@@ -34,10 +34,10 @@ permissions:
   actions: write
   pull-requests: read
   checks: read
-  contents: write
+  contents: read
   deployments: read
   id-token: none
-  issues: read
+  issues: write
   discussions: read
   packages: read
   pages: read
