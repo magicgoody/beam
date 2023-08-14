@@ -40,9 +40,9 @@ permissions:
   issues: read
   discussions: read
   packages: read
-  pages: read
+  pages: write
   repository-projects: read
-  security-events: write
+  security-events: read
   statuses: read
 
 # # This allows a subsequently queued workflow run to interrupt previous runs
