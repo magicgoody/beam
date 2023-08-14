@@ -20,7 +20,7 @@ on:
     tags: ['v*']
     branches: ['master', 'release-*']
     paths: ['sdks/java/extensions/sql/**','.github/workflows/beam_PreCommit_SQL_Java17.yml']
-  pull_request_target:
+  pull_request:
     branches: ['master', 'release-*', '100823*']
     paths: [sdks/java/extensions/sql/**]
   issue_comment:
@@ -60,7 +60,7 @@ jobs:
     timeout-minutes: 120
     if: |
       github.event_name == 'push' ||
-      github.event_name == 'pull_request_target' ||
+      github.event_name == 'pull_request' ||
       github.event_name == 'schedule' ||
       github.event_name == 'workflow_dispatch' ||
       github.event.comment.body == 'Run SQL_Java17 PreCommit'
@@ -111,4 +111,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: SpotBugs Results
-          path: '**/build/reports/spotbugs/*.html'
+          path: '**/build/reports/spotbugs/*.xml'
+      - name: Publish Spotbugs Results
+        uses: jwgmeligmeyling/spotbugs-github-action@v1.2
+        with:
+          name: Spotbugs
+          path: build/reports/spotbugs/*.xml
