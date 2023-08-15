@@ -47,7 +47,7 @@ public class BeamSqlCli {
       builder.autoLoadUserDefinedFunctions();
     }
     builder.setPipelineOptions(pipelineOptions);
-    this.env = builder.build();
+    // this.env = builder.build();
     return this;
   }
 
