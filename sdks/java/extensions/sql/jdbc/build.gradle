@@ -18,7 +18,10 @@ import groovy.json.JsonOutput
  * limitations under the License.
  */
 
-plugins { id 'org.apache.beam.module' }
+plugins { 
+  id 'org.apache.beam.module' 
+  id 'jacoco'
+  }
 applyJavaNature( automaticModuleName: 'org.apache.beam.sdk.extensions.sql.jdbc',
   exportJavadoc: false,
   testShadowJar: true,

@@ -50,4 +50,4 @@ builder.build {
       inclusionPattern("**/org/apache/beam/sdk/extensions/sql/**")
     }
   }
-}
+} 
