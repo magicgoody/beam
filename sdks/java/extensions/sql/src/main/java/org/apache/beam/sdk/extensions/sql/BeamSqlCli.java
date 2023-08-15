@@ -31,6 +31,7 @@ import org.apache.beam.sdk.options.PipelineOptionsFactory;
   "nullness" // TODO(https://github.com/apache/beam/issues/20497)
 })
 public class BeamSqlCli {
+  public String testVariable;
   private BeamSqlEnv env;
   /** The store which persists all the table meta data. */
   private MetaStore metaStore;
@@ -47,7 +48,7 @@ public class BeamSqlCli {
       builder.autoLoadUserDefinedFunctions();
     }
     builder.setPipelineOptions(pipelineOptions);
-    // this.env = builder.build();
+    this.env = builder.build();
     return this;
   }
 
