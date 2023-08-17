@@ -18,7 +18,7 @@ name: PreCommit SQL Java17
 on:
   push:
     tags: ['v*']
-    branches: ['master', 'release-*']
+    branches: ['master', 'release-*', 'JUnit_Test_Results_action']
     paths: ['sdks/java/extensions/sql/**','.github/workflows/beam_PreCommit_SQL_Java17.yml']
   pull_request_target:
     branches: ['master', 'release-*']
