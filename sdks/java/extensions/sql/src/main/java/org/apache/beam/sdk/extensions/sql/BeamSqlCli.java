@@ -72,10 +72,6 @@ public class BeamSqlCli {
       Pipeline pipeline = Pipeline.create(options);
       BeamSqlRelUtils.toPCollection(pipeline, env.parseQuery(sqlString));
       pipeline.run();
-
-
-
-      
     }
   }
 }
