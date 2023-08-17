@@ -184,6 +184,7 @@ jobs:
           path: "**/build/reports/spotbugs/*.html"
       - name: Publish Spotbugs Results
         uses: jwgmeligmeyling/spotbugs-github-action@v1.2
+        if: always()
         with:
           name: Spotbugs
           path: '**/build/reports/spotbugs/*.html'
