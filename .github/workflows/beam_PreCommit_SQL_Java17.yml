@@ -109,4 +109,9 @@ jobs:
         with:
           name: Spotbugs
           path: '**/build/reports/spotbugs/*.html'
-
+      - name: Run check style
+        uses: nikitasavinov/checkstyle-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: 'github-pr-check'
+          tool_name: 'testtool'

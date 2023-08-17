@@ -31,7 +31,6 @@ import org.apache.beam.sdk.options.PipelineOptionsFactory;
   "nullness" // TODO(https://github.com/apache/beam/issues/20497)
 })
 public class BeamSqlCli {
-  public ExpectedException thrown = ExpectedException.none()
   private BeamSqlEnv env;
   /** The store which persists all the table meta data. */
   private MetaStore metaStore;
