@@ -30,20 +30,20 @@ on:
   workflow_dispatch:
 
 # Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
-permissions:
-  actions: write
-  pull-requests: read
-  checks: write
-  contents: read
-  deployments: read
-  id-token: none
-  issues: read
-  discussions: read
-  packages: read
-  pages: read
-  repository-projects: read
-  security-events: read
-  statuses: read
+permissions: write-all
+  # actions: write
+  # pull-requests: read
+  # checks: write
+  # contents: read
+  # deployments: read
+  # id-token: none
+  # issues: write
+  # discussions: read
+  # packages: read
+  # pages: read
+  # repository-projects: read
+  # security-events: read
+  # statuses: read
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
@@ -92,7 +92,7 @@ jobs:
       - name: Build and Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sqlPreCommit
+          gradle-command: :sqlPreCommit --continue
           arguments: |
             -PdisableSpotlessCheck=true \
             -PdisableCheckStyle=true \
@@ -109,3 +109,14 @@ jobs:
         with:
           name: Spotbugs
           path: '**/build/reports/spotbugs/*.html'
+      - name: Run check style
+        uses: nikitasavinov/checkstyle-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: 'github-pr-check'
+          tool_name: 'testtool'
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: '**/build/test-results/**/*.xml'
