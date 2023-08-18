@@ -189,4 +189,3 @@ jobs:
           name: Spotbugs
           path: '**/build/reports/spotbugs/*.html'
           
-          
