@@ -67,6 +67,8 @@ jobs:
       github.event.comment.body == 'Run SQL_Java11 PreCommit'
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: be2c4e66155853d94acf13369ee337d67ea1be68
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
@@ -110,4 +112,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: SpotBugs Results
+          path: '**/build/reports/spotbugs/*.html'
+      - name: Publish Spotbugs Results
+        uses: jwgmeligmeyling/spotbugs-github-action@v1.2
+        if: always()
+        with:
+          name: Spotbugs
           path: '**/build/reports/spotbugs/*.html'
