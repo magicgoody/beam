@@ -146,8 +146,8 @@ jobs:
   beam_PreCommit_Java:
     name: ${{matrix.job_name}} (${{matrix.job_phrase}})
     timeout-minutes: 180
-    # runs-on: [self-hosted, ubuntu-20.04, main]
-    runs-on: [ubuntu-local]
+    runs-on: [self-hosted, ubuntu-20.04, main]
+    # runs-on: [ubuntu-local]
     strategy:
       fail-fast: false
       matrix:
