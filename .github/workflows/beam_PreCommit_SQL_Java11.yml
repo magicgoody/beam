@@ -101,7 +101,6 @@ jobs:
           gradle-command: :sqlPreCommit
           arguments: |
             -PdisableSpotlessCheck=true \
-            -PdisableCheckStyle=true \
             -PcompileAndRunTestsWithJava11 \
             -PskipCheckerFramework \
             -Pjava11Home=$JAVA_HOME_11_X64 \
@@ -119,3 +118,6 @@ jobs:
         uses: jwgmeligmeyling/spotbugs-github-action@master
         with:
           path: '**/build/reports/spotbugs/*.xml'
+      - name: Sleep
+        if: always()
+        run: sleep 1200
