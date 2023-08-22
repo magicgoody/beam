@@ -71,9 +71,9 @@ public class BeamSqlLine {
       sqlLine.setOutputStream(new PrintStream(outputStream, false, Charsets.UTF_8.name()));
     }
 
-    if (errorStream != null) {
+    if (errorStream != null) 
       sqlLine.setErrorStream(new PrintStream(errorStream, false, Charsets.UTF_8.name()));
-    }
+    
 
     return sqlLine.begin(modifiedArgs, inputStream, true);
   }
