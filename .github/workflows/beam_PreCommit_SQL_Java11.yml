@@ -31,7 +31,7 @@ on:
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 # Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
@@ -118,6 +118,7 @@ jobs:
         uses: jwgmeligmeyling/spotbugs-github-action@master
         with:
           path: '**/build/reports/spotbugs/*.xml'
-      - name: Sleep
-        if: always()
-        run: sleep 1200
+      - name: Publish checkstyle check
+        uses: jwgmeligmeyling/checkstyle-github-action@master
+        with:
+          path: '**/build/reports/checkstyle/*.xml'
