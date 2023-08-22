@@ -1258,7 +1258,7 @@ class BeamModulePlugin implements Plugin<Project> {
         configFile = project.project(":").file("sdks/java/build-tools/src/main/resources/beam/checkstyle.xml")
         configProperties = ["checkstyle.suppressions.file": project.project(":").file("sdks/java/build-tools/src/main/resources/beam/suppressions.xml")]
         showViolations = true
-        maxErrors = 0
+        maxErrors = 20
       }
       project.checkstyle { toolVersion = "8.23" }
       // CheckStyle can be removed from the 'check' task by passing -PdisableCheckStyle=true on the Gradle

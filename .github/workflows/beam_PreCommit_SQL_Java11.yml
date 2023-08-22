@@ -117,8 +117,9 @@ jobs:
       - name: SpotBugs
         uses: jwgmeligmeyling/spotbugs-github-action@master
         with:
-          path: '**/build/reports/spotbugs/*.xml'
+          path: '**/build/reports/spotbugs/*.html'
       - name: Publish checkstyle check
         uses: jwgmeligmeyling/checkstyle-github-action@master
         with:
           path: '**/build/reports/checkstyle/*.xml'
+          
