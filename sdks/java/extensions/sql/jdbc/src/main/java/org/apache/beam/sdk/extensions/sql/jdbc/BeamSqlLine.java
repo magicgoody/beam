@@ -36,6 +36,9 @@ public class BeamSqlLine {
 
   private static final String NICKNAME = "BeamSQL";
 
+  
+  public static String SpotBUGStest;
+
   public static void main(String[] args) throws IOException {
     runSqlLine(args, null, System.out, System.err);
   }
