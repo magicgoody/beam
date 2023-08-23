@@ -120,6 +120,7 @@ jobs:
           path: '**/build/reports/spotbugs/*.html'
       - name: Publish checkstyle check
         uses: jwgmeligmeyling/checkstyle-github-action@master
+        if: always()
         with:
           path: '**/build/reports/checkstyle/*.xml'
           
