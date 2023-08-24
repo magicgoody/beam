@@ -36,7 +36,18 @@ public class BeamSqlLine {
 
   private static final String NICKNAME = "BeamSQL";
 
+  @Union({UnionCase1.class, UnionCase2.class})
+  private abstract static class DeterministicUnionBase {}
 
+  @Union({UnionCase1.class, UnionCase2.class, UnionCase3.class})
+  private abstract static class NonDeterministicUnionBase {}
+
+  private static class UnionCase1 extends DeterministicUnionBase {}
+
+  private static class UnionCase2 extends DeterministicUnionBase {
+    @SuppressWarnings("unused")
+    String field;
+  }
   
   public static void main(String[] args) throws IOException {
     runSqlLine(args, null, System.out, System.err);
