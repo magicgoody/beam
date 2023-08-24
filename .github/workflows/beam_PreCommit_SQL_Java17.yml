@@ -99,19 +99,9 @@ jobs:
             -PcompileAndRunTestsWithJava17 \
             -PskipCheckerFramework \
             -Pjava17Home=$JAVA_HOME_17_X64 \
-      - name: Archive JUnit Test Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: JUnit Test Results
-          path: '**/build/test-results/**/*.xml'
       - name: Publish Spotbugs Results
         uses: jwgmeligmeyling/spotbugs-github-action@v1.2
         if: always()
         with:
           name: Spotbugs
           path: '**/build/reports/spotbugs/*.html'
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          files: '**/build/reports/spotbugs/*.xml'
