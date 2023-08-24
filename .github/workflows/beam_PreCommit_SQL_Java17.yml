@@ -115,5 +115,3 @@ jobs:
         if: always()
         with:
           files: '**/build/reports/spotbugs/*.xml'
-
-        

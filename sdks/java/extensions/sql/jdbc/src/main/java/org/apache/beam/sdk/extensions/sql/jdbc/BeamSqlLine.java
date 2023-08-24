@@ -34,8 +34,10 @@ import sqlline.SqlLine.Status;
 /** {@link BeamSqlLine} provides default arguments to SqlLine. */
 public class BeamSqlLine {
 
-  private static final String nickName = "BeamSQL";
+  private static final String NICKNAME = "BeamSQL";
 
+
+  
   public static void main(String[] args) throws IOException {
     runSqlLine(args, null, System.out, System.err);
   }
