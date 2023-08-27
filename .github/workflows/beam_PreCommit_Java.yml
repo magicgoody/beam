@@ -172,10 +172,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      # - name: Install Go
-      #   uses: actions/setup-go@v4
-      #   with:
-      #     go-version: '1.21'
+      - name: Install Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
       - name: run Java PreCommit script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -190,6 +190,7 @@ jobs:
           path: "**/build/test-results/**/*.xml"
       - name: Archive SpotBugs Results
         uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: SpotBugs Results
           path: "**/build/reports/spotbugs/*.html"
