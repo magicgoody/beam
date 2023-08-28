@@ -172,10 +172,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - name: Install Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.21'
+      # - name: Install Go
+      #   uses: actions/setup-go@v4
+      #   with:
+      #     go-version: '1.21'
       - name: run Java PreCommit script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
