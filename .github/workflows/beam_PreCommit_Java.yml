@@ -201,3 +201,5 @@ jobs:
           path: '**/build/reports/spotbugs/*.xml'
       - name: Run SpotBugs with FindSecBugs
         uses: advanced-security/spotbugs-findsecbugs-action@v1
+        with:
+          spotbugs_target: 'sdks/java'
