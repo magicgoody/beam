@@ -85,25 +85,20 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: Set up Java 8
-        uses: actions/setup-java@v3.11.0
-        with:
-          distribution: 'temurin'
-          java-version: '8'
+      # - name: Set up Java 8
+      #   uses: actions/setup-java@v3.11.0
+      #   with:
+      #     distribution: 'temurin'
+      #     java-version: '8'
       - name: run Kafka IO build script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:java:io:kafka:build :sdks:java:io:kafka:kafkaVersionsCompatibilityTest
+          gradle-command: |
+            :sdks:java:io:kafka:build \
+            :sdks:java:io:kafka:kafkaVersionsCompatibilityTest \
           arguments: |
             -PdisableSpotlessCheck=true \
-            -PdisableCheckStyle=true \
-    #   - name: run Kafka VersionsCompatibilityTest script
-    #     uses: ./.github/actions/gradle-command-self-hosted-action
-    #     with:
-    #       gradle-command: :sdks:java:io:kafka:kafkaVersionsCompatibilityTest
-    #       arguments: |
-    #         -PdisableSpotlessCheck=true \
-    #         -PdisableCheckStyle=true \            
+            -PdisableCheckStyle=true \      
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
