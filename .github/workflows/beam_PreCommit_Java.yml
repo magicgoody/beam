@@ -126,20 +126,20 @@ concurrency:
   cancel-in-progress: true
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
-permissions:
-  actions: write
-  pull-requests: read
-  checks: read
-  contents: read
-  deployments: read
-  id-token: none
-  issues: read
-  discussions: read
-  packages: read
-  pages: read
-  repository-projects: read
-  security-events: read
-  statuses: read
+permissions: write-all
+  # actions: write
+  # pull-requests: read
+  # checks: read
+  # contents: read
+  # deployments: read
+  # id-token: none
+  # issues: read
+  # discussions: read
+  # packages: read
+  # pages: read
+  # repository-projects: read
+  # security-events: read
+  # statuses: read
 
 jobs:
   beam_PreCommit_Java:
@@ -187,4 +187,3 @@ jobs:
         if: always()
         with:
           files: '**/build/test-results/**/*.xml'
-          
