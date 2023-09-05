@@ -16,9 +16,6 @@
 name: PostCommit Go VR Spark
 
 on:
-  push:
-    branches: ['master', 'release-*']
-    paths: ['.github/workflows/beam_PostCommit_Go_VR_Spark.yml']
   issue_comment:
     types: [created]
   schedule:
@@ -54,7 +51,6 @@ concurrency:
 jobs:
   beam_PostCommit_Go_VR_Spark:
     if: |
-      github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Go Spark ValidatesRunner'
