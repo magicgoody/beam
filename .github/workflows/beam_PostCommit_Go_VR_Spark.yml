@@ -54,6 +54,7 @@ concurrency:
 jobs:
   beam_PostCommit_Go_VR_Spark:
     if: |
+      github.event_name == 'push' ||
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Go Spark ValidatesRunner'
