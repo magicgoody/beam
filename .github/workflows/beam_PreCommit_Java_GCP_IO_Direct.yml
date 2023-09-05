@@ -46,8 +46,9 @@ on:
       - "sdks/java/io/google-cloud-platform/**"
   issue_comment:
     types: [created]
+  schedule:
+    - cron: '0 */6 * * *'
   workflow_dispatch:
-# disable cron run because the tasks are covered by the single IO precommits below
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
@@ -67,7 +68,7 @@ permissions:
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}'
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
   cancel-in-progress: true
 
 env:
@@ -86,6 +87,7 @@ jobs:
     if: |
       github.event_name == 'push' ||
       github.event_name == 'pull_request_target' ||
+      github.event_name == 'schedule' ||
       github.event_name == 'workflow_dispatch' ||
       github.event.comment.body == 'Run Java_GCP_IO_Direct PreCommit'
     runs-on: [self-hosted, ubuntu-20.04, main]
