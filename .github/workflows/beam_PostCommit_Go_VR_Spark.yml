@@ -17,7 +17,6 @@ name: PostCommit Go VR Spark
 
 on:
   push:
-    tags: ['v*']
     branches: ['master', 'release-*']
     paths: ['.github/workflows/beam_PostCommit_Go_VR_Spark.yml']
   issue_comment:
@@ -79,4 +78,3 @@ jobs:
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:go:test:sparkValidatesRunner
-          
