@@ -58,7 +58,6 @@ jobs:
     timeout-minutes: 120
     name: ${{matrix.job_name}} (${{matrix.job_phrase}} ${{ matrix.python_version }})
     strategy:
-      fail-fast: false
       matrix:
         job_name: ["beam_PostCommit_TransformService_Direct"]
         job_phrase: ["Run TransformService_Direct PostCommit"]
