@@ -56,10 +56,10 @@ permissions:
   security-events: read
   statuses: read
 
-# This allows a subsequently queued workflow run to interrupt previous runs
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
-  cancel-in-progress: false
+# # This allows a subsequently queued workflow run to interrupt previous runs
+# concurrency:
+#   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.sender.login }}-${{ github.event.schedule }}'
+#   cancel-in-progress: false
 
 jobs:
   beam_PreCommit_Java_Kafka_IO_Direct:
@@ -90,7 +90,7 @@ jobs:
           gradle-command: :sdks:java:io:kafka:build :sdks:java:io:kafka:kafkaVersionsCompatibilityTest --no-parallel
           arguments: |
             -PdisableSpotlessCheck=true \
-            -PdisableCheckStyle=true \       
+            -PdisableCheckStyle=true \      
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
