@@ -89,10 +89,11 @@ jobs:
       - name: run Kafka IO build script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:java:io:kafka:build :sdks:java:io:kafka:kafkaVersionsCompatibilityTest --no-parallel
+          gradle-command: :sdks:java:io:kafka:build :sdks:java:io:kafka:kafkaVersionsCompatibilityTest
           arguments: |
             -PdisableSpotlessCheck=true \
-            -PdisableCheckStyle=true \      
+            -PdisableCheckStyle=true \
+            --no-parallel \
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
