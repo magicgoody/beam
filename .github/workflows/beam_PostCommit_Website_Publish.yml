@@ -27,14 +27,14 @@ permissions:
   actions: write
   pull-requests: read
   checks: read
-  contents: read
+  contents: write
   deployments: read
   id-token: none
   issues: read
   discussions: read
   packages: read
   pages: read
-  repository-projects: write
+  repository-projects: read
   security-events: read
   statuses: read
 
