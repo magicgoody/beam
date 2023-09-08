@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Beam – Apache Beam Roadmap Highlights</title><link>/roadmap/</link><description>Recent content in Apache Beam Roadmap Highlights on Apache Beam</description><generator>Hugo -- gohugo.io</generator><atom:link href="/roadmap/index.xml" rel="self" type="application/rss+xml"/><item><title>Roadmap: Beam SQL Roadmap</title><link>/roadmap/sql/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/sql/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache Beam – Apache Beam Roadmap Highlights</title><link>/roadmap/</link><description>Recent content in Apache Beam Roadmap Highlights on Apache Beam</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="/roadmap/index.xml" rel="self" type="application/rss+xml"/><item><title>Roadmap: Beam SQL Roadmap</title><link>/roadmap/sql/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/sql/</guid><description>
 &lt;!--
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ limitations under the License.
 &lt;p>This roadmap is in progress. In the meantime, here are available resources:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="/documentation/dsls/sql/overview">Beam SQL documentation&lt;/a>&lt;/li>
-&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/issues/?jql=project%20%3D%20BEAM%20AND%20component%20%3D%20dsl-sql">dsl-sql&lt;/a>&lt;/li>
+&lt;li>Issues: &lt;a href="https://github.com/apache/beam/issues?q=is%3Aopen+is%3Aissue+label%3Adsl-sql">dsl-sql&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>Roadmap: Connectors - Go SDK</title><link>/roadmap/connectors-go-sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/connectors-go-sdk/</guid><description>
 &lt;!--
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,14 +29,19 @@ limitations under the License.
 -->
 &lt;p>Roadmap for connectors developed using Go SDK.&lt;/p>
 &lt;ul>
-&lt;li>
-&lt;p>We hope to add a Splittable DoFn implementation to Go SDK to support developing new sources. In the
-meantime bounded sources can be developed in the form of ParDos. See
-&lt;a href="https://beam.apache.org/documentation/io/authoring-overview/">Authoring I/O Transforms&lt;/a> for more details.&lt;/p>
+&lt;li>Go SDK plans to utilize currently available Java and Python connectors
+through cross-language transforms feature.
+&lt;ul>
+&lt;li>KafkaIO via Java - DONE&lt;/li>
+&lt;li>BigQuery via Java - In Progress&lt;/li>
+&lt;li>Beam SQL via Java&lt;/li>
+&lt;/ul>
 &lt;/li>
-&lt;li>
-&lt;p>Go SDK plans to utilize currently available Java and Python connectors
-through cross-language transforms feature.&lt;/p>
+&lt;li>The Go SDK supports SplittableDoFns for bounded pipelines, so scalable bounded pipelines are possible.
+&lt;ul>
+&lt;li>The textio package supports &lt;a href="https://pkg.go.dev/github.com/apache/beam/sdks/v2/go/pkg/beam/io/textio#ReadSdf">ReadSdf&lt;/a> and &lt;a href="https://pkg.go.dev/github.com/apache/beam/sdks/v2/go/pkg/beam/io/textio#ReadAllSdf">ReadAllSdf&lt;/a> for efficient batch text reads.&lt;/li>
+&lt;li>A general FileIO will be produced to simplify adding new file based connectors.&lt;/li>
+&lt;/ul>
 &lt;/li>
 &lt;/ul></description></item><item><title>Roadmap: Connectors - Java SDK</title><link>/roadmap/connectors-java-sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/connectors-java-sdk/</guid><description>
 &lt;!--
@@ -53,7 +58,7 @@ limitations under the License.
 &lt;p>Roadmap for connectors developed using Java SDK.&lt;/p>
 &lt;h1 id="couchbase">Couchbase&lt;/h1>
 &lt;p>Couchbase is a NoSQL document-oriented database. See
-&lt;a href="https://issues.apache.org/jira/browse/BEAM-1893">BEAM-1893&lt;/a> for more details on the
+&lt;a href="https://github.com/apache/beam/issues/18381">Issue 18381&lt;/a> for more details on the
 planned Beam connector for Couchbase.&lt;/p>
 &lt;h1 id="influxdb">InfluxDB&lt;/h1>
 &lt;p>InfluxDB is a database for fast and highly available storage and retrieval
@@ -97,7 +102,7 @@ limitations under the License.
 &lt;h1 id="euphoria-api">Euphoria API&lt;/h1>
 &lt;p>Easy to use Java 8 DSL for the Beam Java SDK. Provides a high-level abstraction of Beam transformations, which is both easy to read and write. Can be used as a complement to existing Beam pipelines (convertible back and forth). You can have a glimpse of the API at &lt;a href="/documentation/sdks/java/euphoria/#wordcount-example">WordCount example&lt;/a>.&lt;/p>
 &lt;ul>
-&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/browse/BEAM-4366?jql=project%20%3D%20BEAM%20AND%20component%20%3D%20dsl-euphoria">dsl-euphoria&lt;/a> / &lt;a href="https://issues.apache.org/jira/browse/BEAM-3900">BEAM-3900&lt;/a>&lt;/li>
+&lt;li>Issues: &lt;a href="https://github.com/apache/beam/issues?q=is%3Aopen+is%3Aissue+label%3Adsl-euphoria">dsl-euphoria&lt;/a> / &lt;a href="https://issues.apache.org/jira/browse/BEAM-3900">BEAM-3900&lt;/a>&lt;/li>
 &lt;li>Contact: &lt;a href="mailto:dmvk@apache.org">David Moravek&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;h2 id="salted-join-implementation">&amp;ldquo;Salted&amp;rdquo; join implementation&lt;/h2>
@@ -127,7 +132,7 @@ limitations under the License.
 &lt;p>This roadmap is in progress. In the meantime, here are available resources:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="/documentation/runners/dataflow">Runner documentation&lt;/a>&lt;/li>
-&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/issues/?jql=project%20%3D%20BEAM%20AND%20component%20%3D%20runner-dataflow">runner-dataflow&lt;/a>&lt;/li>
+&lt;li>Issues: &lt;a href="https://github.com/apache/beam/issues?q=is%3Aopen+is%3Aissue+label%3Arunner-dataflow">runner-dataflow&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>Roadmap: Flink Runner Roadmap</title><link>/roadmap/flink-runner/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/flink-runner/</guid><description>
 &lt;!--
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -144,7 +149,7 @@ limitations under the License.
 &lt;p>This roadmap is in progress. In the meantime, here are available resources:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="/documentation/runners/flink">Runner documentation&lt;/a>&lt;/li>
-&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/issues/?jql=project%20%3D%20BEAM%20AND%20component%20%3D%20runner-flink">runner-flink&lt;/a>&lt;/li>
+&lt;li>Issues: &lt;a href="https://github.com/apache/beam/issues?q=is%3Aopen+is%3Aissue+label%3Arunner-flink">runner-flink&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>Roadmap: Go SDK Roadmap</title><link>/roadmap/go-sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/go-sdk/</guid><description>
 &lt;!--
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -158,61 +163,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 &lt;h1 id="go-sdk-roadmap">Go SDK Roadmap&lt;/h1>
-&lt;p>The Go SDK is currently experimental. As the first purely portable Beam SDK, the Go SDK is constrained
-by the status of the &lt;a href="https://beam.apache.org/roadmap/portability/">Beam Portability Framework&lt;/a> and the existence of
-portable runners.&lt;/p>
-&lt;p>&lt;strong>April 2020 Update&lt;/strong>
-This year we hope to move the SDK out of experimental at least for Batch usage.&lt;/p>
-&lt;p>To do so, there are a few blocking changes:&lt;/p>
+&lt;p>The Go SDK is &lt;a href="/blog/go-sdk-release/">fully released as of v2.33.0&lt;/a>.&lt;/p>
+&lt;p>The Go SDK the first SDK purely on the &lt;a href="/roadmap/portability/">Beam Portability Framework&lt;/a>
+and can execute pipelines on portable runners, like Flink, Spark, Samza, and Google Cloud Dataflow.&lt;/p>
+&lt;p>Current roadmap:&lt;/p>
 &lt;ul>
-&lt;li>Support Interoperability with other SDKs&lt;/li>
-&lt;li>Scalable IOs&lt;/li>
-&lt;li>Portability Proto stability&lt;/li>
-&lt;li>Go Ecosystem integration improvements&lt;/li>
+&lt;li>continue building up unbounded pipeline facing features, as described on the &lt;a href="https://cwiki.apache.org/confluence/display/BEAM/Supporting+Streaming+in+the+Go+SDK">Beam Dev Wiki&lt;/a>.&lt;/li>
+&lt;li>improve IO support via cross language transforms, and add scalable native transforms. &lt;a href="/roadmap/connectors-go-sdk/">Go SDK Connector Roadmap&lt;/a>&lt;/li>
 &lt;/ul>
-&lt;p>Interoperability while not a blocking feature in itself, requires Beam Schema support, which
-the SDK could then use as it&amp;rsquo;s default coder. Batch Splittable DoFns are nearly ready for
-playing with on Flink, and the Python Direct Runner, answering the scalable batch IO question.
-There&amp;rsquo;s much work getting the portability protos to a stable baseline. This will allow runner
-and SDK independance, so they don&amp;rsquo;t need to be updated in lockstep. Finally, the Go SDK should
-adopt Go Modules as it&amp;rsquo;s versioning solution, and officially &amp;ldquo;catch up&amp;rdquo; with the current beam
-version.&lt;/p>
-&lt;p>The Go SDK has the following goals for the next few months:&lt;/p>
-&lt;h2 id="usability">Usability&lt;/h2>
-&lt;ul>
-&lt;li>Beam Schema Support &lt;a href="https://issues.apache.org/jira/browse/BEAM-4124">BEAM-9615&lt;/a>&lt;/li>
-&lt;li>Improvements to starcgen &lt;a href="https://issues.apache.org/jira/browse/BEAM-9616">BEAM-9616&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;h2 id="integrating-with-the-go-ecosystem">Integrating with the Go ecosystem&lt;/h2>
-&lt;p>The authors of the Go SDK intended to keep the parts of the language we love, and intend for
-user pipelines to be as close to ordinary Go as possible, minimizing framework boiler plate code.&lt;/p>
-&lt;ul>
-&lt;li>Migrate to a vanity URL path &lt;a href="https://issues.apache.org/jira/browse/BEAM-4115">BEAM-4115&lt;/a>&lt;/li>
-&lt;li>Package versioning support &lt;a href="https://issues.apache.org/jira/browse/BEAM-5379">BEAM-5379&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;h2 id="implement-portability-features">Implement Portability features&lt;/h2>
-&lt;p>The following are dependant on the features being implemented in the Portability Framework.&lt;/p>
-&lt;ul>
-&lt;li>Splitable DoFns (SDFs) for Scalable IO &lt;a href="https://issues.apache.org/jira/browse/BEAM-3301">BEAM-3301&lt;/a>
-&lt;ul>
-&lt;li>This is the primary blocker for the Go SDK to scale to ingest large numbers of elements in both batch and streaming.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Triggers and Timers &lt;a href="https://issues.apache.org/jira/browse/BEAM-3304">BEAM-3304&lt;/a>&lt;/li>
-&lt;li>Advanced WindowFns
-&lt;ul>
-&lt;li>Session windows &lt;a href="https://issues.apache.org/jira/browse/BEAM-4152">BEAM-4152&lt;/a>&lt;/li>
-&lt;li>Custom WindowFns (dependant on streaming Splitable DoFn support) &lt;a href="https://issues.apache.org/jira/browse/BEAM-2939">BEAM-2939&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;p>Without SDFs, IOs are always constrained to work on a single machine prior to a sharding operation (like CoGroupByKey),
-which makes scalable IOs difficult to impossible to write.&lt;/p>
 &lt;p>Otherwise, improving examples and documentation for devs and users alike is ongoing.
 Contributions are welcome. Please contact the &lt;a href="mailto:dev@beam.apache.org?subject=%5BGo%20SDK%5D%20How%20can%20I%20help%3F">dev list&lt;/a>
 for assistance in finding a place to help out.&lt;/p>
 &lt;ul>
-&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/issues/?jql=project%20%3D%20BEAM%20AND%20component%20%3D%20sdk-go">sdk-go&lt;/a>&lt;/li>
+&lt;li>Issues: &lt;a href="https://github.com/apache/beam/issues?q=is%3Aopen+is%3Aissue+label%3Asdk-go">sdk-go&lt;/a>&lt;/li>
 &lt;li>Contact: Robert Burke (@lostluck) &lt;a href="mailto:lostluck@apache.org?subject=%5BGo%20SDK%20Roadmap%5D">Email&lt;/a> - Please also cc the &lt;a href="mailto:dev@beam.apache.org">dev@beam.apache.org&lt;/a> list. I strongly prefer public discussion of Go SDK matters.&lt;/li>
 &lt;/ul></description></item><item><title>Roadmap: Java SDK Roadmap</title><link>/roadmap/java-sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/java-sdk/</guid><description>
 &lt;!--
@@ -227,12 +190,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 &lt;h1 id="java-sdk-roadmap">Java SDK Roadmap&lt;/h1>
-&lt;h2 id="next-java-lts-version-support-java-11--189">Next Java LTS version support (Java 11 / 18.9)&lt;/h2>
+&lt;h2 id="next-java-lts-version-support-java-17">Next Java LTS version support (Java 17)&lt;/h2>
 &lt;p>Work to support the next LTS release of Java is in progress. For more details
 about the scope and info on the various tasks please see the JIRA ticket.&lt;/p>
 &lt;ul>
-&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/browse/BEAM-2530">BEAM-2530&lt;/a>&lt;/li>
-&lt;li>Contact: &lt;a href="mailto:mwalenia@apache.org">Michał Walenia&lt;/a>&lt;/li>
+&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/browse/BEAM-12240">BEAM-12240&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>Roadmap: Multi-SDK Connector Efforts</title><link>/roadmap/connectors-multi-sdk/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/connectors-multi-sdk/</guid><description>
 &lt;!--
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -250,7 +212,7 @@ limitations under the License.
 &lt;p>Splittable DoFn is the next generation sources framework for Beam that will
 replace current frameworks for developing bounded and unbounded sources.
 Splittable DoFn is being developed along side current Beam portability
-efforts. See &lt;a href="https://beam.apache.org/roadmap/portability/">Beam portability framework roadmap&lt;/a> for more details.&lt;/p>
+efforts. See &lt;a href="/roadmap/portability/">Beam portability framework roadmap&lt;/a> for more details.&lt;/p>
 &lt;h1 id="cross-language-transforms">Cross-language transforms&lt;/h1>
 &lt;p>&lt;em>Last updated on May 2020.&lt;/em>&lt;/p>
 &lt;p>As an added benefit of Beam portability effort, we are able to utilize Beam transforms across SDKs. This has many benefits.&lt;/p>
@@ -264,7 +226,7 @@ efforts. See &lt;a href="https://beam.apache.org/roadmap/portability/">Beam port
 &lt;/li>
 &lt;li>Ease of developing and maintaining Beam transforms - in general, with cross-language transforms, Beam transform authors will be able to implement new Beam transforms using a
 language of choice and utilize these transforms from other languages reducing the maintenance and support overheads.&lt;/li>
-&lt;li>&lt;a href="https://beam.apache.org/documentation/dsls/sql/overview/">Beam SQL&lt;/a>, that is currently only available to Java SDK, will become available to Python and Go SDKs.&lt;/li>
+&lt;li>&lt;a href="/documentation/dsls/sql/overview/">Beam SQL&lt;/a>, that is currently only available to Java SDK, will become available to Python and Go SDKs.&lt;/li>
 &lt;li>&lt;a href="https://www.tensorflow.org/tfx/transform/get_started">Beam TFX transforms&lt;/a>, that are currently only available to Beam Python SDK pipelines will become available to Java and Go SDKs.&lt;/li>
 &lt;/ul>
 &lt;h2 id="completed-and-ongoing-efforts">Completed and Ongoing Efforts&lt;/h2>
@@ -355,11 +317,11 @@ limitations under the License.
 &lt;h1 id="portability-framework-roadmap">Portability Framework Roadmap&lt;/h1>
 &lt;h2 id="overview">Overview&lt;/h2>
 &lt;p>Interoperability between SDKs and runners is a key aspect of Apache
-Beam. So far, however, the reality is that most runners support the
-Java SDK only, because each SDK-runner combination requires non-trivial
-work on both sides. All runners are also currently written in Java,
+Beam. Previously, the reality was that most runners supported the
+Java SDK only, because each SDK-runner combination required non-trivial
+work on both sides. Most runners are also currently written in Java,
 which makes support of non-Java SDKs far more expensive. The
-&lt;em>portability framework&lt;/em> aims to rectify this situation and provide
+&lt;em>portability framework&lt;/em> rectified this situation and provided
 full interoperability across the Beam ecosystem.&lt;/p>
 &lt;p>The portability framework introduces well-defined, language-neutral
 data structures and protocols between the SDK and runner. This interop
@@ -410,60 +372,16 @@ the portability API, perhaps exclusively.&lt;/p>
 &lt;p>If you are interested in digging in to the designs, you can find
 them on the &lt;a href="https://cwiki.apache.org/confluence/display/BEAM/Design+Documents">Beam developers&amp;rsquo; wiki&lt;/a>.
 Another overview can be found &lt;a href="https://docs.google.com/presentation/d/1Yg8Xm4fb-oRjiLQjwLt5153hpwwTLclZrVOKP2hQifo/edit#slide=id.g42e4c9aad6_1_3070">here&lt;/a>.&lt;/p>
-&lt;h2 id="milestones">Milestones&lt;/h2>
-&lt;p>The portability framework is a substantial effort that touches every
-Beam component. In addition to the sheer magnitude, a major challenge
-is engineering an interop layer that does not significantly compromise
-performance due to the additional serialization overhead of a
-language-neutral protocol.&lt;/p>
-&lt;p>The proposed project phases are roughly as follows and are not
-strictly sequential, as various components will likely move at
-different speeds. Additionally, there have been (and continues to be)
-supporting refactorings that are not always tracked as part of the
-portability effort. Work already done is not tracked here either.&lt;/p>
-&lt;ul>
-&lt;li>
-&lt;p>&lt;strong>P1 [MVP]&lt;/strong>: Implement the fundamental plumbing for portable SDKs
-and runners for batch and streaming, including containers and the
-ULR
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2899">BEAM-2899&lt;/a>]. Each
-SDK and runner should use the portability framework at least to the
-extent that wordcount
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2896">BEAM-2896&lt;/a>] and
-windowed wordcount
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2941">BEAM-2941&lt;/a>] run
-portably.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;strong>P2 [Feature complete]&lt;/strong>: Design and implement portability support
-for remaining execution-side features, so that any pipeline from
-any SDK can run portably on any runner. These features include side
-inputs
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2863">BEAM-2863&lt;/a>], User state [&lt;a href="https://issues.apache.org/jira/browse/BEAM-2862">BEAM-2862&lt;/a>], User
-timers
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2925">BEAM-2925&lt;/a>],
-Splittable DoFn
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2896">BEAM-2896&lt;/a>] and
-more. Each SDK and runner should use the portability framework at
-least to the extent that the mobile gaming examples
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2940">BEAM-2940&lt;/a>] run
-portably.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;strong>P3 [Performance]&lt;/strong>: Measure and tune performance of portable
-pipelines using benchmarks such as Nexmark. Features such as
-progress reporting
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2940">BEAM-2940&lt;/a>],
-combiner lifting
-[&lt;a href="https://issues.apache.org/jira/browse/BEAM-2937">BEAM-2937&lt;/a>] and
-fusion are expected to be needed.&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;strong>P4 [Cross language]&lt;/strong>: Design and implement cross-language
-pipeline support, including how the ecosystem of shared transforms
-should work.&lt;/p>
-&lt;/li>
-&lt;/ul>
+&lt;h2 id="status">Status&lt;/h2>
+&lt;p>All SDKs currently support the portability framework.
+There is also a Python Universal Local Runner and shared java runners library.
+Performance is good and multi-language pipelines are supported.
+Currently, the Flink and Spark runners support portable pipeline execution
+(which is used by default for SDKs other than Java),
+as does Dataflow when using the &lt;a href="https://cloud.google.com/dataflow/docs/guides/deploying-a-pipeline#dataflow-runner-v2">Dataflow Runner v2&lt;/a>.
+See the
+&lt;a href="https://s.apache.org/apache-beam-portability-support-table">Portability support table&lt;/a>
+for details.&lt;/p>
 &lt;h2 id="issues">Issues&lt;/h2>
 &lt;p>The portability effort touches every component, so the &amp;ldquo;portability&amp;rdquo;
 label is used to identify all portability-related issues. Pure
@@ -471,16 +389,7 @@ design or proto definitions should use the &amp;ldquo;beam-model&amp;rdquo; comp
 common pattern for new portability features is that the overall
 feature is in &amp;ldquo;beam-model&amp;rdquo; with subtasks for each SDK and runner in
 their respective components.&lt;/p>
-&lt;p>&lt;strong>JIRA:&lt;/strong> &lt;a href="https://issues.apache.org/jira/issues/?jql=project%20%3D%20BEAM%20AND%20resolution%20%3D%20Unresolved%20AND%20labels%20%3D%20portability%20order%20by%20priority%20DESC%2Cupdated%20DESC">query&lt;/a>&lt;/p>
-&lt;h2 id="status">Status&lt;/h2>
-&lt;p>MVP, and FeatureCompletness nearly done for
-SDKs, Python ULR, and shared java runners library.
-Performance is good and multi-language pipelines are supported.
-Currently, the Flink and Spark runners support portable pipeline execution,
-as does Dataflow when using the &lt;a href="https://cloud.google.com/dataflow/docs/guides/deploying-a-pipeline#dataflow-runner-v2">Dataflow Runner v2&lt;/a>.
-See the
-&lt;a href="https://s.apache.org/apache-beam-portability-support-table">Portability support table&lt;/a>
-for details.&lt;/p>
+&lt;p>&lt;strong>Issues:&lt;/strong> &lt;a href="https://github.com/apache/beam/issues?q=is%3Aopen+is%3Aissue+label%3Aportability">query&lt;/a>&lt;/p>
 &lt;p>Prerequisites: &lt;a href="https://docs.docker.com/compose/install/">Docker&lt;/a>, &lt;a href="https://docs.python-guide.org/starting/install3/linux/">Python&lt;/a>, &lt;a href="https://openjdk.java.net/install/">Java 8&lt;/a>&lt;/p>
 &lt;h3 id="python-on-flink">Running Python wordcount on Flink&lt;/h3>
 &lt;p>The Beam Flink runner can run Python pipelines in batch and streaming modes.
@@ -536,7 +445,7 @@ limitations under the License.
 &lt;p>This roadmap is in progress. In the meantime, here are available resources:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="/documentation/runners/samza">Runner documentation&lt;/a>&lt;/li>
-&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/issues/?jql=project%20%3D%20BEAM%20AND%20component%20%3D%20runner-samza">runner-samza&lt;/a>&lt;/li>
+&lt;li>Issues: &lt;a href="https://github.com/apache/beam/issues?q=is%3Aopen+is%3Aissue+label%3Arunner-samza">runner-samza&lt;/a>&lt;/li>
 &lt;/ul></description></item><item><title>Roadmap: Spark Runner Roadmap</title><link>/roadmap/spark-runner/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/roadmap/spark-runner/</guid><description>
 &lt;!--
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -572,5 +481,5 @@ limitations under the License.
 &lt;p>This roadmap is in progress. In the meantime, here are available resources:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="/documentation/runners/twister2">Runner documentation&lt;/a>&lt;/li>
-&lt;li>JIRA: &lt;a href="https://issues.apache.org/jira/browse/BEAM-10830?jql=project%20%3D%20BEAM%20AND%20component%20%3D%20runner-twister2">runner-twister2&lt;/a>&lt;/li>
+&lt;li>Issues: &lt;a href="https://github.com/apache/beam/issues?q=is%3Aopen+is%3Aissue+label%3Arunner-twister2">runner-twister2&lt;/a>&lt;/li>
 &lt;/ul></description></item></channel></rss>
