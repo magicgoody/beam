@@ -34,7 +34,7 @@ permissions:
   discussions: read
   packages: read
   pages: read
-  repository-projects: read
+  repository-projects: write
   security-events: read
   statuses: read
 
@@ -62,3 +62,4 @@ jobs:
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :website:clean :website:publishWebsite
+          arguments: -PgitPublishRemote="https//github.com/magicgoody/beam.git"
