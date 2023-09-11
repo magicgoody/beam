@@ -79,7 +79,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-      - name: run PostCommit Java Jpms Dataflow Java17 script
+      - name: run PostCommit Java Jpms Direct Java17 script
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:jpms-tests:directRunnerIntegrationTest
