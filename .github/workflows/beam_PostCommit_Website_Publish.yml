@@ -23,20 +23,20 @@ on:
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
-permissions: write-all
-  # actions: write
-  # pull-requests: read
-  # checks: read
-  # contents: write
-  # deployments: read
-  # id-token: none
-  # issues: read
-  # discussions: read
-  # packages: read
-  # pages: read
-  # repository-projects: read
-  # security-events: read
-  # statuses: read
+permissions:
+  actions: write
+  pull-requests: read
+  checks: read
+  contents: write
+  deployments: read
+  id-token: none
+  issues: read
+  discussions: read
+  packages: read
+  pages: read
+  repository-projects: read
+  security-events: read
+  statuses: read
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
