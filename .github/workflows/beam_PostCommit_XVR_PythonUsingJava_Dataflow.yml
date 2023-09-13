@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: PostCommit XVR Flink
+name: PostCommit XVR PythonUsingJava Dataflow
 
 on:
   issue_comment:
@@ -43,25 +43,24 @@ concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.issue.number || github.event.pull_request.head.label || github.sha || github.head_ref || github.ref }}-${{ github.event.schedule || github.event.comment.body || github.event.sender.login}}'
   cancel-in-progress: true
 
-env:
+# env:
 #   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
 #   GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
 #   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
-  FlinkVersion: 1.15
 
 jobs:
-  beam_PostCommit_XVR_Flink:
+  beam_PostCommit_XVR_PythonUsingJava_Dataflow:
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run XVR_Flink PostCommit'
+      github.event.comment.body == 'Run XVR_PythonUsingJava_Dataflow PostCommit'
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 100
     name: ${{matrix.job_name}} (${{matrix.job_phrase}} ${{ matrix.python_version }})
     strategy:
       matrix:
-        job_name: ["beam_PostCommit_XVR_Flink"]
-        job_phrase: ["Run XVR_Flink PostCommit"]
+        job_name: ["beam_PostCommit_XVR_PythonUsingJava_Dataflow"]
+        job_phrase: ["Run XVR_PythonUsingJava_Dataflow PostCommit"]
         python_version: ['3.8','3.11']
     steps:
       - uses: actions/checkout@v3
@@ -77,31 +76,17 @@ jobs:
           python-version: |
             3.8
             3.11
-      - name: run PostCommit XVR Flink script
+      - name: run PostCommit XVR PythonUsingJava Dataflow script
         env:
           CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
-        if: ${{ matrix.python_version != '3.8' }}
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :runners:flink:${{ env.FlinkVersion }}:job-server:validatesCrossLanguageRunner
+          gradle-command: :runners:google-cloud-dataflow-java:validatesCrossLanguageRunnerPythonUsingJava
           arguments: |
             -PpythonVersion=${{ matrix.python_version }} \
-            -PskipNonPythonTask=true \
-            --no-parallel \
-      - name: run PostCommit XVR Flink script
-        env:
-          CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
-        if: ${{ matrix.python_version == '3.8' }}
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :runners:flink:${{ env.FlinkVersion }}:job-server:validatesCrossLanguageRunner
-          arguments: |
-            -PpythonVersion=${{ matrix.python_version }} \
-            -PskipNonPythonTask=false \
-            --no-parallel \
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         if: always()
         with:
           name: archiveJunit
-          path: "**/build/test-results/**/*.xml"
+          path: "**/pytest*.xml"
