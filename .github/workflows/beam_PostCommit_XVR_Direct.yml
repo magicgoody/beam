@@ -77,12 +77,21 @@ jobs:
             3.8
             3.11
       - name: run PostCommit XVR Direct script
+        if: ${{ matrix.python_version != '3.8' }}
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:python:test-suites:direct:xlang:validatesCrossLanguageRunner
           arguments: |
             -PpythonVersion=${{ matrix.python_version }} \
-            -PskipNonPythonTask=
+            -PskipNonPythonTask=true \
+      - name: run PostCommit XVR Direct script
+        if: ${{ matrix.python_version == '3.8' }}
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:python:test-suites:direct:xlang:validatesCrossLanguageRunner
+          arguments: |
+            -PpythonVersion=${{ matrix.python_version }} \
+            -PskipNonPythonTask=false \
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         if: always()
