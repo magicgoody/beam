@@ -85,6 +85,7 @@ jobs:
           arguments: |
             -PpythonVersion=${{ matrix.python_version }} \
             -PskipNonPythonTask=true \
+            --no-parallel \
       - name: run PostCommit XVR Flink script
         if: ${{ matrix.python_version == '3.8' }}
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -93,6 +94,7 @@ jobs:
           arguments: |
             -PpythonVersion=${{ matrix.python_version }} \
             -PskipNonPythonTask=false \
+            --no-parallel \
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         if: always()
