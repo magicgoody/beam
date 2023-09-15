@@ -58,7 +58,6 @@ env:
     --dataDirectory=gs://beam-tpcds/datasets/parquet/nonpartitioned 
     --resultsDirectory=gs://beam-tpcds/results/dataflow/ 
     --tpcParallel=1 
-    --queries=3,7,10,25,26,29,35,38,40,42,43,52,55,69,79,83,84,87,93,96
   tpcdsBigQueryArgs: |
     --bigQueryTable=tpcds 
     --bigQueryDataset=tpcds 
