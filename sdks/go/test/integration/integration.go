@@ -38,11 +38,11 @@ package integration
 import (
 	"fmt"
 	"math/rand"
+	"os"
 	"regexp"
 	"strings"
 	"testing"
 	"time"
-	"os"
 
 	// common runner flag.
 	"github.com/apache/beam/sdks/v2/go/pkg/beam/options/jobopts"
@@ -140,6 +140,8 @@ var portableFilters = []string{
 }
 
 var prismFilters = []string{
+	// The prism runner does not yet support cross-language.
+	"TestXLang.*",
 	// The prism runner does not support the TestStream primitive
 	"TestTestStream.*",
 	// The trigger and pane tests uses TestStream
@@ -302,8 +304,8 @@ func CheckFilters(t *testing.T) {
 		panic("ptest.Main() has not been called: please override TestMain to ensure that the integration test runs properly.")
 	}
 
+	// TODO(https://github.com/apache/beam/issues/28227): Grant github-actions service account permission to healthcare.fhirStores.create.
 	var user = os.Getenv("USER")
-	// TODO: github-actions service account doesn't have permission to healthcare.fhirStores.create.
 	if user == "github-actions" {
 		dataflowFilters = append(dataflowFilters, "TestFhirIO.*")
 	}
@@ -325,7 +327,6 @@ func CheckFilters(t *testing.T) {
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 	*jobopts.JobName = fmt.Sprintf("go-%v-%v", strings.ToLower(n), r1.Intn(1000))
-	
 	// Test for runner-specific skipping second.
 	var filters []string
 	runner := *ptest.Runner

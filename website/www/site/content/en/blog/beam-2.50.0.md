@@ -1,6 +1,6 @@
 ---
 title:  "Apache Beam 2.50.0"
-date:   2023-08-20 09:00:00 -0400
+date:   2023-08-30 09:00:00 -0400
 categories:
   - blog
   - release
@@ -21,13 +21,11 @@ limitations under the License.
 
 We are happy to present the new 2.50.0 release of Beam.
 This release includes both improvements and new functionality.
-See the [download page](/get-started/downloads/#2500-2023-08-20) for this release.
+See the [download page](/get-started/downloads/#2500-2023-08-30) for this release.
 
 <!--more-->
 
 For more information on changes in 2.50.0, check out the [detailed release notes](https://github.com/apache/beam/milestone/14).
-
-# [2.50.0] - Unreleased
 
 ## Highlights
 
@@ -79,15 +77,17 @@ For more information on changes in 2.50.0, check out the [detailed release notes
 
 * Fixed DirectRunner bug in Python SDK where GroupByKey gets empty PCollection and fails when pipeline option `direct_num_workers!=1`.([#27373](https://github.com/apache/beam/pull/27373))
 * Fixed BigQuery I/O bug when estimating size on queries that utilize row-level security ([#27474](https://github.com/apache/beam/pull/27474))
+* Beam Python containers rely on a version of Debian/aom that has several security vulnerabilities: [CVE-2021-30474](https://nvd.nist.gov/vuln/detail/CVE-2021-30474), [CVE-2021-30475](https://nvd.nist.gov/vuln/detail/CVE-2021-30475), [CVE-2021-30473](https://nvd.nist.gov/vuln/detail/CVE-2021-30473), [CVE-2020-36133](https://nvd.nist.gov/vuln/detail/CVE-2020-36133), [CVE-2020-36131](https://nvd.nist.gov/vuln/detail/CVE-2020-36131), [CVE-2020-36130](https://nvd.nist.gov/vuln/detail/CVE-2020-36130), and [CVE-2020-36135](https://nvd.nist.gov/vuln/detail/CVE-2020-36135).
 
 ## Known Issues
 
-* TBD
+* Long-running Python pipelines might experience a memory leak: [#28246](https://github.com/apache/beam/issues/28246).
+* Python Pipelines using BigQuery IO or `orjson` dependency might experience segmentation faults or get stuck: [#28318](https://github.com/apache/beam/issues/28318).
 
 
 ## List of Contributors
 
-According to git shortlog, the following people contributed to the 2.40.0 release. Thank you to all contributors!
+According to git shortlog, the following people contributed to the 2.50.0 release. Thank you to all contributors!
 
 Abacn
 
