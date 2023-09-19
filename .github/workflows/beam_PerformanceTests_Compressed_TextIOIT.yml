@@ -19,7 +19,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '30 1,13 * * *'
+    - cron: '30 8,20 * * *'
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -55,7 +55,7 @@ jobs:
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Java CompressedTextIO Performance Test'
     runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 240
+    timeout-minutes: 100
     name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
     strategy:
       matrix:
@@ -69,23 +69,15 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: Authenticate on GCP
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
       - name: Prepare config
         id: set_config
         shell: bash
         run: |
           CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_PerformanceTests_Compressed_TextIOIT.txt | tr '\n' ' ')
-          CONFIGWITHDATE=$(echo "${CURCONFIG/jdbc_io_/jdbc_io_$CURDATE}")
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_BigQueryIO_Batch_Java_Json.txt | tr '\n' ' ')
+          CONFIGWITHDATE=$(echo "${CURCONFIG/bqio_write_10GB_java_json_/bqio_write_10GB_java_json_$CURDATE}")
           echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
-      - name: Run PerformanceTests Compressed TextIOIT Test
-        env:
-          CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
+      - name: run PerformanceTests Compressed TextIOIT Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:io:file-based-io-tests:integrationTest --tests org.apache.beam.sdk.io.text.TextIOIT --info -DintegrationTestPipelineOptions=["--runner=DataflowRunner","--project=apache-beam-testing","--tempRoot=gs://temp-storage-for-perf-tests","--filenamePrefix=gs://temp-storage-for-perf-tests/beam_PerformanceTests_Compressed_TextIOIT/7667/","--bigQueryDataset=beam_performance","--bigQueryTable=compressed_textioit_results","--influxMeasurement=compressed_textioit_results","--numberOfRecords=450000000","--expectedHash=8a3de973354abc6fba621c6797cc0f06","--datasetSize=1097840000","--compressionType=GZIP","--numWorkers=5","--autoscalingAlgorithm=NONE","--influxDatabase=beam_test_metrics","--influxHost=http://10.128.0.96:8086"] -Dfilesystem=gcs -DintegrationTestRunner=dataflow
