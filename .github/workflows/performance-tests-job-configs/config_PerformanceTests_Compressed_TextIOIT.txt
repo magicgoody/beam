@@ -15,18 +15,18 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-'["--tempRoot=gs://temp-storage-for-perf-tests",
+'["--runner=DataflowRunner",
 "--project=apache-beam-testing",
-"--runner=DataflowRunner",
-"--numberOfRecords=450000000",
+"--tempRoot=gs://temp-storage-for-perf-tests",
+"--filenamePrefix=gs://temp-storage-for-perf-tests/beam_PerformanceTests_Compressed_TextIOIT/${{github.run_id}}/",
 "--bigQueryDataset=beam_performance",
 "--bigQueryTable=compressed_textioit_results",
 "--influxMeasurement=compressed_textioit_results",
-"--influxDatabase=beam_test_metrics",
-"--influxHost=http://10.128.0.96:8086",
-"--autoscalingAlgorithm=NONE",
-"--numWorkers=5",
-"--datasetSize=1097840000",
+"--numberOfRecords=450000000",
 "--expectedHash=8a3de973354abc6fba621c6797cc0f06",
-"--filenamePrefix=gs://temp-storage-for-perf-tests/beam_PerformanceTests_Compressed_TextIOIT/${{github.run_id}}",
-"--compressionType=GZIP"]'
+"--datasetSize=1097840000",
+"--compressionType=GZIP",
+"--numWorkers=5",
+"--autoscalingAlgorithm=NONE",
+"--influxDatabase=beam_test_metrics",
+"--influxHost=http://10.128.0.96:8086"]'
