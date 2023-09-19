@@ -89,5 +89,3 @@ jobs:
             -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
             -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:$hostname:9000\",\"dfs.replication\":1}]","--filenamePrefix=hdfs://$hostname:9000/TEXTIO_IT_"]'
-
-            
