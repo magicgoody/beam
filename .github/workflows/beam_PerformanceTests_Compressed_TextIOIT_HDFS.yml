@@ -69,6 +69,8 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+      - name: Get hostname IP
+        run: ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
       - name: Prepare config
         id: set_config
         shell: bash
@@ -86,7 +88,7 @@ jobs:
             --info \
             -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:127.0.0.1:9000\",\"dfs.replication\":1}]","--filenamePrefix=hdfs://127.0.0.1:9000/TEXTIO_IT_"]'
+            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:$ip4:9000\",\"dfs.replication\":1}]","--filenamePrefix=hdfs://$ip4:9000/TEXTIO_IT_"]'
       - name: sleep
         if: always()
         run: sleep 5000    
