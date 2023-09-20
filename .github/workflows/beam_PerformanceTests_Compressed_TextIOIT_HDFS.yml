@@ -72,7 +72,7 @@ jobs:
       - name: Get hostName
         run: runner_hostname="$(hostname)"
         env: 
-          hostName: runner_hostname
+          hostName: $runner_hostname
       - name: Prepare config
         id: set_config
         shell: bash
