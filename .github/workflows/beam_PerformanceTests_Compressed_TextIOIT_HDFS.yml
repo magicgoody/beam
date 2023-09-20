@@ -69,8 +69,8 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      # - name: Get hostName
-      #   run: hostName_ip="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
+      - name: Get hostName
+        run: hostName="$(hostname)"
       - name: Prepare config
         id: set_config
         shell: bash
@@ -88,4 +88,4 @@ jobs:
             --info \
             -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:hostname:9000\",\"dfs.replication\":1}]","--filenamePrefix=hdfs://hostname:9000/TEXTIO_IT_"]'
+            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:$hostName:9000\",\"dfs.replication\":1}]","--filenamePrefix=hdfs://$hostName:9000/TEXTIO_IT_"]'
