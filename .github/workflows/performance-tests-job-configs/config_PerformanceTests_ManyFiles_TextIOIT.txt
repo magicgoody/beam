@@ -30,4 +30,4 @@
 "--numWorkers=5",
 "--autoscalingAlgorithm=NONE",
 "--influxDatabase=beam_test_metrics",
-"--influxHost=http://10.128.0.96:8086"
+"--influxHost=http://10.128.0.96:8086",
