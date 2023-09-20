@@ -88,4 +88,5 @@ jobs:
             -DintegrationTestRunner=dataflow \
             -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:127.0.0.1:9000\",\"dfs.replication\":1}]","--filenamePrefix=hdfs://127.0.0.1:9000/TEXTIO_IT_"]'
       - name: sleep
+        if: always()
         run: sleep 5000    
