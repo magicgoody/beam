@@ -73,7 +73,7 @@ variable "main_runner" {
       max_replicas = optional(number, 1)
       disk_size_gb = optional(number, 100)
       webhook_scaling = optional(bool, false)
-      runner_image = optional(string, "us-central1-docker.pkg.dev/apache-beam-testing/beam-github-actions/beam-arc-runner:60d397ecfbd2b10a1929615c70d500eb71a2c053")
+      runner_image = optional(string, "us-central1-docker.pkg.dev/apache-beam-testing/beam-github-actions/beam-arc-runner:2ad06b3cdcd217d3068e2b473ea1112364e22f07")
       labels = optional(list(string), ["self-hosted", "ubuntu-20.04","main"])
       enable_selector = optional(bool, false)
       enable_taint = optional(bool, false)
