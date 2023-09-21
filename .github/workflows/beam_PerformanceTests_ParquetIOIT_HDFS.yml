@@ -91,7 +91,7 @@ jobs:
         id: set_config
         shell: bash
         run: |
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_PerformanceTests_XmlIOIT_HDFS.txt | tr '\n' ' ')
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_PerformanceTests_ParquetIOIT_HDFS.txt | tr '\n' ' ')
           echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
       - name: run PerformanceTests ParquetIOIT HDFS Test
         uses: ./.github/actions/gradle-command-self-hosted-action
