@@ -19,7 +19,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '30 8,20 * * *'
+    - cron: '0 0/12 * * *'
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -55,30 +55,44 @@ jobs:
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Java ParquetIO Performance Test HDFS'
     runs-on: [self-hosted, ubuntu-20.04, main]
-    timeout-minutes: 240
+    timeout-minutes: 100
     name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
     strategy:
       matrix:
         job_name: ["beam_PerformanceTests_ParquetIOIT_HDFS"]
         job_phrase: ["Run Java ParquetIO Performance Test HDFS"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup repository
         uses: ./.github/actions/setup-action
         with:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
-      - name: Get hostname IP
-        run: echo "IP4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)" >> $GITHUB_ENV
+      - name: Authenticate on GCP
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+      - name: Set k8s access
+        uses: ./.github/actions/setup-k8s-access
+        with:
+          cluster_name: io-datastores-for-tests
+          k8s_namespace: ${{ matrix.job_name }}-${{ github.run_id }}
+      - name: Install Hadoop
+        id: install_hadoop
+        run: |
+          kubectl apply -f ${{ github.workspace }}/.test-infra/kubernetes/hadoop/LargeITCluster/hdfs-multi-datanode-cluster.yml
+          kubectl wait svc/hadoop --for=jsonpath='{.status.loadBalancer.ingress[0].ip}' --timeout=120s
+          loadbalancer_IP=$(kubectl get svc hadoop -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          echo hadoop_IP=$loadbalancer_IP >> $GITHUB_OUTPUT
       - name: Prepare config
         id: set_config
         shell: bash
         run: |
-          CURDATE=$(date '+%m%d%H%M%S' --utc)
-          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_PerformanceTests_ManyFiles_TextIOIT_HDFS.txt | tr '\n' ' ')
-          CONFIGWITHDATE=$(echo "${CURCONFIG/bqio_write_10GB_java_json_/bqio_write_10GB_java_json_$CURDATE}")
-          echo "prepared_config=$CONFIGWITHDATE" >> $GITHUB_OUTPUT
+          CURCONFIG=$(grep -v "^#.*" ./.github/workflows/performance-tests-job-configs/config_PerformanceTests_XmlIOIT_HDFS.txt | tr '\n' ' ')
+          echo "prepared_config=$CURCONFIG" >> $GITHUB_OUTPUT
       - name: run PerformanceTests ParquetIOIT HDFS Test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -88,4 +102,4 @@ jobs:
             --info \
             -Dfilesystem=hdfs \
             -DintegrationTestRunner=dataflow \
-            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:${{env.IP4}}:9000\",\"dfs.replication\":1}]","--filenamePrefix=hdfs://${{env.IP4}}:9000/TEXTIO_IT_"]'
+            -DintegrationTestPipelineOptions='[${{ steps.set_config.outputs.prepared_config }}"--filenamePrefix=hdfs://${{ steps.install_hadoop.outputs.hadoop_IP }}:9000/TEXTIO_IT_", "--hdfsConfiguration=[{\"fs.defaultFS\":\"hdfs:${{ steps.install_hadoop.outputs.hadoop_IP }}:9000\",\"dfs.replication\":1}]"]'
