@@ -82,7 +82,7 @@ jobs:
         id: install_kafka
         run: |
           cd ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/
-          sh setup-cluster.sh
+          kubectl delete -R -f .
       - name: Get Kafka IP
         id: kafka_ip
         run: |
