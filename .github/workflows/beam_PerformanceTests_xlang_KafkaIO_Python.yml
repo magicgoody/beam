@@ -82,6 +82,7 @@ jobs:
         id: install_kafka
         run: |
           cd ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/
+          kubectl delete -R -f .
           sh setup-cluster.sh
       - run: sleep 30000
       - name: Prepare config
