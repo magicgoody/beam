@@ -81,7 +81,7 @@ jobs:
       - name: Install Kafka
         id: install_kafka
         run: |
-          cd ${{ github.workspace }}.test-infra/kubernetes/kafka-cluster/
+          cd ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/
           sh setup-cluster.sh
       - name: Prepare config
         id: set_config
