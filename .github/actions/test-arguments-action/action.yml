@@ -15,57 +15,82 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: 'Setup Integration Tests action'
-description: 'Setup Integration Tests action'
+name: 'Set test arguments action'
+description: 'Set test arguments action to run the test'
 inputs:
-  config-file-path:
+  argument-file-paths:
     required: true
-    description: 'Test config file path'
+    description: 'List of paths to files with test arguments'
     default: ''
   arguments:
     required: false
-    description: 'Test arguments'
+    description: 'Test arguments generated at runtime'
     default: ''
-  java-test:
+  test-type:
     required: true
-    description: 'Type "true" if this is a Java test'
-    default: 'false'
-  python-test:
+    description: 'Specify if this is a "load" or "performance" test'
+  test-language:
     required: true
-    description: 'Type "true" if this is a Python test'
-    default: 'false'
-
-outputs:
-  arguments:
-    description: "Arguments"
-    value: ${{ steps.test_arguments.outputs.arguments }}
+    description: 'Specify if this is a "java", "python" or "go" test'
 
 runs:
   using: composite
   steps:
-    - name: Get default Java test arguments
-      if: ${{ inputs.java-test == 'true' }}
+    - name: Check if test-type was provided
+      shell: bash
+      run: | 
+        if [ -z "${{ inputs.test-type }}" ]; then
+          echo "Test type was not provided"
+          exit 1
+        fi
+    - name: Check if test-language was provided
+      shell: bash
+      run: | 
+        if [ -z "${{ inputs.test-language }}" ]; then
+          echo "Test language was not provided"
+          exit 1
+        fi
+    - name: Set common arguments
+      id: common_arguments
       shell: bash
       run: |
-        DEFAULT_ARGUMENTS=$(echo '
-          "--project=apache-beam-testing",
-          "--influxDatabase=beam_test_metrics",
-          "--influxHost=http://10.128.0.96:8086"'
-        )
-        echo DEFAULT_ARGUMENTS=$DEFAULT_ARGUMENTS >> $GITHUB_ENV
-    - name: Get default Python test arguments
-      if: ${{ inputs.python-test == 'true' }}
+        echo project="apache-beam-testing" >> $GITHUB_OUTPUT
+        echo influx_db_name="beam_test_metrics" >> $GITHUB_OUTPUT
+        echo influx_host="http://10.128.0.96:8086" >> $GITHUB_OUTPUT
+    - name: Get default ${{ inputs.test-language }} test arguments
+      id: default_arguments
       shell: bash
       run: |
-        DEFAULT_ARGUMENTS=$(echo '
-          "--project=apache-beam-testing",
-          "--influx_db_name=beam_test_metrics",
-          "--influx_hostname=http://10.128.0.96:8086"'
-        )
-        echo DEFAULT_ARGUMENTS=$DEFAULT_ARGUMENTS >> $GITHUB_ENV
-    - id: test_arguments
+        DEFAULT_ARGUMENTS=""
+        if ${{ inputs.test-language == 'java' }}; then
+          DEFAULT_ARGUMENTS=$(echo "
+            --project=${{ steps.common_arguments.outputs.project }}
+            --influxDatabase=${{ steps.common_arguments.outputs.influx_db_name }}
+            --influxHost=${{ steps.common_arguments.outputs.influx_host }}
+          ")
+        elif ${{ inputs.test-language == 'python' || inputs.test-language == 'go' }}; then
+          DEFAULT_ARGUMENTS=$(echo "
+            --project=${{ steps.common_arguments.outputs.project }}
+            --influx_db_name=${{ steps.common_arguments.outputs.influx_db_name }}
+            --influx_hostname=${{ steps.common_arguments.outputs.influx_host }}
+          ")
+        fi
+        echo arguments=$DEFAULT_ARGUMENTS >> $GITHUB_OUTPUT
+    - name: Group arguments
       shell: bash
       run: |
-        CONFIG=$(grep -v "^#.*" ${{ inputs.config-file-path }})
-        ARGUMENTS=$(echo '${{ env.DEFAULT_ARGUMENTS }}, ${{ inputs.arguments }},' $CONFIG | tr '\n' ' ')
-        echo arguments=$ARGUMENTS >> $GITHUB_OUTPUT
+        PATHS=($(echo "${{ inputs.argument-file-paths }}" | tr '\n' ' '))
+        for index in "${!PATHS[@]}"; do
+          CONFIG=$(grep -v "^#.*" ${PATHS[index]})
+          ARGUMENTS=$(echo "${{ steps.default_arguments.outputs.arguments }} ${{ inputs.arguments }} $CONFIG" | tr '\n' ' ')
+          ARGUMENTS="${ARGUMENTS% }"
+          if ${{ inputs.test-type == 'performance' }}; then
+            arguments=""
+            read -ra args <<< "$ARGUMENTS"
+            for arg in "${args[@]}"; do
+              arguments="${arguments}\"${arg}\","
+            done
+            ARGUMENTS="${arguments%,}"
+          fi
+          echo "${{ github.job }}_test_arguments_$((index + 1))=$ARGUMENTS" >> $GITHUB_ENV
+        done
