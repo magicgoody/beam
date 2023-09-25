@@ -83,6 +83,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/
           sh setup-cluster.sh
+      - run: sleep 30000
       - name: Prepare config
         id: set_config
         shell: bash
