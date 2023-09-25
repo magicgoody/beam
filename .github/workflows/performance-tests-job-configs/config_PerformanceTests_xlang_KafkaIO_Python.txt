@@ -15,20 +15,20 @@
 #  See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
--PloadTest.args=--runner=DataflowRunner 
---project=apache-beam-testing 
---region=us-central1 
---temp_location=gs://temp-storage-for-perf-tests/ 
---sdk_harness_container_image_overrides=.*java.*,gcr.io/apache-beam-testing/beam-sdk/beam_java8_sdk:latest 
---publish_to_big_query=true 
---metrics_dataset=beam_performance 
---metrics_table=python_kafkaio_results 
---influx_measurement=python_kafkaio_results 
---test_class=KafkaIOPerfTest 
---input_options='{"num_records":100000000,"key_size":10,"value_size":90,"algorithm":"lcg"}' 
---kafka_topic=beam 
---read_timeout=1500 
---numWorkers=5 
---autoscaling_algorithm=NONE 
---influx_db_name=beam_test_metrics 
+-PloadTest.args=--runner=DataflowRunner
+--project=apache-beam-testing
+--region=us-central1
+--temp_location=gs://temp-storage-for-perf-tests/
+--sdk_harness_container_image_overrides=.*java.*,gcr.io/apache-beam-testing/beam-sdk/beam_java8_sdk:latest
+--publish_to_big_query=true
+--metrics_dataset=beam_performance
+--metrics_table=python_kafkaio_results
+--influx_measurement=python_kafkaio_results
+--test_class=KafkaIOPerfTest
+--input_options='{"num_records":100000000,"key_size":10,"value_size":90,"algorithm":"lcg"}'
+--kafka_topic=beam
+--read_timeout=1500
+--numWorkers=5
+--autoscaling_algorithm=NONE
+--influx_db_name=beam_test_metrics
 --influx_hostname=http://10.128.0.96:8086
