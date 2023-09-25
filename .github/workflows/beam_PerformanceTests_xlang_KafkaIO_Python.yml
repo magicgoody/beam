@@ -82,7 +82,7 @@ jobs:
         id: install_kafka
         run: |
           cd ${{ github.workspace }}/.test-infra/kubernetes/kafka-cluster/
-          kubectl delete -R -f .
+          kubectl apply -R -f .
       - name: Get Kafka IP
         id: kafka_ip
         run: |
@@ -92,15 +92,9 @@ jobs:
           KAFKA_BROKER_0_IP=$(kubectl get svc outside-0 -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           KAFKA_BROKER_1_IP=$(kubectl get svc outside-1 -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           KAFKA_BROKER_2_IP=$(kubectl get svc outside-2 -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-          KAFKA_BROKER_0_PORT_NUMBER=$(kubectl get svc outside-0 -o jsonpath='{.spec.ports[0].port}')
-          KAFKA_BROKER_1_PORT_NUMBER=$(kubectl get svc outside-1 -o jsonpath='{.spec.ports[0].port}')
-          KAFKA_BROKER_2_PORT_NUMBER=$(kubectl get svc outside-2 -o jsonpath='{.spec.ports[0].port}')
           echo KAFKA_BROKER_0=$KAFKA_BROKER_0_IP >> $GITHUB_OUTPUT
           echo KAFKA_BROKER_1=$KAFKA_BROKER_1_IP >> $GITHUB_OUTPUT
           echo KAFKA_BROKER_2=$KAFKA_BROKER_2_IP >> $GITHUB_OUTPUT
-          echo KAFKA_BROKER_0_PORT=$KAFKA_BROKER_0_PORT_NUMBER >> $GITHUB_OUTPUT
-          echo KAFKA_BROKER_1_PORT=$KAFKA_BROKER_1_PORT_NUMBER >> $GITHUB_OUTPUT
-          echo KAFKA_BROKER_2_PORT=$KAFKA_BROKER_2_PORT_NUMBER >> $GITHUB_OUTPUT
       - name: Prepare config
         id: set_config
         shell: bash
@@ -115,4 +109,4 @@ jobs:
             -PloadTest.mainClass=apache_beam.io.external.xlang_kafkaio_perf_test \
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
-            '${{ steps.set_config.outputs.prepared_config }}--filename_prefix=gs://temp-storage-for-perf-tests/beam_PerformanceTests_xlang_KafkaIO_Python/${{github.run_id}}/ --bootstrap_servers=${{ steps.kafka_ip.outputs.KAFKA_BROKER_0 }}:${{ steps.kafka_ip.outputs.KAFKA_BROKER_0_PORT }},${{ steps.kafka_ip.outputs.KAFKA_BROKER_1 }}:${{ steps.kafka_ip.outputs.KAFKA_BROKER_1_PORT }},${{ steps.kafka_ip.outputs.KAFKA_BROKER_2 }}:${{ steps.kafka_ip.outputs.KAFKA_BROKER_2_PORT }}' \
+            '${{ steps.set_config.outputs.prepared_config }}--filename_prefix=gs://temp-storage-for-perf-tests/beam_PerformanceTests_xlang_KafkaIO_Python/${{github.run_id}}/ --bootstrap_servers=${{ steps.kafka_ip.outputs.KAFKA_BROKER_0 }}:32400,${{ steps.kafka_ip.outputs.KAFKA_BROKER_1 }}:32400,${{ steps.kafka_ip.outputs.KAFKA_BROKER_2 }}:32400' \
