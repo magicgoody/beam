@@ -100,7 +100,7 @@ jobs:
         uses: ./.github/actions/test-arguments-action
         with:
           test-type: performance
-          test-language: python
+          test-language: java
           argument-file-paths: |
             ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_xlang_KafkaIO_Python.txt
           arguments: |
