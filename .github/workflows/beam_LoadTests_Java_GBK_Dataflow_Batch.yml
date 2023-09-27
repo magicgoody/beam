@@ -137,4 +137,4 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_7 }}' \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_7 }}'
