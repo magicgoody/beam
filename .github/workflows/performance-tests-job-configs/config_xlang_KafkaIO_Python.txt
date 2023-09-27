@@ -26,5 +26,5 @@
 --input_options=''{\\"num_records\\":100000000,\\"key_size\\":10,\\"value_size\\":90,\\"algorithm\\":\\"lcg\\"}''
 --kafka_topic=beam
 --read_timeout=1500
---numWorkers=5
+--num_Workers=5
 --autoscaling_algorithm=NONE
