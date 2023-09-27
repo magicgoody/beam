@@ -105,6 +105,7 @@ jobs:
             ${{ github.workspace }}/.github/workflows/performance-tests-job-configs/config_xlang_KafkaIO_Python.txt
           arguments: |
             --filenamePrefix=gs://temp-storage-for-perf-tests/${{ matrix.job_name }}/${{github.run_id}}/
+            --bootstrap_servers=${{ steps.kafka_ip.outputs.KAFKA_BROKER_0 }}:32400,${{ steps.kafka_ip.outputs.KAFKA_BROKER_1 }}:32400,${{ steps.kafka_ip.outputs.KAFKA_BROKER_2 }}:32400
       - name: run integrationTest
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -113,4 +114,4 @@ jobs:
             -Prunner=DataflowRunner \
             -PloadTest.mainClass=apache_beam.io.external.xlang_kafkaio_perf_test \
             -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_PerformanceTests_xlang_KafkaIO_Python_test_arguments_1 }}--bootstrap_servers=${{ steps.kafka_ip.outputs.KAFKA_BROKER_0 }}:32400,${{ steps.kafka_ip.outputs.KAFKA_BROKER_1 }}:32400,${{ steps.kafka_ip.outputs.KAFKA_BROKER_2 }}:32400'
+            '-PloadTest.args=${{ env.beam_PerformanceTests_xlang_KafkaIO_Python_test_arguments_1 }}'
