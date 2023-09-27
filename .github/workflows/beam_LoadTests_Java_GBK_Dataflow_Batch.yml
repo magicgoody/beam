@@ -89,7 +89,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_1 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_1 }}' \
       - name: run Load test 2GB of 100B records
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -97,7 +97,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_2 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_2 }}' \
       - name: run Load test 2GB of 100kB records
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -105,7 +105,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_3 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_3 }}' \
       - name: run Load test fanout 4 times with 2GB 10-byte records total
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -113,7 +113,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_4 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_4 }}' \
       - name: run Load test fanout 8 times with 2GB 10-byte records total
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -121,7 +121,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_5 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_5 }}' \
       - name: run Load test reiterate 4 times 10kB values
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -129,7 +129,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_6 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_6 }}' \
       - name: run Load test reiterate 4 times 2MB values
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -137,4 +137,4 @@ jobs:
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
             -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_7 }}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Batch_test_arguments_7 }}' \
