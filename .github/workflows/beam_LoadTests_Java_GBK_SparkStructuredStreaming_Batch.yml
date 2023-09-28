@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: LoadTests Java GBK Dataflow Streaming
+name: LoadTests Java GBK SparkStructuredStreaming Batch
 
 on:
   issue_comment:
@@ -49,18 +49,18 @@ concurrency:
 #   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
-  beam_LoadTests_Java_GBK_Dataflow_Streaming:
+  beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch:
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
-      github.event.comment.body == 'Run Load Tests Java GBK Dataflow Streaming'
+      github.event.comment.body == 'Run Load Tests Java GBK SparkStructuredStreaming Batch'
     runs-on: [self-hosted, ubuntu-20.04, main]
     timeout-minutes: 240
     name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
     strategy:
       matrix:
-        job_name: ["beam_LoadTests_Java_GBK_Dataflow_Streaming"]
-        job_phrase: ["Run Load Tests Java GBK Dataflow Streaming"]
+        job_name: ["beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch"]
+        job_phrase: ["Run Load Tests Java GBK SparkStructuredStreaming Batch"]
     steps:
       - uses: actions/checkout@v3
       - name: Setup repository
@@ -75,66 +75,66 @@ jobs:
           test-type: load
           test-language: java
           argument-file-paths: |
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Streaming_2GB_of_10B_records.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Streaming_2GB_of_100B_records.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Streaming_2GB_of_100kB_records.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Streaming_fanout_4_times_with_2GB_10-byte_records_total.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Streaming_fanout_8_times_with_2GB_10-byte_records_total.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Streaming_reiterate_4_times_10kB_values.txt
-            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Streaming_reiterate_4_times_2MB_values.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Batch_2GB_of_10B_records.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Batch_2GB_of_100B_records.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Batch_2GB_of_100kB_records.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Batch_fanout_4_times_with_2GB_10-byte_records_total.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Batch_fanout_8_times_with_2GB_10-byte_records_total.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Batch_reiterate_4_times_10kB_values.txt
+            ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Java_GBK_Dataflow_Batch_reiterate_4_times_2MB_values.txt
       - name: run Load test 2GB of 10B records
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:load-tests:run
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
-            -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Streaming_test_arguments_1 }}' \
+            -Prunner=:runners:spark:3 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch_test_arguments_1 }}' \
       - name: run Load test 2GB of 100B records
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:load-tests:run
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
-            -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Streaming_test_arguments_2 }}' \
+            -Prunner=:runners:spark:3 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch_test_arguments_2 }}' \
       - name: run Load test 2GB of 100kB records
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:load-tests:run
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
-            -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Streaming_test_arguments_3 }}' \
+            -Prunner=:runners:spark:3 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch_test_arguments_3 }}' \
       - name: run Load test fanout 4 times with 2GB 10-byte records total
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:load-tests:run
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
-            -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Streaming_test_arguments_4 }}' \
+            -Prunner=:runners:spark:3 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch_test_arguments_4 }}' \
       - name: run Load test fanout 8 times with 2GB 10-byte records total
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:load-tests:run
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
-            -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Streaming_test_arguments_5 }}' \
+            -Prunner=:runners:spark:3 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch_test_arguments_5 }}' \
       - name: run Load test reiterate 4 times 10kB values
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:load-tests:run
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
-            -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Streaming_test_arguments_6 }}' \
+            -Prunner=:runners:spark:3 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch_test_arguments_6 }}' \
       - name: run Load test reiterate 4 times 2MB values
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:java:testing:load-tests:run
           arguments: |
             -PloadTest.mainClass=org.apache.beam.sdk.loadtests.GroupByKeyLoadTest \
-            -Prunner=:runners:google-cloud-dataflow-java \
-            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_Dataflow_Streaming_test_arguments_7 }}'
+            -Prunner=:runners:spark:3 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Java_GBK_SparkStructuredStreaming_Batch_test_arguments_7 }}'
