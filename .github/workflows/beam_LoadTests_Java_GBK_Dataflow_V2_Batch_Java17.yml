@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: beam_LoadTests_Java_GBK_Dataflow_V2_Batch_Java17
+name: LoadTests Java GBK Dataflow V2 Batch Java17
 
 on:
   issue_comment:
