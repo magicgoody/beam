@@ -91,7 +91,7 @@ jobs:
             -PpythonVersion=3.8 \
             -PloadTest.mainClass=apache_beam.testing.load_tests.combine_test \
             -Prunner=PortableRunner \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Flink_Batch_test_arguments_1 }} --job_name=load-tests-python-flink-batch-combine-1-$(date +'%m%d%H%M%S' --utc)'
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Flink_Batch_test_arguments_1 }} --job_name=load-tests-python-flink-batch-combine-1-$(date +'%m%d%H%M%S' --utc)' \
       - name: run Load test 2GB Fanout 4
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -100,7 +100,7 @@ jobs:
             -PpythonVersion=3.8 \
             -PloadTest.mainClass=apache_beam.testing.load_tests.combine_test \
             -Prunner=PortableRunner \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Flink_Batch_test_arguments_2 }} --job_name=load-tests-python-flink-batch-combine-4-$(date +'%m%d%H%M%S' --utc)'
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Flink_Batch_test_arguments_2 }} --job_name=load-tests-python-flink-batch-combine-4-$(date +'%m%d%H%M%S' --utc)' \
       - name: run Load test 2GB Fanout 8
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -109,4 +109,4 @@ jobs:
             -PpythonVersion=3.8 \
             -PloadTest.mainClass=apache_beam.testing.load_tests.combine_test \
             -Prunner=PortableRunner \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Flink_Batch_test_arguments_3 }} --job_name=load-tests-python-flink-batch-combine-5-$(date +'%m%d%H%M%S' --utc)'
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Flink_Batch_test_arguments_3 }} --job_name=load-tests-python-flink-batch-combine-5-$(date +'%m%d%H%M%S' --utc)' \
