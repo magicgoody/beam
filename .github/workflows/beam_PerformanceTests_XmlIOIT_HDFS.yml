@@ -19,7 +19,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '0 0/12 * * *'
+    - cron: '50 4/12 * * *'
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -44,9 +44,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-#   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
-#   GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
-#   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
+  GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+  GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
+  GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
   beam_PerformanceTests_XmlIOIT_HDFS_test_arguments_1: ''
 
 jobs:
@@ -79,7 +79,6 @@ jobs:
       - name: Set k8s access
         uses: ./.github/actions/setup-k8s-access
         with:
-          cluster_name: io-datastores-for-tests
           k8s_namespace: ${{ matrix.job_name }}-${{ github.run_id }}
       - name: Install Hadoop
         id: install_hadoop

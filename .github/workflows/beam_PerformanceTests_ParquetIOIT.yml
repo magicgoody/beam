@@ -19,7 +19,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '30 8,20 * * *'
+    - cron: '10 3/12 * * *'
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -44,10 +44,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-#   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
-#   GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
-#   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
-  beam_PerformanceTests_ParquetIOIT_test_arguments_1: ''
+  GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+  GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
+  GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
 
 jobs:
   beam_PerformanceTests_ParquetIOIT:
@@ -70,6 +69,7 @@ jobs:
           comment_phrase: ${{ matrix.job_phrase }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_job: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
+# The env variable is created and populated in the test-arguments-action as "<github.job>_test_arguments_<argument_file_paths_index>"
       - name: Prepare test arguments
         uses: ./.github/actions/test-arguments-action
         with:
