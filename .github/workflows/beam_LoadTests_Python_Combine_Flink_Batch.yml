@@ -84,7 +84,7 @@ jobs:
             ${{ github.workspace }}/.github/workflows/load-tests-job-configs/Python_Combine_Flink_Batch_2GB_Fanout_8.txt
       # The env variable is created and populated in the test-arguments-action as "<github.job>_test_arguments_<argument_file_paths_index>"     
       - name: get current time
-        run: echo "NOW=$(date '+%m%d%H%M%S' --utc')" >> $GITHUB_ENV
+        run: echo "NOW_UTC=$(date '+%m%d%H%M%S' --utc)" >> $GITHUB_ENV
       - name: run Load test 2GB 10 byte records
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -93,7 +93,7 @@ jobs:
             -PpythonVersion=3.8 \
             -PloadTest.mainClass=apache_beam.testing.load_tests.combine_test \
             -Prunner=PortableRunner \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Flink_Batch_test_arguments_1 }} --job_name=load-tests-python-flink-batch-combine-1-${{env.NOW}}' \
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Flink_Batch_test_arguments_1 }} --job_name=load-tests-python-flink-batch-combine-1-${{env.NOW_UTC}}' \
       - name: run Load test 2GB Fanout 4
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
