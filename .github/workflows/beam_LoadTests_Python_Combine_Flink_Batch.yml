@@ -100,10 +100,6 @@ jobs:
           cd ${{ github.workspace }}/.test-infra/dataproc; ./flink_cluster.sh create
       - name: get current time
         run: echo "NOW_UTC=$(date '+%m%d%H%M%S' --utc)" >> $GITHUB_ENV
-      - name: Teardown Flink
-        if: always()
-        run: |
-          ${{ github.workspace }}/.test-infra/dataproc/flink_cluster.sh delete
       - name: run Load test 2GB 10 byte records
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
