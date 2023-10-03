@@ -56,7 +56,7 @@ env:
   DETACHED_MODE: true
   HARNESS_IMAGES_TO_PULL: gcr.io/apache-beam-testing/beam-sdk/beam_go_sdk:latest
   JOB_SERVER_IMAGE: gcr.io/apache-beam-testing/beam_portability/beam_flink1.15_job_server:latest
-  ARTIFACTS_DIR: gs://beam-flink-cluster/eam-loadtests-python-combine-flink-batch-${{ github.run_id }}
+  ARTIFACTS_DIR: gs://beam-flink-cluster/beam-loadtests-python-combine-flink-batch-${{ github.run_id }}
 
 jobs:
   beam_LoadTests_Python_Combine_Flink_Batch:
