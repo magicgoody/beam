@@ -18,11 +18,13 @@
 --temp_location=gs://temp-storage-for-perf-tests/loadtests
 --publish_to_big_query=true
 --metrics_dataset=load_test
---metrics_table=python_dataflow_batch_gbk_5
---influx_measurement=python_batch_gbk_5
---input_options=''{\\"num_records\\":2500000,\\"key_size\\":10,\\"value_size\\":90,\\"algorithm\\":\\"lcg\\"}''
+--metrics_table=python_dataflow_streaming_gbk_4
+--influx_measurement=python_streaming_gbk_4
+--input_options=''{\\"num_records\\":5000000,\\"key_size\\":10,\\"value_size\\":90,\\"algorithm\\":\\"lcg\\"}''
 --iterations=1
---fanout=8
+--fanout=4
 --numWorkers=16
 --autoscaling_algorithm=NONE
+--streaming
+--experiments=use_runner_v2
 --runner=DataflowRunner
