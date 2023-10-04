@@ -16,13 +16,12 @@
 
 --publish_to_big_query=true
 --metrics_dataset=load_test
---metrics_table=python_flink_batch_combine_4
---influx_measurement=python_batch_combine_4
---input_options=''{\\"num_records\\":5000000,\\"key_size\\":10,\\"value_size\\":90,\\"algorithm\\":\\"lcg\\"}''
---parallelism=16
+--metrics_table=python_flink_batch_gbk_2
+--influx_measurement=python_batch_gkb_2
+--input_options=''{\\"num_records\\":200000000,\\"key_size\\":10,\\"value_size\\":90,\\"algorithm\\":\\"lcg\\"}''
+--iterations =1
+--fanout=1
+--parallelism=5
 --job_endpoint=localhost:8099
 --environment_type=DOCKER
 --environment_config=gcr.io/apache-beam-testing/beam-sdk/beam_python3.8_sdk:latest
---fanout=4
---top_count=20
---runner=PortableRunner
