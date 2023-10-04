@@ -25,12 +25,12 @@ on:
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
   actions: write
-  pull-requests: write
-  checks: write
+  pull-requests: read
+  checks: read
   contents: read
   deployments: read
   id-token: none
-  issues: write
+  issues: read
   discussions: read
   packages: read
   pages: read
@@ -102,4 +102,4 @@ jobs:
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_2 }} --job_name=load-tests-python-dataflow-streaming-gbk-7-${{env.NOW_UTC}}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_2 }} --job_name=load-tests-python-dataflow-streaming-gbk-7-${{env.NOW_UTC}}' \
