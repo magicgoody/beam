@@ -53,8 +53,4 @@ runs:
       if: ${{ inputs.go-version != '' }}
       uses: actions/setup-go@v3
       with:
-<<<<<<< HEAD
         go-version: ${{ inputs.go-version }} # never set patch, to get latest patch releases.
-=======
-        go-version: ${{ inputs.go-version }} # never set patch, to get latest patch releases.
->>>>>>> beam/master
