@@ -84,7 +84,7 @@ jobs:
       - name: get current time
         run: echo "NOW_UTC=$(date '+%m%d%H%M%S' --utc)" >> $GITHUB_ENV
         # The env variables are created and populated in the test-arguments-action as "<github.job>_test_arguments_<argument_file_paths_index>"
-      - name: run integrationTest
+      - name: run reiterate 4 times 10kB values test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:python:apache_beam:testing:load_tests:run
@@ -93,10 +93,10 @@ jobs:
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_1 }} --job_name=load-tests-python-dataflow-streaming-gbk-6-${{env.NOW_UTC}}' \
-      - name: run integrationTest
-        uses: ./.github/actions/gradle-command-self-hosted-action --info
+      - name: run reiterate 4 times 2MB values test
+        uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
+          gradle-command: :sdks:python:apache_beam:testing:load_tests:run --info
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=DataflowRunner \
