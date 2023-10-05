@@ -26,4 +26,4 @@
 --environment_type=DOCKER
 --environment_config=gcr.io/apache-beam-testing/beam-sdk/beam_python3.8_sdk:latest
 --runner=PortableRunner
---numWorkers=5
+--num_workers=5

@@ -21,7 +21,7 @@
 --metrics_table=python_dataflow_streaming_combine_4
 --influx_measurement=python_streaming_combine_4
 --input_options=''{\\"num_records\\":5000000,\\"key_size\\":10,\\"value_size\\":90,\\"algorithm\\":\\"lcg\\"}''
---numWorkers=16
+--num_workers=16
 --autoscaling_algorithm=NONE
 --fanout=4
 --top_count=20
