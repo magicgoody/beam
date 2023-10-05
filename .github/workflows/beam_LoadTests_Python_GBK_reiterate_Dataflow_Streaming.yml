@@ -87,7 +87,7 @@ jobs:
       - name: run reiterate 4 times 10kB values test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:python:apache_beam:testing:load_tests:run --info
+          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=DataflowRunner \
@@ -96,9 +96,9 @@ jobs:
       - name: run reiterate 4 times 2MB values test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
-          gradle-command: :sdks:python:apache_beam:testing:load_tests:run --info
+          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_2 }} --job_name=load-tests-python-dataflow-streaming-gbk-7-${{env.NOW_UTC}}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_2 }} --job_name=load-tests-python-dataflow-streaming-gbk-7-${{env.NOW_UTC}}' \
