@@ -21,7 +21,8 @@
 --input_options=''{\\"num_records\\":5000000,\\"key_size\\":10,\\"value_size\\":90,\\"algorithm\\":\\"lcg\\"}''
 --iterations =1
 --fanout=4
---parallelism=167
+--parallelism=16
 --job_endpoint=localhost:8099
 --environment_type=DOCKER
 --environment_config=gcr.io/apache-beam-testing/beam-sdk/beam_python3.8_sdk:latest
+--runner=PortableRunner
