@@ -26,4 +26,5 @@
 --numWorkers=5
 --autoscaling_algorithm=NONE
 --streaming
+--experiments=use_runner_v2
 --runner=DataflowRunner
