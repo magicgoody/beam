@@ -54,7 +54,7 @@ jobs:
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'schedule' ||
       github.event.comment.body == 'Run Load Tests Python GBK reiterate Dataflow Streaming'
-    runs-on: [self-hosted, ubuntu-20.04, main]
+    runs-on: [self-hosted, ubuntu-20.04, highmem]
     timeout-minutes: 720
     name: ${{ matrix.job_name }} (${{ matrix.job_phrase }})
     strategy:
@@ -92,7 +92,7 @@ jobs:
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_2 }} --job_name=load-tests-python-dataflow-streaming-gbk-7-${{env.NOW_UTC}}' \
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_1 }} --job_name=load-tests-python-dataflow-streaming-gbk-6-${{env.NOW_UTC}}' \
       - name: run integrationTest
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -101,4 +101,4 @@ jobs:
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_1 }} --job_name=load-tests-python-dataflow-streaming-gbk-6-${{env.NOW_UTC}}'
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Streaming_test_arguments_2 }} --job_name=load-tests-python-dataflow-streaming-gbk-7-${{env.NOW_UTC}}'
