@@ -94,7 +94,6 @@ jobs:
             ${{ github.workspace }}/.github/workflows/load-tests-job-configs/python_GBK_Flink_Batch_fanout_4_times_with_2GB_10-byte_records_total.txt
             ${{ github.workspace }}/.github/workflows/load-tests-job-configs/python_GBK_Flink_Batch_fanout_8_times_with_2GB_10-byte_records_total.txt
             ${{ github.workspace }}/.github/workflows/load-tests-job-configs/python_GBK_Flink_Batch_reiterate_4_times_10kB_values.txt
-          arguments: 
       - name: get current time
         run: echo "NOW_UTC=$(date '+%m%d%H%M%S' --utc)" >> $GITHUB_ENV
       - name: Start Flink with parallelism 5
