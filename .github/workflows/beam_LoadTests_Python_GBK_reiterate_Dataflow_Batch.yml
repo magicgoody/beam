@@ -19,18 +19,18 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '30 8,20 * * *'
+    - cron: '10 1 * * *'
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
 permissions:
   actions: write
-  pull-requests: write
-  checks: write
+  pull-requests: read
+  checks: read
   contents: read
   deployments: read
   id-token: none
-  issues: write
+  issues: read
   discussions: read
   packages: read
   pages: read
@@ -84,7 +84,7 @@ jobs:
       - name: get current time
         run: echo "NOW_UTC=$(date '+%m%d%H%M%S' --utc)" >> $GITHUB_ENV
         # The env variables are created and populated in the test-arguments-action as "<github.job>_test_arguments_<argument_file_paths_index>"
-      - name: run integrationTest
+      - name: run reiterate 4 times 10kB values test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:python:apache_beam:testing:load_tests:run
@@ -93,7 +93,7 @@ jobs:
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_reiterate_Dataflow_Batch_test_arguments_1 }} --job_name=load-tests-python-dataflow-batch-gbk-6-${{env.NOW_UTC}}' \
-      - name: run integrationTest
+      - name: run reiterate 4 times 2MB values test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:python:apache_beam:testing:load_tests:run

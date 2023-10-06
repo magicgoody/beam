@@ -19,7 +19,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    - cron: '10 5 * * *'
+    - cron: '10 9 * * *'
   workflow_dispatch:
 
 #Setting explicit permissions for the action to avoid the default permissions which are `write-all` in case of pull_request_target event
@@ -85,7 +85,7 @@ jobs:
       - name: get current time
         run: echo "NOW_UTC=$(date '+%m%d%H%M%S' --utc)" >> $GITHUB_ENV
         # The env variables are created and populated in the test-arguments-action as "<github.job>_test_arguments_<argument_file_paths_index>"
-      - name: run integrationTest
+      - name: run 2GB 10 byte records test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:python:apache_beam:testing:load_tests:run
@@ -94,7 +94,7 @@ jobs:
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Dataflow_Streaming_test_arguments_1 }} --job_name=load-tests-python-dataflow-streaming-combine-1-${{env.NOW_UTC}}' \
-      - name: run integrationTest
+      - name: run 2GB Fanout 4 test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:python:apache_beam:testing:load_tests:run
@@ -103,7 +103,7 @@ jobs:
             -Prunner=DataflowRunner \
             -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_Combine_Dataflow_Streaming_test_arguments_2 }} --job_name=load-tests-python-dataflow-streaming-combine-4-${{env.NOW_UTC}}' \
-      - name: run integrationTest
+      - name: run 2GB Fanout 8 test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
           gradle-command: :sdks:python:apache_beam:testing:load_tests:run
