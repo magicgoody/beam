@@ -15,7 +15,7 @@
 #  limitations under the License.
 
 --publish_to_big_query=true
---metrics_dataset=load_test
+--metrics_dataset=python_load_tests
 --metrics_table=python_flink_batch_gbk_1
 --influx_measurement=python_batch_gkb_1
 --iterations=1
