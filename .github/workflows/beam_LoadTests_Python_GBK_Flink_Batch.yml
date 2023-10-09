@@ -108,7 +108,7 @@ jobs:
           gradle-command: :sdks:python:apache_beam:testing:load_tests:run --info
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
-            -Prunner=DirectRunner \
+            -Prunner=PortableRunner \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_1 }} --job_name=load-tests-python-flink-batch-gbk-1-${{env.NOW_UTC}}' \
       - name: run Flink Batch 2GB of 100B records test
         uses: ./.github/actions/gradle-command-self-hosted-action
