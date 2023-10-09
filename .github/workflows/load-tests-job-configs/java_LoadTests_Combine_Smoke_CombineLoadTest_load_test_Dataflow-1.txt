@@ -17,10 +17,10 @@
 --region=us-central1
 --appName=smoke-dsl-java
 --tempLocation=gs://temp-storage-for-perf-tests/smoketests
---sourceOptions={"numRecords":100000,"keySizeBytes":1,"valueSizeBytes":1}
+--sourceOptions={"numRecords":100000,"splitPointFrequencyRecords":1}
+--stepOptions={"outputRecordsPerInputRecord":1,"preservesInputKeyDistribution":true}
 --fanout=10
 --iterations=1
 --numWorkers=5
 --autoscalingAlgorithm=NONE
---streaming=false
 --runner=DataflowRunner
