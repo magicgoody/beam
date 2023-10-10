@@ -109,6 +109,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=PortableRunner \
+            -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_1 }} --job_name=load-tests-python-flink-batch-gbk-1-${{env.NOW_UTC}}' \
       - name: run Flink Batch 2GB of 100B records test
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -117,6 +118,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=PortableRunner \
+            -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_2 }} --job_name=load-tests-python-flink-batch-gbk-2-${{env.NOW_UTC}}' \
       - name: run reiterate 4 times 10kB values test
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -125,6 +127,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=PortableRunner \
+            -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_5 }} --job_name=load-tests-python-flink-batch-gbk-6-${{env.NOW_UTC}}' \
       - name: Restart Flink with parallelism 16
         env:
@@ -138,6 +141,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=PortableRunner \
+            -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_3 }} --job_name=load-tests-python-flink-batch-gbk-4-${{env.NOW_UTC}}' \
       - name: run fanout 8 times with 2GB 10-byte records total test
         uses: ./.github/actions/gradle-command-self-hosted-action
@@ -146,6 +150,7 @@ jobs:
           arguments: |
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=PortableRunner \
+            -PpythonVersion=3.8 \
             '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_4 }} --job_name=load-tests-python-flink-batch-gbk-5-${{env.NOW_UTC}}' \
       - name: Teardown Flink
         if: always()
