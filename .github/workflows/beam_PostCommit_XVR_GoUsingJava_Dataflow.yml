@@ -73,6 +73,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
+      - name: Get current user
+        run: USER="$(whoami)"
       - name: run XVR GoUsingJava Dataflow script
         env:
           CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
