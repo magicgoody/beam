@@ -96,44 +96,12 @@ jobs:
             ${{ github.workspace }}/.github/workflows/load-tests-job-configs/python_GBK_Flink_Batch_reiterate_4_times_10kB_values.txt
       - name: get current time
         run: echo "NOW_UTC=$(date '+%m%d%H%M%S' --utc)" >> $GITHUB_ENV
-      - name: Start Flink with parallelism 5
-        env:
-          FLINK_NUM_WORKERS: 5
-        run: |
-          cd ${{ github.workspace }}/.test-infra/dataproc; ./flink_cluster.sh create
-        # The env variables are created and populated in the test-arguments-action as "<github.job>_test_arguments_<argument_file_paths_index>"
-      - name: run Flink Batch 2GB of 10B records test
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
-          arguments: |
-            -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
-            -Prunner=PortableRunner \
-            -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_1 }} --job_name=load-tests-python-flink-batch-gbk-1-${{env.NOW_UTC}}' \
-      - name: run Flink Batch 2GB of 100B records test
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
-          arguments: |
-            -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
-            -Prunner=PortableRunner \
-            -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_2 }} --job_name=load-tests-python-flink-batch-gbk-2-${{env.NOW_UTC}}' \
-      - name: run reiterate 4 times 10kB values test
-        uses: ./.github/actions/gradle-command-self-hosted-action
-        with:
-          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
-          arguments: |
-            -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
-            -Prunner=PortableRunner \
-            -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_5 }} --job_name=load-tests-python-flink-batch-gbk-6-${{env.NOW_UTC}}' \
-      - name: Restart Flink with parallelism 16
+      - name: Start Flink with parallelism 16
         env:
           FLINK_NUM_WORKERS: 16
         run: |
-          cd ${{ github.workspace }}/.test-infra/dataproc; ./flink_cluster.sh restart
+          cd ${{ github.workspace }}/.test-infra/dataproc; ./flink_cluster.sh create
+        # The env variables are created and populated in the test-arguments-action as "<github.job>_test_arguments_<argument_file_paths_index>"
       - name: run fanout 4 times with 2GB 10-byte records total test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -142,7 +110,7 @@ jobs:
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=PortableRunner \
             -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_3 }} --job_name=load-tests-python-flink-batch-gbk-4-${{env.NOW_UTC}}' \
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_3 }} --job_name=load_tests_Python_Flink_Batch_GBK-4-${{env.NOW_UTC}}' \
       - name: run fanout 8 times with 2GB 10-byte records total test
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
@@ -151,7 +119,39 @@ jobs:
             -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
             -Prunner=PortableRunner \
             -PpythonVersion=3.8 \
-            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_4 }} --job_name=load-tests-python-flink-batch-gbk-5-${{env.NOW_UTC}}' \
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_4 }} --job_name=load_tests_Python_Flink_Batch_GBK-5-${{env.NOW_UTC}}' \
+      - name: Restart Flink with parallelism 5
+        env:
+          FLINK_NUM_WORKERS: 5
+        run: |
+          cd ${{ github.workspace }}/.test-infra/dataproc; ./flink_cluster.sh restart
+      - name: run Flink Batch 2GB of 10B records test
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
+          arguments: |
+            -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
+            -Prunner=PortableRunner \
+            -PpythonVersion=3.8 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_1 }} --job_name=load_tests_Python_Flink_Batch_GBK-1-${{env.NOW_UTC}}' \
+      - name: run Flink Batch 2GB of 100B records test
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
+          arguments: |
+            -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
+            -Prunner=PortableRunner \
+            -PpythonVersion=3.8 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_2 }} --job_name=load_tests_Python_Flink_Batch_GBK-2-${{env.NOW_UTC}}' \
+      - name: run reiterate 4 times 10kB values test
+        uses: ./.github/actions/gradle-command-self-hosted-action
+        with:
+          gradle-command: :sdks:python:apache_beam:testing:load_tests:run
+          arguments: |
+            -PloadTest.mainClass=apache_beam.testing.load_tests.group_by_key_test \
+            -Prunner=PortableRunner \
+            -PpythonVersion=3.8 \
+            '-PloadTest.args=${{ env.beam_LoadTests_Python_GBK_Flink_Batch_test_arguments_5 }} --job_name=load_tests_Python_Flink_Batch_GBK-6-${{env.NOW_UTC}}' \
       - name: Teardown Flink
         if: always()
         run: |
