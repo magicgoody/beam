@@ -47,7 +47,6 @@ env:
   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
   GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GE_CACHE_USERNAME }}
   GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GE_CACHE_PASSWORD }}
-  USER: ''
 
 jobs:
   beam_PostCommit_XVR_GoUsingJava_Dataflow:
@@ -74,10 +73,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-      - name: Get current user
-        run: echo "USER="$(whoami)"" >> $GITHUB_ENV
       - name: run XVR GoUsingJava Dataflow script
         env:
+          USER: github-actions
           CLOUDSDK_CONFIG: ${{ env.KUBELET_GCLOUD_CONFIG_PATH}}
         uses: ./.github/actions/gradle-command-self-hosted-action
         with:
