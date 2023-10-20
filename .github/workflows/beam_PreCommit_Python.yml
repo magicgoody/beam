@@ -107,11 +107,11 @@ jobs:
         if: always()
         with:
           name: Python Test Results
-          path: "**/pytest*.xml"
+          path: "**/build/test-results/**/*.xml"
       - name: Publish Python Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           commit: '${{ env.prsha || env.GITHUB_SHA }}'
           comment_mode: ${{ github.event_name == 'issue_comment'  && 'always' || 'off' }}
-          files: '**/pytest*.xml'
+          files: '**/build/test-results/**/*.xml'
